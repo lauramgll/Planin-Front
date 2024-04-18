@@ -1,0 +1,94 @@
+/* Inicio sesión y registro */
+
+header img {
+    width: 13px;
+    height: 13px;
+}
+
+header {
+    padding: 62px 32px 20px 32px;
+}
+
+header h4 {
+    flex-grow: 1;
+    text-align: center;
+}
+
+form {
+    margin: 50px;
+    font-family: Nunito;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 11px;
+}
+
+form > div:nth-of-type(1) {
+    margin-bottom: 31px;
+}
+
+form > div:nth-of-type(2) {
+    position: relative;
+}
+
+form img {
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    top: 40%;
+    right: 5px; 
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+input {
+    padding-bottom: 14px;
+    border: none;
+    border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
+    color: rgba(95, 95, 95, 0.60);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.botonAzul {
+    width: calc(100% - 100px);
+    margin: 50px 50px 13px 50px;
+}
+
+p {
+    text-align: center;
+    color: #727DF3;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+a {
+    color: #727DF3;
+}
+
+@media (min-width: 840px) {
+    #fondo {
+        background-color: #F1F2FE;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #contenedor {
+        width: 578px;
+        height: 650px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+    }
+
+    header {
+        padding: 32px 32px 30px 32px;
+    }
+    
+    form > div:nth-of-type(1) {
+        margin-top: 78px;
+    }
+}

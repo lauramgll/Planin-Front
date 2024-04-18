@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planin · Inicio sesión</title>
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/forms.css">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="fondo">
+        <div id="contenedor">
+            <header>
+                <img src="./recursos/cerrar.png" alt="cerrar">
+                <h4 class="tituloTipo">INICIAR SESIÓN</h4>
+            </header>
+            <main>
+                <form>
+                    <div>
+                        <label class="fuentePeque" for="email">Email</label>
+                        <input type="email" id="email" placeholder="Escribe tu email" required />
+                    </div>
+                    <div>
+                        <label class="fuentePeque" for="password">Contraseña</label>
+                        <div>
+                            <input type="password" id="password" placeholder="Escribe tu contraseña" required />
+                            <img src="./recursos/ojo_password.png" alt="ojo password">
+                        </div>
+                    </div>
+                </form>
+                <button class="botonAzul">Iniciar sesión</button>
+                <p>¿No tienes cuenta? <a href="./registro.html">Regístrate</a></p>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
