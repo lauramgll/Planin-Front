@@ -1,0 +1,103 @@
+/* Index */
+
+#indexWeb {
+    display: none;
+}
+
+body {
+    padding: 40px 50px;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+#logo {
+    width: 15px;
+    height: 15px; 
+    margin-bottom: 40px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+#ilustracionInicio {
+    width: 290px;
+    height: 290px;
+    margin: 40px 0px 65px 0px;
+    align-self: center;
+}
+
+#indexMovil {
+    display: flex;
+    flex-direction: column;
+}
+
+.botonTransparente {
+    margin-top: 10px;
+}
+
+.botonAzul, .botonTransparente {
+    width: 100%;
+}
+
+@media (min-width: 840px) {
+    #indexMovil {
+        display: none;
+    }
+
+    body {
+        padding: 0px;
+    }
+
+    #indexWeb {
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        min-height: 90px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 23px 54px;
+    }
+
+    header div:last-of-type {
+        display: flex;
+    }
+
+    #logo {
+        width: 20px;
+        height: 20px; 
+        margin: 0px;
+    }
+
+    .botonAzul, .botonTransparente {
+        width: 167px;
+        height: 40px;
+        margin-top: 0px;
+    }
+
+    .botonAzul {
+        order: 2;
+    }
+
+    main {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 100px 140px;
+        column-gap: 100px;
+        align-self: center;
+        max-width: 1000px;
+    }
+}
