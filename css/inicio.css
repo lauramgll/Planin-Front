@@ -1,0 +1,25 @@
+ion-icon {
+    color: rgba(95, 95, 95, 0.80);
+    cursor: pointer;
+}
+
+header {
+    align-items: center;
+    padding: 68px 35px 20px 35px;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.tituloTipo {
+    margin: 0px 18px;
+}
+
+#vistaTotales {
+    height: 250px;
+    background-color: #F1F2FE;
+}
