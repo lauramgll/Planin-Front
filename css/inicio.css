@@ -41,15 +41,8 @@ h3 {
 }
 
 #vistaTotales {
-    height: 250px;
-    background-color: #F1F2FE;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     row-gap: 17px;
-    padding: 55px 50px 65px 50px;
-    z-index: 0;
 }
 
 #vistaTotales div {
@@ -123,4 +116,48 @@ h5 {
 #circulo + p {
     margin-right: auto;
     margin-left: 20px;
+}
+
+.oculto {
+    display: none;
+}
+
+.visible {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    background-color: #F1F2FE;
+    padding: 55px 50px 65px 50px;
+    z-index: 0;
+}
+
+.porcentajes {
+    color: rgba(95, 95, 95, 0.50);
+}
+
+#circulo2 {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #5F5F5F;
+}
+
+#vistaChart {
+    column-gap: 10%;
+}
+
+#categorias {
+    display: grid;
+    row-gap: 17px;
+    column-gap: 7px;
+    min-width: 120px;
+    grid-template-columns: auto 10px auto;
+    align-items: center;
+}
+
+#chart {
+    width: 150px;
+    height: 150px;
+    background-color: lightgray;
 }
