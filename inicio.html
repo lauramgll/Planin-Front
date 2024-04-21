@@ -11,6 +11,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
 <body>
+    <aside>
+        <div>
+            <img src="./images/logo.png" alt="Inicio">
+            <p class="fuentePeque">Inicio</p>
+        </div>
+        <div>
+            <img src="./images/transacciones.png" alt="Transacciones">
+            <p class="fuentePeque">Transacciones</p>
+        </div>
+        <div>
+            <img src="./images/cuentas.png" alt="Cuentas">
+            <p class="fuentePeque">Cuentas</p>
+        </div>
+        <div>
+            <img src="./images/ajustes.png" alt="Ajustes">
+            <p class="fuentePeque">Ajustes</p>
+        </div>
+        <div>
+            <img src="./images/cerrar_sesion.png" alt="Cerrar sesión">
+            <p class="fuentePeque">Cerrar sesión</p>
+        </div>
+    </aside>
     <div id="transparenciaFiltrado">
         <div id="rectanguloFiltros">
             <div>
@@ -39,6 +61,33 @@
         <ion-icon name="filter-outline"></ion-icon>
     </header>
     <main>
+        <div id="transparenciaFiltrado">
+            <div id="rectanguloFiltros">
+                <div>
+                    <ion-icon name="refresh-outline"></ion-icon>
+                    <p class="fuentePeque">Guardar</p>
+                </div>
+                <h4 class="tituloFiltro">RANGO DE FECHAS</h4>
+                <div id="filtroFecha">
+                    <p class="filtroActivo fuenteTransacciones">Mes</p>
+                    <p class="filtroInactivo fuenteTransacciones">Año</p>
+                </div>
+                <h4 class="tituloFiltro">CUENTA</h4>
+                <div id="filtroCuenta">
+                    <p class="filtroActivo fuenteTransacciones">Todos</p>
+                    <p class="filtroInactivo fuenteTransacciones">Principal</p>
+                    <p class="filtroInactivo fuenteTransacciones">Ahorro</p>
+                </div>
+            </div>
+        </div>
+        <header>
+            <div>
+                <ion-icon name="chevron-back-outline"></ion-icon>
+                <h4 class="tituloTipo">MARZO 2024</h4>
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+            </div>
+            <ion-icon name="filter-outline"></ion-icon>
+        </header>
         <div id="vistaChart" class="visible">
             <div id="categorias">
                 <p class="porcentajes">79%</p>
@@ -59,6 +108,9 @@
             </div>
         </div>
         <div id="vistaTotales" class="oculto">
+            <div id="chartTotales">
+
+            </div>
             <div>
                 <h6>Saldo</h6>
                 <h3>1274,55€</h3>
@@ -81,6 +133,36 @@
                 <h5>Gastos</h5>
             </div>
             <div id="listado">
+                <div>
+                    <div id="circulo"></div>
+                    <p class="fuenteTransacciones">Salario</p>
+                    <p class="fuenteTransacciones">+1850,17€</p>
+                </div>
+                <div>
+                    <div id="circulo"></div>
+                    <p class="fuenteTransacciones">Alimentación</p>
+                    <p class="fuenteTransacciones">-70,58€</p>
+                </div>
+                <div>
+                    <div id="circulo"></div>
+                    <p class="fuenteTransacciones">Gasolina</p>
+                    <p class="fuenteTransacciones">-50,00€</p>
+                </div>
+                <div>
+                    <div id="circulo"></div>
+                    <p class="fuenteTransacciones">Inversiones</p>
+                    <p class="fuenteTransacciones">+119,96€</p>
+                </div>
+                <div>
+                    <div id="circulo"></div>
+                    <p class="fuenteTransacciones">Alquiler</p>
+                    <p class="fuenteTransacciones">-550,00€</p>
+                </div>
+                <div>
+                    <div id="circulo"></div>
+                    <p class="fuenteTransacciones">Ocio</p>
+                    <p class="fuenteTransacciones">-25,00€</p>
+                </div>
                 <div>
                     <div id="circulo"></div>
                     <p class="fuenteTransacciones">Salario</p>

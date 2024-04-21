@@ -29,6 +29,14 @@ header {
     box-shadow: 0px 4px 6px -3px rgba(95, 95, 95, 0.3);
 }
 
+main header {
+    display: none;
+}
+
+aside {
+    display: none;
+}
+
 button {
     cursor: pointer;
 }
@@ -130,4 +138,69 @@ footer img {
     width: 15px;
     height: 15px;
     margin-bottom: 7px;
+}
+
+@media (min-width: 840px) {
+    body {
+        display: grid;
+        grid-template-columns: 225px auto;
+    }
+
+    body > header {
+        display: none;
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: 420px auto;
+        grid-template-rows: 117px auto;
+        min-height: 100vh;
+        background-color: #F1F2FE;
+        padding: 70px 50px 70px 0px;
+    }
+
+    main header {
+        display: flex;
+        grid-column: 2;
+        background-color: #FFFFFF;
+    }
+
+    footer {
+        display: none;
+    }
+
+    aside {
+        background-color: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        row-gap: 35px;
+        padding: 105px 50px 45px 50px;
+        min-height: 100vh;
+        box-shadow: 4px 0px 6px -3px rgba(95, 95, 95, 0.3);
+    }
+
+    aside div {
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+    }
+
+    aside > div:nth-of-type(1) img {
+        width: 15px;
+        height: 15px;
+        rotate: 180deg;
+    }
+
+    aside > div:last-of-type {
+        margin-top: auto;
+    }
+
+    aside > div:last-of-type p {
+        color: #FC7B7F;
+    }
+
+    aside > div:last-of-type img {
+        width: 17px;
+        height: 17px;
+    }
 }
