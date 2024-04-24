@@ -81,18 +81,14 @@ h5 {
     --ionicon-stroke-width: 50px;
 }
 
-aside + #transparenciaFiltrado {
+#transparenciaFiltrado {
     /* display: block; */
-    display: block;
+    display: none;
     background-color: rgba(255, 255, 255, 0.85);
     width: 100%;
     height: 100%;
     position: absolute;
     z-index: 2;
-}
-
-main > #transparenciaFiltrado {
-    display: none;
 }
 
 #rectanguloFiltros {
@@ -138,4 +134,50 @@ main > #transparenciaFiltrado {
     flex-wrap: wrap;
     gap: 11px; 
     margin-bottom: 25px;
+}
+
+@media (min-width: 840px) {
+    body {
+        grid-template-rows: none;
+        grid-template-columns: 225px 345px auto;
+    }
+
+    header {
+        padding: 68px 80px 20px 80px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    header, #vistaTransacciones {
+        min-width: 540px;
+    }
+
+    #vistaTransacciones {
+        padding: 50px 75px 25px 75px;
+        border-radius: 0px 0px 10px 10px;
+        max-height: calc(100vh - 470px);
+    }
+
+    .fuentePeque {
+        font-size: 14px;
+    }
+
+    #transparenciaFiltrado {
+        display: block;
+        background-color: rgba(255, 255, 255, 0.85);
+        grid-column: 2;
+        width: 400px;
+        border-radius: none;
+        padding: 100px 45px;
+    }
+
+    #rectanguloFiltros {
+        box-shadow: none;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+    }
+
+    main {
+        grid-column: 3;
+    }
 }
