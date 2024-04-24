@@ -1,6 +1,7 @@
 body {
     display: grid;
     grid-template-rows: 100px auto 90px;
+    position: relative;
 }
 
 header {
@@ -82,7 +83,7 @@ h5 {
 
 aside + #transparenciaFiltrado {
     /* display: block; */
-    display: none;
+    display: block;
     background-color: rgba(255, 255, 255, 0.85);
     width: 100%;
     height: 100%;
@@ -92,4 +93,49 @@ aside + #transparenciaFiltrado {
 
 main > #transparenciaFiltrado {
     display: none;
+}
+
+#rectanguloFiltros {
+    min-height: 191px;
+    background-color: #FFFFFF;
+    margin: 50px 35px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 1px rgba(95, 95, 95, 0.20);
+    padding: 17px 25px 10px 25px;
+    min-width: 320px;
+}
+
+#rectanguloFiltros > div:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    column-gap: 11px;
+}
+
+#rectanguloFiltros h4 {
+    margin-bottom: 10px;
+}
+
+#rectanguloFiltros p {
+    padding: 3px 15px;
+    border-radius: 50px;
+}
+
+#rectanguloFiltros > div:nth-of-type(1) p {
+    padding: 0;
+}
+
+.filtroActivo {
+    background-color: rgba(114, 125, 243, 0.20);
+}
+
+.filtroInactivo {
+    background-color: rgba(95, 95, 95, 0.10);
+}
+
+#filtroFecha, #filtroCuenta, #filtroTipo, #filtroCategoria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 11px; 
+    margin-bottom: 25px;
 }
