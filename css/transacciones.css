@@ -23,11 +23,15 @@ footer > div:nth-of-type(1) img {
     rotate: 0deg;
 }
 
-#vistaTransacciones {
-    padding: 20px 25px 105px 35px;
-    position: relative;
+main {
     display: flex;
     flex-direction: column;
+    padding: 20px 25px 25px 35px;
+    justify-content: space-between;
+}
+
+#vistaTransacciones {
+    padding-bottom: 50px;
 }
 
 .grupoFecha > div {
@@ -66,11 +70,8 @@ h5 {
     display: flex;
     align-items: center;
     justify-content: center;
+
     align-self: flex-end;
-    margin-top: 50px;
-    margin-bottom: 25px;
-    position: absolute;
-    bottom: 0;
 }
 
 #crearTransaccion ion-icon {
