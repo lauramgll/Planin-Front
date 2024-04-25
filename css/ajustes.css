@@ -1,0 +1,93 @@
+body {
+    display: grid;
+    grid-template-rows: 100px auto 90px;
+}
+
+header {
+    padding: 68px 35px 20px 35px;
+    display: flex;
+    align-items: center;
+}
+
+header h4 {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.tituloTipo {
+    margin: 0px 18px;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 70px 50px;
+}
+
+form {
+    padding-top: 50px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 11px;
+}
+
+form > div {
+    margin-bottom: 31px;
+}
+
+.divPassword div {
+    position: relative;
+}
+
+.divPassword img {
+    width: 19px;
+    height: 19px;
+    cursor: pointer;
+    position: absolute;
+    top: 40%; 
+    right: 5px; 
+    transform: translateY(-50%)
+}
+
+input, form > div:last-child div {
+    padding-bottom: 14px;
+    border: none;
+    border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
+    color: rgba(95, 95, 95, 0.60);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+form > div:last-child div {
+    flex-direction: row;
+    column-gap: 22px;
+}
+
+.decimalesActivo {
+    color: #727DF3;
+}
+
+main > div:last-of-type {
+    display: flex;
+    column-gap: 10px;
+    align-self: center;
+    padding-top: 25px;
+}
+
+main > div:last-of-type p {
+    color: #FC7B7F;
+    font-size: 14px;
+}
+
+main > div:last-of-type img {
+    width: 17px;
+    height: 17px;
+}
