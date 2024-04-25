@@ -154,7 +154,7 @@ h5 {
     #vistaTransacciones {
         padding: 50px 75px 25px 75px;
         border-radius: 0px 0px 10px 10px;
-        max-height: calc(100vh - 470px);
+        background-color: #FFFFFF;
     }
 
     .fuentePeque {
@@ -165,19 +165,22 @@ h5 {
         display: block;
         background-color: rgba(255, 255, 255, 0.85);
         grid-column: 2;
-        width: 400px;
+        width: 345px;
         border-radius: none;
-        padding: 100px 45px;
     }
 
     #rectanguloFiltros {
         box-shadow: none;
         margin: 0px;
-        padding: 0px;
+        padding: 17px 25px 17px 25px;
+        margin: 50px 0px;
         background-color: transparent;
     }
 
     main {
         grid-column: 3;
+        justify-content: initial;
+        grid-template-columns: none;
+        padding: 70px 50px 70px 50px;
     }
 }

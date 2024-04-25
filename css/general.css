@@ -177,6 +177,7 @@ footer img {
         padding: 105px 50px 45px 50px;
         min-height: 100vh;
         box-shadow: 4px 0px 6px -3px rgba(95, 95, 95, 0.3);
+        z-index: 10;
     }
 
     aside div {
