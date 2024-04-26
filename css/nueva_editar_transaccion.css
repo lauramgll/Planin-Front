@@ -1,0 +1,111 @@
+header ion-icon {
+    width: 15px;
+    height: 15px;
+    color: #5F5F5F;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 100px auto 90px;
+}
+
+header {
+    padding: 68px 35px 20px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tituloTipo {
+    margin: 0px 18px;
+}
+
+#contenedorDatosTransaccion {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#botonera {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15px;
+}
+
+h5 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#ingreso, #gasto {
+    padding: 3px 12px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    column-gap: 7px;
+}
+
+#ingreso {
+    border: 1px solid #50CFBC;
+}
+
+#ingreso div, #gasto div {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+}
+
+#ingreso div {
+    background-color: #50CFBC;
+}
+
+#gasto {
+    border: 1px solid #FC7B7F;
+}
+
+#gasto div {
+    background-color: #FC7B7F;
+}
+
+.oculto {
+    border: 1px solid rgba(95, 95, 95, 0.20) !important;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 700;
+    padding: 35px 0px 30px 0px;
+}
+
+form {
+    width: 100%;
+}
+
+form > div {
+    border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
+    padding: 13px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+form > div:last-of-type {
+    border-bottom: none;
+}
+
+#categoria div, #cuenta div {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+#categoria div p, #cuenta div p, #notas label {
+    color: rgba(95, 95, 95, 0.50);
+}
+
+#categoria ion-icon, #cuenta ion-icon {
+    width: 11px;
+    color: rgba(95, 95, 95, 0.50);
+}
