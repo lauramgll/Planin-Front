@@ -66,20 +66,21 @@
                 </div>
                 <div>
                     <label class="fuenteTransacciones" for="fecha">Fecha</label>
-                    <input type="date"/>
+                    <input class="fuenteTransacciones" id="fecha" type="date"/>
                 </div>
                 <div id="cuenta">
                     <label class="fuenteTransacciones" for="cuenta">Cuenta</label>
-                    <div>
-                        <p class="fuenteTransacciones">ELEGIR</p>
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                    </div>
+                    <select class="fuenteTransacciones" name="cuentas" id="cuentas">
+                        <option value="principal">Principal</option>
+                        <option value="ahorro">Ahorro</option>
+                    </select>
                 </div>
                 <div id="notas">
-                    <label class="fuenteTransacciones" for="notas">Notas</label>
+                    <textarea class="fuenteTransacciones" id="notas" placeholder="Notas"></textarea>
                 </div>
             </form>
         </div>
+        <button id="btnBorrar">Borrar</button>
     </main>
     <footer>
         <div>
