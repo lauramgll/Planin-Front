@@ -1,0 +1,92 @@
+header ion-icon {
+    width: 15px;
+    height: 15px;
+    color: #5F5F5F;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 100px auto 90px;
+}
+
+header {
+    padding: 68px 35px 20px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tituloTipo {
+    margin: 0px 18px;
+}
+
+#vistaNeto {
+    text-align: center;
+    background-color: #F1F2FE;
+    padding: 55px 50px 55px 50px;
+    z-index: 0;
+}
+
+h5 {
+    color: #727DF3;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+h2 {
+    color: #727DF3;
+    font-size: 30px;
+    font-weight: 700;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+#vistaCuentas {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    border-radius: 10px 10px 0px 0px;
+    padding: 50px 50px 25px 50px;
+    position: relative;
+    margin-top: -10px;
+    z-index: 1;
+    background-color: #FFFFFF;
+    overflow-y: auto;
+    height: calc(100vh - 440px);
+}
+
+#vistaCuentas > div {
+    border-radius: 5px;
+    border: 1px solid rgba(95, 95, 95, 0.60);
+    padding: 13px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.predeterminada {
+    border: 1px solid #727DF3 !important;
+}
+
+#botones {
+    display: flex;
+    justify-content: flex-end;
+    padding: 25px 30px 25px 30px;
+    align-self: flex-end;
+    column-gap: 20px;
+}
+
+.botonAzul, .botonTransparente {
+    min-height: auto;
+    padding: 3px 15px;
+    font-size: 14px;
+}
+
+.botonTransparente {
+    border: 1px solid #727DF3;
+    border-radius: 5px;
+}
+
+.botonTransparente:hover {
+    background-color: #F1F2FE;
+}
