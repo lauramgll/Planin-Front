@@ -57,6 +57,7 @@ section {
 
     body {
         padding: 0px;
+        display: block;
     }
 
     #indexWeb {
@@ -99,5 +100,7 @@ section {
         column-gap: 100px;
         align-self: center;
         max-width: 1000px;
+        background-color: transparent;
+        min-height: calc(100vh - 90px);
     }
 }
