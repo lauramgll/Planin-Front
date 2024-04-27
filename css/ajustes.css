@@ -120,6 +120,7 @@ main > div:last-of-type img {
         padding: 70px 75px 50px 75px;
         border-radius: 0px 0px 10px 10px;
         width: 100%;
+        min-height: calc(100vh - 250px);
     }
 
     aside > div:nth-of-type(1) img {
