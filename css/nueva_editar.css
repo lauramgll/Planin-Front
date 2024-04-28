@@ -162,7 +162,28 @@ select {
     font-weight: 400;
     border: none;
     align-self: center;
-    display: none;
+    display: block;
+}
+
+/* Cuentas */
+input[type="text"] {
+    border: none;
+    outline: none;
+    text-align: right;
+}
+
+input[type="text"], #predeterminada p {
+    color: #5F5F5F;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+#predeterminada {
+    border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
+}
+
+.predeterminada {
+    color: #727DF3 !important;
 }
 
 @media (min-width: 840px) {
@@ -171,7 +192,7 @@ select {
     }
 
     header {
-        padding: 68px 80px 20px 80px;
+        padding: 30px 80px 30px 80px;
         border-radius: 10px 10px 0px 0px;
         width: 100%;
         z-index: 2;

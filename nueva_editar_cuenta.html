@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planin · Cuenta</title>
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/nueva_editar.css">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+    <aside>
+        <div>
+            <img src="./images/logo.png" alt="Inicio">
+            <p class="fuentePeque">Inicio</p>
+        </div>
+        <div>
+            <img src="./images/transacciones.png" alt="Transacciones">
+            <p class="fuentePeque">Transacciones</p>
+        </div>
+        <div>
+            <img src="./images/cuentas_select.png" alt="Cuentas">
+            <p class="fuentePeque">Cuentas</p>
+        </div>
+        <div>
+            <img src="./images/ajustes.png" alt="Ajustes">
+            <p class="fuentePeque">Ajustes</p>
+        </div>
+        <div>
+            <img src="./images/cerrar_sesion.png" alt="Cerrar sesión">
+            <p class="fuentePeque">Cerrar sesión</p>
+        </div>
+    </aside>
+    <header>
+        <a href="./cuentas.html"><ion-icon name="close-outline"></ion-icon></a>
+        <h4 class="tituloTipo">NUEVA CUENTA</h4>
+        <p class="fuentePeque">Guardar</p>
+    </header>
+    <main>
+        <header>
+            <a href="./cuentas.html"><ion-icon name="close-outline"></ion-icon></a>
+            <h4 class="tituloTipo">NUEVA CUENTA</h4>
+            <p class="fuentePeque">Guardar</p>
+        </header>
+        <div id="contenedorDatosTransaccion">
+            <h5>Saldo inicial</h5>
+            <h2>0,00€</h2>
+            <form>
+                <div id="nombre">
+                    <label class="fuenteTransacciones" for="nombre">Nombre</label>
+                    <input type="text" id="nombre" placeholder="Introduce nombre" required />
+                </div>
+                <div id="predeterminada">
+                    <label class="fuenteTransacciones" for="predeterminada">Predeterminada</label>
+                    <p class="predeterminada">Sí</p>
+                </div>
+            </form>
+            <button id="btnBorrar">Borrar</button>
+        </div>
+    </main>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
