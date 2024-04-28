@@ -181,6 +181,11 @@ footer img {
         z-index: 10;
     }
 
+    aside img {
+        width: 15px;
+        height: 15px;
+    }
+
     aside div {
         display: flex;
         align-items: center;
@@ -188,8 +193,6 @@ footer img {
     }
 
     aside > div:nth-of-type(1) img {
-        width: 15px;
-        height: 15px;
         rotate: 180deg;
     }
 

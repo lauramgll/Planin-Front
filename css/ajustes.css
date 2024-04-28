@@ -92,6 +92,10 @@ main > div:last-of-type img {
     height: 17px;
 }
 
+footer > div:nth-of-type(1) img {
+    rotate: 0deg;
+}
+
 @media (min-width: 840px) {
     main > div:last-of-type {
         display: none;
