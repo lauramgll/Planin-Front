@@ -52,7 +52,7 @@ h2 {
     z-index: 1;
     background-color: #FFFFFF;
     overflow-y: auto;
-    height: calc(100vh - 440px);
+    height: calc(100vh - 450px);
 }
 
 #vistaCuentas > div {
@@ -71,7 +71,7 @@ h2 {
 #botones {
     display: flex;
     justify-content: flex-end;
-    padding: 25px 30px 25px 30px;
+    padding: 30px;
     align-self: flex-end;
     column-gap: 20px;
 }
@@ -89,4 +89,45 @@ h2 {
 
 .botonTransparente:hover {
     background-color: #F1F2FE;
+}
+
+@media (min-width: 840px) {
+    body {
+        background-color: #F1F2FE;
+    }
+
+    header {
+        padding: 68px 80px 20px 80px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    header, #vistaCuentas {
+        min-width: 540px;
+    }
+
+    main {
+        grid-template-columns: 350px auto;
+        grid-template-rows: none;
+    }
+
+    #vistaNeto {
+        grid-row: 1 / 3;
+        height: auto;
+    }
+
+    #vistaCuentas {
+        padding: 50px 75px 25px 75px;
+        min-height: calc(100vh - 340px);
+    }
+
+    #botones {
+        grid-column: 2;
+        background-color: #FFFFFF;
+        border-radius: 0px 0px 10px 10px;
+        padding: 40px;
+    }
+
+    .fuentePeque {
+        font-size: 14px;
+    }
 }
