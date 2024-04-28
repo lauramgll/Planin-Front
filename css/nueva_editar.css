@@ -44,7 +44,7 @@ h5 {
     font-weight: 600;
 }
 
-#ingreso, #gasto {
+#ingreso, #gasto, #transferencia {
     padding: 3px 12px;
     border-radius: 50px;
     display: flex;
@@ -56,7 +56,7 @@ h5 {
     border: 1px solid #50CFBC;
 }
 
-#ingreso div, #gasto div {
+#ingreso div, #gasto div, #transferencia div {
     border-radius: 50%;
     width: 10px;
     height: 10px;
@@ -72,6 +72,14 @@ h5 {
 
 #gasto div {
     background-color: #FC7B7F;
+}
+
+#transferencia {
+    border: 1px solid #727DF3;
+}
+
+#transferencia div {
+    background-color: #727DF3;
 }
 
 .oculto {
