@@ -161,7 +161,7 @@ select {
 
 #btnBorrar {
     min-width: 70px;
-    height: 25px;
+    min-height: 25px;
     border-radius: 50px;
     background: rgba(252, 123, 127, 0.20);
     color: #5F5F5F;
@@ -200,7 +200,7 @@ input[type="text"], #predeterminada p {
     }
 
     header {
-        padding: 30px 80px 30px 80px;
+        padding: 30px 50px 30px 50px;
         border-radius: 10px 10px 0px 0px;
         width: 100%;
         z-index: 2;
