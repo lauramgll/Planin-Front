@@ -27,6 +27,7 @@ img {
 header {
     display: flex;
     box-shadow: 0px 4px 6px -3px rgba(95, 95, 95, 0.3);
+    z-index: 2;
 }
 
 main header {
