@@ -264,7 +264,6 @@ main > #transparenciaFiltrado {
     
     #vistaChart {
         column-gap: 10%;
-        display: flex;
         flex-direction: column-reverse;
     }
 
