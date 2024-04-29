@@ -50,8 +50,13 @@ input {
     border: none;
     border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
     color: rgba(95, 95, 95, 0.60);
+    font-family: Nunito;
     font-size: 14px;
     font-weight: 400;
+}
+
+input::placeholder {
+    color: rgba(95, 95, 95, 0.60);
 }
 
 .botonAzul {
