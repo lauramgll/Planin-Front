@@ -27,6 +27,8 @@ main {
     display: flex;
     flex-direction: column;
     padding: 70px 50px;
+    max-height: calc(100vh - 190px);
+    overflow-y: auto;
 }
 
 form {
@@ -62,8 +64,13 @@ input, form > div:last-child div {
     border: none;
     border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
     color: rgba(95, 95, 95, 0.60);
+    font-family: Nunito;
     font-size: 14px;
     font-weight: 400;
+}
+
+input::placeholder {
+    color: rgba(95, 95, 95, 0.60);
 }
 
 form > div:last-child div {
@@ -118,6 +125,7 @@ footer > div:nth-of-type(1) img {
         justify-content: center;
         align-items: center;
         padding: 70px 150px;
+        max-height: initial;
     }
 
     #vistaAjustes {
@@ -125,6 +133,7 @@ footer > div:nth-of-type(1) img {
         border-radius: 0px 0px 10px 10px;
         width: 100%;
         min-height: calc(100vh - 250px);
+        overflow-y: auto;
     }
 
     aside > div:nth-of-type(1) img {
