@@ -50,6 +50,10 @@ section {
     width: 100%;
 }
 
+a{
+    text-decoration: none;
+}
+
 @media (min-width: 840px) {
     #indexMovil {
         display: none;

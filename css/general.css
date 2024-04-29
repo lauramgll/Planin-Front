@@ -88,6 +88,10 @@ button {
     border: none;
 }
 
+.botonTransparente a {
+    color: #727DF3;
+}
+
 input:focus {
     outline: none;
 }
