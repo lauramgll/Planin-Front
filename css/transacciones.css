@@ -1,3 +1,8 @@
+ion-icon {
+    color: rgba(95, 95, 95, 0.80);
+    cursor: pointer;
+}
+
 body {
     display: grid;
     grid-template-rows: 100px auto 90px;
@@ -36,13 +41,12 @@ main > div {
     padding-bottom: 20px;
     overflow-y: auto;
     max-height: calc(100vh - 305px);
-    padding: 20px 25px 0px 35px;
 }
 
 .grupoFecha > div {
     border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
     padding: 13px 0px 13px 0px;
-    margin: 0px 20px;
+    margin: 0px 0px 0px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -188,7 +192,7 @@ h5 {
     }
 
     #rectanguloFiltros > div:nth-of-type(1) {
-        padding-bottom: 28px;
+        padding-bottom: 20px;
     }
 
     #vistaTransacciones {
