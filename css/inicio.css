@@ -99,7 +99,7 @@ h5 {
 
 #listado {
     overflow-y: auto;
-    max-height: calc(100vh - 580px);
+    max-height: calc(100vh - 595px);
 }
 
 #listado > div {
