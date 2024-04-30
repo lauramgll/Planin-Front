@@ -1,3 +1,7 @@
+'use strict'
+
+export const URL = 'http://localhost:8888';
+
 export function crearElemento(tipo = "br", padre = contenido) {
     let elemento = document.createElement(tipo);
     padre.appendChild(elemento);

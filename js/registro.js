@@ -1,19 +1,33 @@
+'use strict'
+
 import { validaNombre, validaEmail, validaPassword, mostrarErrores } from './validaciones.js';
+import { URL } from './utils.js';
 
-const botonSubmitRgistro = document.querySelector('.botonAzul');
+window.addEventListener("load", () => {
+  const botonSubmitRgistro = document.querySelector('.botonAzul');
 
-botonSubmitRgistro.addEventListener('click', (e) => {
-  e.preventDefault();
-  
-  let form = document.getElementById('formRegistro');
-  let formdata = new FormData(form);
+  botonSubmitRgistro.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    let form = document.getElementById('formRegistro');
+    let formdata = new FormData(form);
 
-  let errores = validaRegistro(formdata);
-  if (Object.keys(errores).length > 0) {
-    mostrarErrores(form, errores);
-  } else {
-    // fetch
-  }
+    let errores = validaRegistro(formdata);
+    if (Object.keys(errores).length > 0) {
+      mostrarErrores(form, errores);
+    } else {
+      // COMPROBAR QUE EL USUARIO NO EXISTE YA // 
+      formdata.append("vista_decimal", 1);
+
+      await fetch(`${URL}/usuarios/crearUsuario`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(formdata))
+      })
+    }
+  })
 })
 
 function validaRegistro(formdata) {

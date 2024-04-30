@@ -1,11 +1,13 @@
+'use strict'
+
 import { crearElementoTexto } from "./utils.js";
 
 export function validaNombre(campo, errores){ 
   let correcto = true;
-  if (campo.value == "" || campo.value == null) {
+  if (campo == "" || campo == null) {
     errores["nombre"] = "El nombre no puede estar vacío.";
     correcto = false;
-  } else if (campo.value.length > 50){
+  } else if (campo.length > 50){
     errores["nombre"] = "El nombre debe tener un máximo de 50 caracteres.";
     correcto = false;
   }  
@@ -15,7 +17,7 @@ export function validaNombre(campo, errores){
 export function validaEmail(campo, errores) {
   let correcto = true;
   let emailexpreg = /^[a-zA-Z0-9._%+-ñÑ]+@[a-zA-Z0-9.-ñÑ]+\.[a-zA-Z]{2,4}$/; 
-  if (!emailexpreg.test(campo.value)) {
+  if (!emailexpreg.test(campo)) {
     errores["email"] = "El email no es válido.";
     correcto = false;
   } 
@@ -25,7 +27,7 @@ export function validaEmail(campo, errores) {
 export function validaPassword(campo, errores) {
   let correcto = true;
   let passexpreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; 
-  if (!passexpreg.test(campo.value)) {
+  if (!passexpreg.test(campo)) {
     errores["password"] = "La contraseña debe tener mínimo 6 caracteres e incluir al menos 1 dígito.";
     correcto = false;
   } 
