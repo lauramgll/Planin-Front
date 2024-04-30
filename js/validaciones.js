@@ -1,48 +1,56 @@
-import { crearElementoTexto } from './utils.js';
+import { crearElementoTexto } from "./utils.js";
 
-export function validarCampoObligatorio(formdata, errores) {
-    const form = document.getElementById('formRegistro');
-    const inputs = form.querySelectorAll('input[required]');
+export function validaNombre(campo, errores){ 
+  let correcto = true;
+  if (campo.value == "" || campo.value == null) {
+    errores["nombre"] = "El nombre no puede estar vacío.";
+    correcto = false;
+  } else if (campo.value.length > 50){
+    errores["nombre"] = "El nombre debe tener un máximo de 50 caracteres.";
+    correcto = false;
+  }  
+  return correcto; 
+} 
 
-    inputs.forEach(input => {
-        const valor = formdata.get(input.id);
-        if (!valor || valor.trim() === '') {
-            errores[input.id] = 'El campo no puede estar vacío.';
-        }
-    });
+export function validaEmail(campo, errores) {
+  let correcto = true;
+  let emailexpreg = /^[a-zA-Z0-9._%+-ñÑ]+@[a-zA-Z0-9.-ñÑ]+\.[a-zA-Z]{2,4}$/; 
+  if (!emailexpreg.test(campo.value)) {
+    errores["email"] = "El email no es válido.";
+    correcto = false;
+  } 
+  return correcto;  
+} 
+
+export function validaPassword(campo, errores) {
+  let correcto = true;
+  let passexpreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; 
+  if (!passexpreg.test(campo.value)) {
+    errores["password"] = "La contraseña debe tener mínimo 6 caracteres e incluir al menos 1 dígito.";
+    correcto = false;
+  } 
+  return correcto;  
 }
 
-export function validarNombre(formdata, errores) {
-    let nombre = formdata.get('nombre');
-    if (nombre && nombre.length > 50) {
-      errores['nombre'] = "El nombre tiene un máximo de 50 caracteres.";
-    }
-}
+export function mostrarErrores(form, errores) {
+  const inputs = form.querySelectorAll("input");
 
-export function validarEmail(formdata, errores) {
-    const emailRegex = /^[a-zA-Z0-9_.+-ñ]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    let email = formdata.get('email');
-    if (!emailRegex.test(email)) {
-      errores['email'] = "El email no es válido.";
-    }
-  }
-  
-  export function mostrarErrores(form, errores) {
-    const inputs = form.querySelectorAll('input');
-    inputs.forEach(campo => {
-      const error = errores[campo.id];
-      const contenedor = campo.closest('div');
-      if (error) {
-        let errorAnterior = contenedor.querySelector('p.error');
-        if (errorAnterior) {
-          errorAnterior.remove();
-        }
-        crearElementoTexto(error, 'p', contenedor, 'error'); 
-    } else {
-        let errorAnterior = contenedor.querySelector('p.error');
-        if (errorAnterior) {
-            errorAnterior.remove();
-        }
+  inputs.forEach(campo => {
+    const error = errores[campo.id];
+    const contenedor = campo.closest("div");
+    let errorAnterior = contenedor.querySelector(".error");
+
+    if (error) {
+      if (errorAnterior) {
+        errorAnterior.textContent = error;
+      } else {
+        const nuevoError = crearElementoTexto(error, "p", contenedor);
+        nuevoError.classList.add("error"); 
       }
-    })
+    } else {
+      if (errorAnterior) {
+        errorAnterior.remove();
+      }
+    }
+  });
 }

@@ -1,15 +1,14 @@
-import { validarNombre, validarEmail, validarCampoObligatorio, mostrarErrores } from './validaciones.js';
+import { validaNombre, validaEmail, validaPassword, mostrarErrores } from './validaciones.js';
 
-const botonSubmit = document.querySelector('.botonAzul');
+const botonSubmitRgistro = document.querySelector('.botonAzul');
 
-botonSubmit.addEventListener('click', (e) => {
+botonSubmitRgistro.addEventListener('click', (e) => {
   e.preventDefault();
   
   let form = document.getElementById('formRegistro');
   let formdata = new FormData(form);
-  console.log(formdata);
 
-  let errores = validarRegistro(formdata);
+  let errores = validaRegistro(formdata);
   if (Object.keys(errores).length > 0) {
     mostrarErrores(form, errores);
   } else {
@@ -17,11 +16,16 @@ botonSubmit.addEventListener('click', (e) => {
   }
 })
 
-function validarRegistro(formdata) {
+function validaRegistro(formdata) {
   const errores = {};
-  console.log(errores);
-  validarCampoObligatorio(formdata, errores);
-  validarNombre(formdata, errores)
-  validarEmail(formdata, errores);
+
+  let nombre = formdata.get("nombre");
+  let email = formdata.get("email");
+  let password = formdata.get("password");
+
+  validaNombre(nombre, errores);
+  validaEmail(email, errores)
+  validaPassword(password, errores);
+
   return errores;
 }
