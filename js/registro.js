@@ -1,7 +1,7 @@
 'use strict'
 
-import { validaNombre, validaEmail, validaPassword, mostrarErrores } from './validaciones.js';
 import { URL } from './utils.js';
+import { mostrarErrores, validaEmail, validaNombre, validaPassword } from './validaciones.js';
 
 window.addEventListener("load", () => {
   const botonSubmitRgistro = document.querySelector('.botonAzul');
@@ -16,9 +16,13 @@ window.addEventListener("load", () => {
     if (Object.keys(errores).length > 0) {
       mostrarErrores(form, errores);
     } else {
-      // COMPROBAR QUE EL USUARIO NO EXISTE YA // 
-      formdata.append("vista_decimal", 1);
+      // COMPROBAR QUE EL USUARIO NO EXISTE YA //
 
+      /*En la entidad vista_decimal no existe, siempre se tiene que llamar igual 
+      que el campo de la entidad, luego spring ya se encarga de convertila a 
+      vista_decimal, pero eso nos la pela. YA ME PAGARAS UN ALMUERZO :D*/
+
+      formdata.append("vistaDecimal", true);
       await fetch(`${URL}/usuarios/crearUsuario`, {
         method: 'POST',
         headers: {
