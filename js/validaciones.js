@@ -1,6 +1,6 @@
 'use strict'
 
-import { crearElementoTexto } from "./utils.js";
+import { crearElementoTexto, getUsuarios } from "./utils.js";
 
 export function validaNombre(campo, errores){ 
   let correcto = true;
@@ -20,7 +20,15 @@ export function validaEmail(campo, errores) {
   if (!emailexpreg.test(campo)) {
     errores["email"] = "El email no es válido.";
     correcto = false;
-  } 
+  } else {
+    comprobarUsuarioRegistro(campo)
+    .then(usuarioEncontrado => {
+      if (usuarioEncontrado) {
+        errores["email"] = "Ya existe un usuario registrado con ese email.";
+        correcto = false;
+      }
+    })
+  }
   return correcto;  
 } 
 
@@ -34,10 +42,15 @@ export function validaPassword(campo, errores) {
   return correcto;  
 }
 
-export function validaUsuario() {
+export function validaUsuarioLogin() {
   let errores = {};
   errores["password"] = "No se encontró ningún usuario con ese email y contraseña."; 
   return errores;
+}
+
+export async function comprobarUsuarioRegistro(email) {
+  const usuarios = await getUsuarios();
+  return usuarios.some(usuario => usuario.email === email);
 }
 
 export function mostrarErrores(form, errores) {

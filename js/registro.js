@@ -13,15 +13,10 @@ window.addEventListener("load", () => {
     let formdata = new FormData(form);
 
     let errores = validaRegistro(formdata);
+    console.log(errores);
     if (Object.keys(errores).length > 0) {
       mostrarErrores(form, errores);
     } else {
-      // COMPROBAR QUE EL USUARIO NO EXISTE YA //
-
-      /*En la entidad vista_decimal no existe, siempre se tiene que llamar igual 
-      que el campo de la entidad, luego spring ya se encarga de convertila a 
-      vista_decimal, pero eso nos la pela. YA ME PAGARAS UN ALMUERZO :D*/
-
       formdata.append("vistaDecimal", true);
       await fetch(`${URL}/usuarios/crearUsuario`, {
         method: 'POST',
@@ -30,7 +25,9 @@ window.addEventListener("load", () => {
         },
         body: JSON.stringify(Object.fromEntries(formdata))
       })
-      // Redirigir al login
+      mostrarErrores(form, {});
+      console.log("Registro OK");
+      window.location.href = "../inicio_sesion.html";
     }
   })
 })
