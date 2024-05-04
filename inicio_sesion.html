@@ -18,15 +18,15 @@
                 <h4 class="tituloTipo">INICIAR SESIÓN</h4>
             </header>
             <main>
-                <form>
+                <form id="formLogin"> 
                     <div>
                         <label class="fuentePeque" for="email">Email</label>
-                        <input type="email" id="email" placeholder="Escribe tu email" required />
+                        <input type="email" id="email" name="email" placeholder="Escribe tu email" required />
                     </div>
                     <div class="divPassword">
                         <label class="fuentePeque" for="password">Contraseña</label>
                         <div>
-                            <input type="password" id="password" placeholder="Escribe tu contraseña" required />
+                            <input type="password" id="password" name="password" placeholder="Escribe tu contraseña" required />
                             <img src="./images/ojo_password.png" alt="ojo password">
                         </div>
                     </div>
@@ -38,5 +38,6 @@
     </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="./js/login.js"></script>
 </body>
 </html>

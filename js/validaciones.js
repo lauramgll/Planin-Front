@@ -34,6 +34,12 @@ export function validaPassword(campo, errores) {
   return correcto;  
 }
 
+export function validaUsuario() {
+  let errores = {};
+  errores["password"] = "No se encontró ningún usuario con ese email y contraseña."; 
+  return errores;
+}
+
 export function mostrarErrores(form, errores) {
   const inputs = form.querySelectorAll("input");
 

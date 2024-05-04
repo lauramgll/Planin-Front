@@ -4,9 +4,9 @@ import { validaNombre, validaEmail, validaPassword, mostrarErrores } from './val
 import { URL } from './utils.js';
 
 window.addEventListener("load", () => {
-  const botonSubmitRgistro = document.querySelector('.botonAzul');
+  const botonSubmitRegistro = document.querySelector('.botonAzul');
 
-  botonSubmitRgistro.addEventListener('click', async (e) => {
+  botonSubmitRegistro.addEventListener('click', async (e) => {
     e.preventDefault();
     
     let form = document.getElementById('formRegistro');
@@ -26,6 +26,7 @@ window.addEventListener("load", () => {
         },
         body: JSON.stringify(Object.fromEntries(formdata))
       })
+      // Redirigir al login
     }
   })
 })
