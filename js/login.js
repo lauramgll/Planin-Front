@@ -1,7 +1,7 @@
 'use strict'
 
-import { validaUsuario, mostrarErrores } from './validaciones.js';
-import { URL } from './utils.js';
+import { validaUsuarioLogin, mostrarErrores } from './validaciones.js';
+import { getUsuarios } from './utils.js';
 
 window.addEventListener("load", () => {
   const botonSubmitLogin = document.querySelector('.botonAzul');
@@ -12,15 +12,7 @@ window.addEventListener("load", () => {
     let form = document.getElementById('formLogin');
     let formdata = new FormData(form);
 
-    const loginResponse = await fetch(`${URL}/usuarios`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
-    
-    const usuarios = await loginResponse.json();
-
+    const usuarios = await getUsuarios();
     const usuarioEncontrado = usuarios.find(usuario => usuario.email === formdata.get('email') && usuario.password === formdata.get('password'));
 
     if (usuarioEncontrado) {
@@ -33,7 +25,7 @@ window.addEventListener("load", () => {
 
       window.location.href = "../inicio.html";
     } else {
-      let errores = validaUsuario();
+      let errores = validaUsuarioLogin();
       mostrarErrores(form, errores);
     }
   })
