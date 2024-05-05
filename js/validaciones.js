@@ -20,14 +20,6 @@ export function validaEmail(campo, errores) {
   if (!emailexpreg.test(campo)) {
     errores["email"] = "El email no es válido.";
     correcto = false;
-  } else {
-    comprobarUsuarioRegistro(campo)
-    .then(usuarioEncontrado => {
-      if (usuarioEncontrado) {
-        errores["email"] = "Ya existe un usuario registrado con ese email.";
-        correcto = false;
-      }
-    })
   }
   return correcto;  
 } 
@@ -48,9 +40,14 @@ export function validaUsuarioLogin() {
   return errores;
 }
 
-export async function comprobarUsuarioRegistro(email) {
+export async function comprobarUsuarioRegistro(email, errores) {
+  let correcto = true;
   const usuarios = await getUsuarios();
-  return usuarios.some(usuario => usuario.email === email);
+  if (usuarios.some(usuario => usuario.email === email)) {
+    errores["email"] = "Ya existe un usuario registrado con ese email.";
+    correcto = false;
+  }
+  return correcto;
 }
 
 export function mostrarErrores(form, errores) {

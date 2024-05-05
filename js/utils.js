@@ -16,13 +16,13 @@ export function crearElementoTexto(texto = "Ejemplo", tipo = "div", padre = cont
 }
 
 export async function getUsuarios() {
-  const usuariosResponse = await fetch(`${URL}/usuarios`, {
+  const loginResponse = await fetch(`${URL}/usuarios`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
   });
 
-  const usuarios = await usuariosResponse.json();
+  const usuarios = await loginResponse.json();
   return usuarios;
 }

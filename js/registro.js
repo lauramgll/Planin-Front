@@ -1,7 +1,7 @@
 'use strict'
 
 import { URL } from './utils.js';
-import { mostrarErrores, validaEmail, validaNombre, validaPassword } from './validaciones.js';
+import { mostrarErrores, validaEmail, validaNombre, validaPassword, comprobarUsuarioRegistro } from './validaciones.js';
 
 window.addEventListener("load", () => {
   const botonSubmitRegistro = document.querySelector('.botonAzul');
@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
     let form = document.getElementById('formRegistro');
     let formdata = new FormData(form);
 
-    let errores = validaRegistro(formdata);
+    let errores = await validaRegistro(formdata);
     console.log(errores);
     if (Object.keys(errores).length > 0) {
       mostrarErrores(form, errores);
@@ -32,7 +32,7 @@ window.addEventListener("load", () => {
   })
 })
 
-function validaRegistro(formdata) {
+async function validaRegistro(formdata) {
   const errores = {};
 
   let nombre = formdata.get("nombre");
@@ -40,6 +40,7 @@ function validaRegistro(formdata) {
   let password = formdata.get("password");
 
   validaNombre(nombre, errores);
+  await comprobarUsuarioRegistro(email, errores);
   validaEmail(email, errores)
   validaPassword(password, errores);
 
