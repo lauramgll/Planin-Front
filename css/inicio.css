@@ -169,17 +169,15 @@ h5 {
     align-items: center;
 }
 
-#transparenciaFiltradoMovil {
+#transparenciaFiltrado {
     display: none;
     background-color: rgba(255, 255, 255, 0.85);
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 10;
-}
-
-#transparenciaFiltradoPC {
-    display: none;
 }
 
 #rectanguloFiltros {
@@ -271,7 +269,7 @@ h5 {
         flex-direction: column-reverse;
     }
 
-    #transparenciaFiltradoPC {
+    #transparenciaFiltrado {
         display: none;
         background-color: rgba(255, 255, 255, 0.85);
         position: absolute;
@@ -281,9 +279,5 @@ h5 {
         width: calc(100% - 50px);
         height: calc(100% - 100px);
         border-radius: 10px;
-    }
-
-    #transparenciaFiltradoMovil {
-        display: none !important;
     }
 }

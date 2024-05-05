@@ -85,17 +85,12 @@ window.addEventListener("load", async () => {
     });
 
     // Filtros
-    const transparenciaFiltradoPC = document.getElementById("transparenciaFiltradoPC");
-    const transparenciaFiltradoMovil = document.getElementById("transparenciaFiltradoMovil");
+    const transparenciaFiltrado = document.getElementById("transparenciaFiltrado");
 
-    document.getElementById("iconoFiltroMovil").addEventListener("click", function() {
-        transparenciaFiltradoMovil.style.display = "block";
-        transparenciaFiltradoPC.style.display = "none";
-    });
-    
-    document.getElementById("iconoFiltroPC").addEventListener("click", function() {
-        transparenciaFiltradoPC.style.display = "block";
-        transparenciaFiltradoMovil.style.display = "none";
+    document.querySelectorAll(".iconoFiltro").forEach(icono => {
+        icono.addEventListener("click", function() {
+            transparenciaFiltrado.style.display = "block";
+        });
     });
 }) 
 
