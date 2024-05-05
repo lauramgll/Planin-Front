@@ -33,7 +33,7 @@
             <p class="fuentePeque">Cerrar sesión</p>
         </div>
     </aside>
-    <div id="transparenciaFiltrado">
+    <div id="transparenciaFiltradoMovil">
         <div id="rectanguloFiltros">
             <div>
                 <ion-icon name="refresh-outline"></ion-icon>
@@ -58,10 +58,10 @@
             <h4 class="tituloTipo">MARZO 2024</h4>
             <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
-        <ion-icon name="filter-outline"></ion-icon>
+        <ion-icon id="iconoFiltroMovil" name="filter-outline"></ion-icon>
     </header>
     <main>
-        <div id="transparenciaFiltrado">
+        <div id="transparenciaFiltradoPC">
             <div id="rectanguloFiltros">
                 <div>
                     <ion-icon name="refresh-outline"></ion-icon>
@@ -86,7 +86,7 @@
                 <h4 class="tituloTipo">MARZO 2024</h4>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
             </div>
-            <ion-icon name="filter-outline"></ion-icon>
+            <ion-icon id="iconoFiltroPC" name="filter-outline"></ion-icon>
         </header>
         <div id="vistaChart" class="oculto">
             <div id="categorias">
@@ -109,90 +109,30 @@
         </div>
         <div id="vistaTotales" class="visible">
             <div id="chartTotales">
-
+                <canvas id="chartIngresosGastos" style="display: block; margin: 0; padding: 0; height: 100%; width: 100%;"></canvas>
             </div>
             <div>
                 <h6>Saldo</h6>
-                <h3>1274,55€</h3>
+                <h3 id="saldo"></h3>
             </div>
             <div>
-                <p class="porcentajes">74%</p>
+                <p class="porcentajes" id="porcentajeIngresos"></p>
                 <h6>Ingresos</h6>
-                <h3>1970,13€</h3>
+                <h3 id="ingresos"></h3>
             </div>
             <div>
-                <p class="porcentajes">26%</p>
+                <p class="porcentajes" id="porcentajeGastos"></p>
                 <h6>Gastos</h6>
-                <h3>695,58€</h3>
+                <h3 id="gastos"></h3>
             </div>
         </div>
         <div id="vistaDesglose">
             <div id="botonera">
-                <h5 class="todos">Todos</h5>
-                <h5>Ingresos</h5>
-                <h5>Gastos</h5>
+                <h5 class="todos" id="btnTodos">Todos</h5>
+                <h5 id="btnIngresos">Ingresos</h5>
+                <h5 id="btnGastos">Gastos</h5>
             </div>
             <div id="listado">
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Salario</p>
-                    <p class="fuenteTransacciones">+1850,17€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Alimentación</p>
-                    <p class="fuenteTransacciones">-70,58€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Gasolina</p>
-                    <p class="fuenteTransacciones">-50,00€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Inversiones</p>
-                    <p class="fuenteTransacciones">+119,96€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Alquiler</p>
-                    <p class="fuenteTransacciones">-550,00€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Ocio</p>
-                    <p class="fuenteTransacciones">-25,00€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Salario</p>
-                    <p class="fuenteTransacciones">+1850,17€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Alimentación</p>
-                    <p class="fuenteTransacciones">-70,58€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Gasolina</p>
-                    <p class="fuenteTransacciones">-50,00€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Inversiones</p>
-                    <p class="fuenteTransacciones">+119,96€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Alquiler</p>
-                    <p class="fuenteTransacciones">-550,00€</p>
-                </div>
-                <div>
-                    <div id="circulo"></div>
-                    <p class="fuenteTransacciones">Ocio</p>
-                    <p class="fuenteTransacciones">-25,00€</p>
-                </div>
             </div>
         </div>
     </main>
@@ -216,5 +156,7 @@
     </footer>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script type="module" src="./js/inicio.js"></script>
 </body>
 </html>
