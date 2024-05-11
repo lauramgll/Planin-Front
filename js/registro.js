@@ -1,9 +1,11 @@
 'use strict'
 
-import { URL } from './utils.js';
+import { URL, togglePassword } from './utils.js';
 import { mostrarErrores, validaEmail, validaNombre, validaPassword, comprobarUsuarioRegistro } from './validaciones.js';
 
 window.addEventListener("load", () => {
+  togglePassword();
+
   const botonSubmitRegistro = document.querySelector('.botonAzul');
 
   botonSubmitRegistro.addEventListener('click', async (e) => {
