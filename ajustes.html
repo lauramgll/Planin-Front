@@ -43,28 +43,28 @@
             <p class="fuentePeque">Editar</p>
         </header>
         <div id="vistaAjustes">
-            <h2>¡Hola, Laura!</h2>
-            <form>
+            <h2>¡Hola, <span></span>!</h2>
+            <form id="formAjustes">
                 <div>
                     <label class="fuentePeque" for="nombre">Nombre</label>
-                    <input type="text" id="nombre" value="Laura" required />
+                    <input type="text" id="nombre" name="nombre" value="" required readonly/>
                 </div>
                 <div>
                     <label class="fuentePeque" for="email">Email</label>
-                    <input type="email" id="email" value="laura@ejemplo.com" required />
+                    <input type="email" id="email" name="email" value="" required readonly/>
                 </div>
                 <div class="divPassword">
                     <label class="fuentePeque" for="password">Contraseña</label>
                     <div>
-                        <input type="password" id="password" value="1234567L" required />
-                        <img src="./images/ojo_password.png" alt="ojo password">
+                        <input type="password" id="password" name="password" value="" required readonly/>
+                        <ion-icon class="toggle-password" name="eye-outline"></ion-icon>
                     </div>
                 </div>
                 <div>
                     <label class="fuentePeque" for="decimales">Habilitar decimales</label>
                     <div>
-                        <p class="decimalesActivo">Sí</p>
-                        <p>No</p>
+                        <p id="decimalTrue">Sí</p>
+                        <p id="decimalFalse">No</p>
                     </div>
                 </div>
             </form>
@@ -94,5 +94,6 @@
     </footer>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="./js/ajustes.js"></script>
 </body>
 </html>

@@ -2,41 +2,41 @@
 
 import { crearElementoTexto, getUsuarios } from "./utils.js";
 
-export function validaNombre(campo, errores){ 
+export function validaNombre(campo, errores) {
   let correcto = true;
   if (campo == "" || campo == null) {
     errores["nombre"] = "El nombre no puede estar vacío.";
     correcto = false;
-  } else if (campo.length > 50){
+  } else if (campo.length > 50) {
     errores["nombre"] = "El nombre debe tener un máximo de 50 caracteres.";
     correcto = false;
-  }  
-  return correcto; 
-} 
+  }
+  return correcto;
+}
 
 export function validaEmail(campo, errores) {
   let correcto = true;
-  let emailexpreg = /^[a-zA-Z0-9._%+-ñÑ]+@[a-zA-Z0-9.-ñÑ]+\.[a-zA-Z]{2,4}$/; 
+  let emailexpreg = /^[a-zA-Z0-9._%+-ñÑ]+@[a-zA-Z0-9.-ñÑ]+\.[a-zA-Z]{2,4}$/;
   if (!emailexpreg.test(campo)) {
     errores["email"] = "El email no es válido.";
     correcto = false;
   }
-  return correcto;  
-} 
+  return correcto;
+}
 
 export function validaPassword(campo, errores) {
   let correcto = true;
-  let passexpreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; 
+  let passexpreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
   if (!passexpreg.test(campo)) {
     errores["password"] = "La contraseña debe tener mínimo 6 caracteres e incluir al menos 1 dígito.";
     correcto = false;
-  } 
-  return correcto;  
+  }
+  return correcto;
 }
 
 export function validaUsuarioLogin() {
   let errores = {};
-  errores["password"] = "No se encontró ningún usuario con ese email y contraseña."; 
+  errores["password"] = "No se encontró ningún usuario con ese email y contraseña.";
   return errores;
 }
 
@@ -47,6 +47,19 @@ export async function comprobarUsuarioRegistro(email, errores) {
     errores["email"] = "Ya existe un usuario registrado con ese email.";
     correcto = false;
   }
+  return correcto;
+}
+
+export async function comprobarUsuarioAjustes(email, idUsuario, errores) {
+  let correcto = true;
+  const usuarios = await getUsuarios();
+
+  console.log(idUsuario);
+  if (usuarios.some(usuario => usuario.email === email && usuario.id != idUsuario)) {
+    errores["email"] = "Ya existe un usuario registrado con ese email.";
+    correcto = false;
+  }
+
   return correcto;
 }
 
@@ -63,7 +76,7 @@ export function mostrarErrores(form, errores) {
         errorAnterior.textContent = error;
       } else {
         const nuevoError = crearElementoTexto(error, "p", contenedor);
-        nuevoError.classList.add("error"); 
+        nuevoError.classList.add("error");
       }
     } else {
       if (errorAnterior) {

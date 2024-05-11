@@ -21,7 +21,8 @@ window.addEventListener("load", () => {
 
       localStorage.setItem("id", usuarioEncontrado.id);
       localStorage.setItem("nombre", usuarioEncontrado.nombre);
-      localStorage.setItem("decimal", usuarioEncontrado.vista_decimal);
+      localStorage.setItem("email", usuarioEncontrado.email);
+      localStorage.setItem("decimal", usuarioEncontrado.vistaDecimal);
 
       window.location.href = "../inicio.html";
     } else {

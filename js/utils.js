@@ -107,3 +107,20 @@ export async function getCategorias() {
   const categorias = await categoriasResponse.json();
   return categorias;
 }
+
+// Ocultar/desocultar password
+export function togglePassword() {
+  const togglePassword = document.querySelector('.toggle-password');
+
+  togglePassword.addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+      
+    if (type === 'password') {
+      togglePassword.setAttribute('name', 'eye-outline');
+    } else {
+        togglePassword.setAttribute('name', 'eye-off-outline');
+    }
+  });
+}
