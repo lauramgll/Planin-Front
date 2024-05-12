@@ -91,6 +91,10 @@ h2 {
     background-color: #F1F2FE;
 }
 
+#vistaCuentas > div, #nuevaCuenta, #transferencia {
+    cursor: pointer;
+}
+
 footer > div:nth-of-type(1) img {
     rotate: 0deg;
 }

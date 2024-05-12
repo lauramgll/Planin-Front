@@ -3,9 +3,9 @@
 export const URL = 'http://localhost:8888';
 
 export function crearElemento(tipo = "br", padre = contenido) {
-    let elemento = document.createElement(tipo);
-    padre.appendChild(elemento);
-    return elemento;
+  let elemento = document.createElement(tipo);
+  padre.appendChild(elemento);
+  return elemento;
 }
 
 export function crearElementoTexto(texto = "Ejemplo", tipo = "div", padre = contenido) {
@@ -76,7 +76,7 @@ export async function getImporteGastos() {
   const gastos = await getListadoGastos();
 
   let importeGastos = 0;
-  
+
   gastos.forEach(gasto => {
     importeGastos += gasto.importe;
   });
@@ -84,7 +84,7 @@ export async function getImporteGastos() {
   return importeGastos;
 }
 
-export async function getSaldo() {
+export async function getsaldoCuenta() {
   return await getImporteIngresos() - await getImporteGastos();
 }
 
@@ -108,6 +108,52 @@ export async function getCategorias() {
   return categorias;
 }
 
+export async function getCuentas() {
+  let idUsuario = localStorage.getItem("id");
+
+  const cuentasResponse = await fetch(`${URL}/cuentas/usuario/${idUsuario}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+
+  let cuentas = await cuentasResponse.json();
+
+  console.log(cuentas);
+  return cuentas;
+}
+
+export async function actualizarSaldoCuentas() {
+  let cuentasUsuario = await getCuentas();
+  let transaccionesUsuario = await getTransacciones();
+
+  cuentasUsuario.forEach(async cuenta => {
+    let saldoCuenta = cuenta.saldo;
+
+    let transaccionesCuenta = transaccionesUsuario.filter(transaccion => transaccion.idCuenta === cuenta.id);
+
+    transaccionesCuenta.forEach(transaccion => {
+      if (transaccion.tipo === 'ingreso') {
+        saldoCuenta += transaccion.importe;
+      } else if (transaccion.tipo === 'gasto') {
+        saldoCuenta -= transaccion.importe;
+      }
+    })
+
+    cuenta.saldo = saldoCuenta - cuenta.saldo;
+
+    await fetch(`${URL}/cuentas/${cuenta.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cuenta)
+    });
+    console.log("Saldo actualizado OK");
+  });
+}
+
 // Ocultar/desocultar password
 export function togglePassword() {
   const togglePassword = document.querySelector('.toggle-password');
@@ -116,11 +162,11 @@ export function togglePassword() {
     const passwordField = document.getElementById('password');
     const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordField.setAttribute('type', type);
-      
+
     if (type === 'password') {
       togglePassword.setAttribute('name', 'eye-outline');
     } else {
-        togglePassword.setAttribute('name', 'eye-off-outline');
+      togglePassword.setAttribute('name', 'eye-off-outline');
     }
   });
 }
