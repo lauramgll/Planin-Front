@@ -35,26 +35,29 @@
     </aside>
     <header>
         <a href="./cuentas.html"><ion-icon name="close-outline"></ion-icon></a>
-        <h4 class="tituloTipo">NUEVA CUENTA</h4>
+        <h4 class="tituloTipo"></h4>
         <p class="fuentePeque">Guardar</p>
     </header>
     <main>
         <header>
             <a href="./cuentas.html"><ion-icon name="close-outline"></ion-icon></a>
-            <h4 class="tituloTipo">NUEVA CUENTA</h4>
+            <h4 class="tituloTipo"></h4>
             <p class="fuentePeque">Guardar</p>
         </header>
         <div id="contenedorDatosTransaccion">
             <h5>Saldo inicial</h5>
-            <h2>0,00€</h2>
+            <div id="vistaSaldo">
+                <input type="text" id="numeroInput" value="0,00">
+                <h2>€</h2>
+            </div>
             <form>
-                <div id="nombre">
+                <div>
                     <label class="fuenteTransacciones" for="nombre">Nombre</label>
-                    <input type="text" id="nombre" placeholder="Introduce nombre" required />
+                    <input type="text" id="nombre" name="nombre" placeholder="Introduce nombre" required />
                 </div>
                 <div id="predeterminada">
                     <label class="fuenteTransacciones" for="predeterminada">Predeterminada</label>
-                    <p class="predeterminada">Sí</p>
+                    <p>Sí</p>
                 </div>
             </form>
             <button id="btnBorrar">Borrar</button>
@@ -62,5 +65,6 @@
     </main>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="./js/nueva_editar_cuenta.js"></script>
 </body>
 </html>
