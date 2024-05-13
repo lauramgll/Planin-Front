@@ -1,10 +1,11 @@
 'use strict'
 
-import { URL, togglePassword } from './utils.js';
+import { URL, cargarMenu, togglePassword } from './utils.js';
 import { mostrarErrores, validaEmail, validaNombre, validaPassword, comprobarUsuarioAjustes } from './validaciones.js';
 
 window.addEventListener("load", async () => {
     togglePassword();
+    cargarMenu();
 
     // Vista
     let idUsuario = localStorage.getItem("id");

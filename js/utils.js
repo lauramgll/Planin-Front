@@ -170,3 +170,40 @@ export function togglePassword() {
     }
   });
 }
+
+export function cargarMenu() {
+  let menuInicio = document.querySelectorAll(".menuInicio");
+  menuInicio.forEach(menu => {
+    menu.addEventListener("click", function() {
+      window.location.href = "../inicio.html";
+    });
+  });
+
+  let menuTransacciones = document.querySelectorAll(".menuTransacciones");
+  menuTransacciones.forEach(menu => {
+    menu.addEventListener("click", function() {
+      window.location.href = "../transacciones.html";
+    });
+  });
+
+  let menuCuentas = document.querySelectorAll(".menuCuentas");
+  menuCuentas.forEach(menu => {
+    menu.addEventListener("click", function() {
+      window.location.href = "../cuentas.html";
+    });
+  });
+
+  let menuAjustes = document.querySelectorAll(".menuAjustes");
+  menuAjustes.forEach(menu => {
+    menu.addEventListener("click", function() {
+      window.location.href = "../ajustes.html";
+    });
+  });
+
+  let menuCerrarSesion = document.querySelectorAll(".menuCerrarSesion");
+  menuCerrarSesion.forEach(menu => {
+    menu.addEventListener("click", function() {
+      window.location.href = "../inicio_sesion.html";
+    });
+  });
+}

@@ -1,9 +1,10 @@
 'use strict'
 
-import { getCuentas, crearElemento, crearElementoTexto, formateoDecimal, actualizarSaldoCuentas } from './utils.js';
+import { getCuentas, crearElemento, crearElementoTexto, formateoDecimal, actualizarSaldoCuentas, cargarMenu } from './utils.js';
 
 window.addEventListener("load", async () => {
     actualizarSaldoCuentas();
+    cargarMenu();
 
     let valorNeto = document.getElementById("valorNeto");
 

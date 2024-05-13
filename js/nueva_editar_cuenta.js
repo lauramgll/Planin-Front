@@ -1,8 +1,10 @@
 'use strict'
 
-import { URL } from './utils.js';
+import { URL, cargarMenu } from './utils.js';
 
 window.addEventListener("DOMContentLoaded", () => {
+    cargarMenu();
+    
     let tipoEdit = localStorage.getItem("tipoEditCuenta");
     let titulos = document.querySelectorAll(".tituloTipo");
     let btnBorrar = document.getElementById("btnBorrar");

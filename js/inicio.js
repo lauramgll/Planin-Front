@@ -1,8 +1,9 @@
 'use strict'
 
-import { getSaldo, formateoDecimal, getImporteIngresos, getImporteGastos, calcularPorcentaje, getTransacciones, crearElemento, crearElementoTexto, getCategorias, getListadoIngresos, getListadoGastos } from './utils.js';
+import { getSaldo, formateoDecimal, getImporteIngresos, getImporteGastos, calcularPorcentaje, getTransacciones, crearElemento, crearElementoTexto, getCategorias, getListadoIngresos, getListadoGastos, cargarMenu } from './utils.js';
 
 window.addEventListener("load", async () => {
+    cargarMenu();
 
     // Vista totales
     let saldo = await getSaldo();
