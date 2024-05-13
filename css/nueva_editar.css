@@ -206,6 +206,10 @@ input[type="text"], #predeterminada p {
     color: #727DF3 !important;
 }
 
+header > p {
+    cursor: pointer;
+}
+
 @media (min-width: 840px) {
     main > div:last-of-type {
         display: none;

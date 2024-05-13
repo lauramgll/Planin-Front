@@ -1,10 +1,10 @@
 'use strict'
 
-import { URL, cargarMenu } from './utils.js';
+import { URL, cargarMenu, getCuentas, formateoDecimal } from './utils.js';
 
 window.addEventListener("DOMContentLoaded", () => {
     cargarMenu();
-    
+
     let tipoEdit = localStorage.getItem("tipoEditCuenta");
     let titulos = document.querySelectorAll(".tituloTipo");
     let btnBorrar = document.getElementById("btnBorrar");
@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", () => {
             btnBorrar.style.display = "block";
             txtSaldo.textContent = "Saldo";
             nombre.value = JSON.parse(localStorage.getItem("cuentaSeleccionada")).nombre;
-            numeroInput.value = JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo;
+            numeroInput.value = (JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo).toFixed(2).toString().replace('.', ',');
             predeterminada.textContent = JSON.parse(localStorage.getItem("cuentaSeleccionada")).predeterminada;
 
             if (predeterminada.textContent == "Sí") {
@@ -83,12 +83,53 @@ window.addEventListener("DOMContentLoaded", () => {
                 })
                 console.log("Cambio cuenta OK");
 
+                // Cambio resto cuentas a predeterminada: no
+                if(predeterminada.textContent == "Sí") {
+                    const cuentas = await getCuentas();
+                    const cuentasPorActualizar = cuentas.filter(cuenta => cuenta.id != idCuenta);
+                    
+                    cuentasPorActualizar.forEach(async cuenta => {
+                        cuenta.predeterminada = "No";
+                        console.log(cuenta);
+                        await fetch(`${URL}/cuentas/${cuenta.id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(cuenta)
+                        });
+                    });
+                }
+
                 btn.textContent = "Editar";
                 document.querySelectorAll('input').forEach(input => {
                     input.setAttribute('readonly', 'readonly');
                 });
 
-                //location.reload();
+                location.href = "../cuentas.html";
+            }
+        });
+    });
+
+    // Borrar cuenta
+    btnBorrar.addEventListener('click', (e) => {
+        Swal.fire({
+            text: "Vas a borrar la cuenta, ¿seguro que quieres hacerlo?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#727DF3",
+            cancelButtonText: "Cancelar",
+            cancelButtonColor: "#FC7B7F",
+            confirmButtonText: "Borrar",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await fetch(`${URL}/cuentas/${idCuenta}`, {
+                    method: 'DELETE',
+                    headers: {
+                    'Content-Type': 'application/json'
+                    }
+                });
+            location.href = "../cuentas.html";
             }
         });
     });
@@ -131,8 +172,8 @@ function formatoNumero() {
 }
 
 function ajustarAncho() {
-    numeroInput.style.width = "110px";
-    const inputWidth = numeroInput.scrollWidth + 10; 
+    const value = numeroInput.value;
+    const inputWidth = value.length * 14 + 25;
     numeroInput.style.width = inputWidth + "px";
 }
 
