@@ -1,12 +1,12 @@
 'use strict'
 
-import { getSaldo, formateoDecimal, getImporteIngresos, getImporteGastos, calcularPorcentaje, getTransacciones, crearElemento, crearElementoTexto, getCategorias, getListadoIngresos, getListadoGastos, cargarMenu } from './utils.js';
+import { getsaldoCuenta, formateoDecimal, getImporteIngresos, getImporteGastos, calcularPorcentaje, getTransacciones, crearElemento, crearElementoTexto, getCategorias, getListadoIngresos, getListadoGastos, cargarMenu } from './utils.js';
 
 window.addEventListener("load", async () => {
     cargarMenu();
 
     // Vista totales
-    let saldo = await getSaldo();
+    let saldo = await getsaldoCuenta();
     document.getElementById("saldo").textContent = formateoDecimal(saldo);
 
     let ingresos = await getImporteIngresos();
