@@ -21,6 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
             titulo.textContent = "NUEVA CUENTA";
             btnBorrar.style.display = "none";
             txtSaldo.textContent = "Saldo inicial";
+            predeterminada.textContent = "No";
 
             numeroInput.disabled = false; 
         } else {
@@ -67,21 +68,43 @@ window.addEventListener("DOMContentLoaded", () => {
                     input.removeAttribute('readonly');
                 });
             } else {
-                const data = {
-                    saldo: JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo,
-                    nombre: nombre.value,
-                    predeterminada: predeterminada.textContent,
-                    idUsuario: localStorage.getItem("id")
-                };
+                if (tipoEdit == "nueva") { 
+                    // Validar campo nombre
+                    // CUENTA NUEVA
+                    console.log(numeroInput.value.replace(/\./g, '').replace(',', '.'));
+                    const dataNueva = {
+                        saldo: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
+                        nombre: nombre.value,
+                        predeterminada: predeterminada.textContent,
+                        idUsuario: localStorage.getItem("id")
+                    };
 
-                await fetch(`${URL}/cuentas/${idCuenta}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify((data))
-                })
-                console.log("Cambio cuenta OK");
+                    await fetch(`${URL}/cuentas/crearCuenta`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify((dataNueva))
+                    })
+                    console.log("Cuenta creada OK");
+                } else {
+                    // EDITAR CUENTA
+                    const dataEditar = {
+                        saldo: JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo,
+                        nombre: nombre.value,
+                        predeterminada: predeterminada.textContent,
+                        idUsuario: localStorage.getItem("id")
+                    };
+    
+                    await fetch(`${URL}/cuentas/${idCuenta}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify((dataEditar))
+                    })
+                    console.log("Cambio cuenta OK");
+                }
 
                 // Cambio resto cuentas a predeterminada: no
                 if(predeterminada.textContent == "Sí") {
