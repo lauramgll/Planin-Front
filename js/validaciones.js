@@ -85,3 +85,22 @@ export function mostrarErrores(form, errores) {
     }
   });
 }
+
+export function mostrarErroresNombreCuenta(campo, errores) {
+    const error = errores[campo.id];
+    const contenedor = document.querySelector("span");
+    let errorAnterior = contenedor.querySelector(".error");
+
+    if (error) {
+      if (errorAnterior) {
+        errorAnterior.textContent = error;
+      } else {
+        const nuevoError = crearElementoTexto(error, "p", contenedor);
+        nuevoError.classList.add("error");
+      }
+    } else {
+      if (errorAnterior) {
+        errorAnterior.remove();
+      }
+    }
+}

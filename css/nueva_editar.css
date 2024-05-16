@@ -181,6 +181,16 @@ select {
     display: block;
 }
 
+.error {
+    color: #FC7B7F;
+    text-align: left;
+}
+
+p.error {
+    font-size: 11px !important;
+    padding: 10px 0px;
+}
+
 /* Cuentas */
 input[type="text"] {
     border: none;

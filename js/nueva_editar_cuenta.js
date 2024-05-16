@@ -1,6 +1,7 @@
 'use strict'
 
-import { URL, cargarMenu, getCuentas, formateoDecimal } from './utils.js';
+import { URL, cargarMenu, getCuentas } from './utils.js';
+import { validaNombre, mostrarErroresNombreCuenta } from './validaciones.js';
 
 window.addEventListener("DOMContentLoaded", () => {
     cargarMenu();
@@ -57,21 +58,20 @@ window.addEventListener("DOMContentLoaded", () => {
     ajustarAncho();
     numeroInput.addEventListener("input", ajustarAncho);
 
+    let redireccion = false;
     let btnForm = document.querySelectorAll("header > p");
 
     btnForm.forEach(btn => {
         btn.addEventListener('click', async (e) => {
             e.preventDefault();
-            if (btn.textContent == "Editar") {
-                btn.textContent = "Guardar";
-                document.querySelectorAll('input').forEach(input => {
-                    input.removeAttribute('readonly');
-                });
-            } else {
-                if (tipoEdit == "nueva") { 
-                    // Validar campo nombre
-                    // CUENTA NUEVA
-                    console.log(numeroInput.value.replace(/\./g, '').replace(',', '.'));
+            if (tipoEdit == "nueva") { 
+                // CUENTA NUEVA
+                let errores =  validaNombreCuenta(nombre.value); 
+                console.log(errores);
+
+                if (Object.keys(errores).length > 0) {
+                    mostrarErroresNombreCuenta(nombre, errores);
+                } else {
                     const dataNueva = {
                         saldo: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
                         nombre: nombre.value,
@@ -79,7 +79,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         idUsuario: localStorage.getItem("id")
                     };
 
-                    await fetch(`${URL}/cuentas/crearCuenta`, {
+                    const cuentaResponse = await fetch(`${URL}/cuentas/crearCuenta`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -87,15 +87,27 @@ window.addEventListener("DOMContentLoaded", () => {
                         body: JSON.stringify((dataNueva))
                     })
                     console.log("Cuenta creada OK");
+
+                    const nuevaCuenta = await cuentaResponse.json();
+                    idCuenta = nuevaCuenta.id;
+                    console.log(idCuenta);
+                    redireccion = true;
+                }
+            } else {
+                // EDITAR CUENTA
+                let errores =  validaNombreCuenta(nombre.value); 
+                console.log(errores);
+
+                if (Object.keys(errores).length > 0) {
+                    mostrarErroresNombreCuenta(nombre, errores);
                 } else {
-                    // EDITAR CUENTA
                     const dataEditar = {
                         saldo: JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo,
                         nombre: nombre.value,
                         predeterminada: predeterminada.textContent,
                         idUsuario: localStorage.getItem("id")
                     };
-    
+
                     await fetch(`${URL}/cuentas/${idCuenta}`, {
                         method: 'PUT',
                         headers: {
@@ -104,31 +116,29 @@ window.addEventListener("DOMContentLoaded", () => {
                         body: JSON.stringify((dataEditar))
                     })
                     console.log("Cambio cuenta OK");
+                    redireccion = true;
                 }
+            }
 
-                // Cambio resto cuentas a predeterminada: no
-                if(predeterminada.textContent == "Sí") {
-                    const cuentas = await getCuentas();
-                    const cuentasPorActualizar = cuentas.filter(cuenta => cuenta.id != idCuenta);
-                    
-                    cuentasPorActualizar.forEach(async cuenta => {
-                        cuenta.predeterminada = "No";
-                        console.log(cuenta);
-                        await fetch(`${URL}/cuentas/${cuenta.id}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(cuenta)
-                        });
+            // Cambio resto cuentas a predeterminada: no
+            if(predeterminada.textContent == "Sí") {
+                const cuentas = await getCuentas();
+                const cuentasPorActualizar = cuentas.filter(cuenta => cuenta.id != idCuenta);
+                
+                cuentasPorActualizar.forEach(async cuenta => {
+                    cuenta.predeterminada = "No";
+                    console.log(cuenta);
+                    await fetch(`${URL}/cuentas/${cuenta.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cuenta)
                     });
-                }
-
-                btn.textContent = "Editar";
-                document.querySelectorAll('input').forEach(input => {
-                    input.setAttribute('readonly', 'readonly');
                 });
+            }
 
+            if(redireccion) {
                 location.href = "../cuentas.html";
             }
         });
@@ -200,9 +210,10 @@ function ajustarAncho() {
     numeroInput.style.width = inputWidth + "px";
 }
 
-/*
-// Convertir saldo a double
-let numeroInputValue = numeroInput.value;
-numeroInputValue = numeroInputValue.replace(',', '.');
-numeroInputValue = parseFloat(numeroInputValue);
-*/
+function validaNombreCuenta(campo) {
+    const errores = {};
+
+    validaNombre(campo, errores);
+
+    return errores;
+}
