@@ -220,6 +220,8 @@ header > p {
     cursor: pointer;
 }
 
+/* Transferencia */
+
 @media (min-width: 840px) {
     main > div:last-of-type {
         display: none;
