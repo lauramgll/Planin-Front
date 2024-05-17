@@ -186,7 +186,8 @@ select {
     text-align: left;
 }
 
-p.error {
+p.error, span.error {
+    font-family: Nunito;
     font-size: 11px !important;
     padding: 10px 0px;
 }
@@ -204,7 +205,7 @@ input[type="text"], #predeterminada p {
     font-weight: 400;
 }
 
-#predeterminada {
+#predeterminada, #cuentaDestino {
     border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
 }
 
@@ -221,6 +222,17 @@ header > p {
 }
 
 /* Transferencia */
+span.error {
+    align-self: flex-start;
+}
+
+#formTransferencia {
+    padding-bottom: 10px;
+}
+
+#errorTransferencia {
+    display: none;
+}
 
 @media (min-width: 840px) {
     main > div:last-of-type {

@@ -55,31 +55,28 @@
                 <input type="text" id="numeroInput" value="0,00">
                 <h2>€</h2>
             </div>
-            <form>
+            <form id="formTransferencia">
                 <div>
                     <label class="fuenteTransacciones" for="fecha">Fecha</label>
                     <input class="fuenteTransacciones" id="fecha" type="date"/>
                 </div>
                 <div id="cuentaOrigen">
                     <label class="fuenteTransacciones" for="cuentaOrigen">Cuenta</label>
-                    <select class="fuenteTransacciones" name="cuentas" id="cuentas">
-                        <option value="principal">Principal</option>
-                        <option value="ahorro">Ahorro</option>
+                    <select class="fuenteTransacciones" name="transferenciaOrigen" id="transferenciaOrigen">
                     </select>
                 </div>
                 <div id="cuentaDestino">
                     <label class="fuenteTransacciones" for="cuentaDestino">A la cuenta</label>
-                    <select class="fuenteTransacciones" name="cuentas" id="cuentas">
-                        <option value=""></option>
-                        <option value="principal">Principal</option>
-                        <option value="ahorro">Ahorro</option>
+                    <select class="fuenteTransacciones" name="transferenciaOrigen" id="transferenciaDestino">
                     </select>
                 </div>
+                <!--
                 <div id="notas">
                     <textarea class="fuenteTransacciones" id="notas" placeholder="Notas"></textarea>
                 </div>
+                -->
             </form>
-            <button id="btnBorrar">Borrar</button>
+            <span id="errorTransferencia" class="error">El importe de la transferencia excede el saldo disponible en la cuenta de origen</span>
         </div>
     </main>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

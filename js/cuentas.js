@@ -1,15 +1,15 @@
 'use strict'
 
-import { getCuentas, crearElemento, crearElementoTexto, formateoDecimal, actualizarSaldoCuentas, cargarMenu } from './utils.js';
+import { getCuentas, crearElemento, crearElementoTexto, formateoDecimal, cargarMenu } from './utils.js';
 
-window.addEventListener("load", async () => {
-    actualizarSaldoCuentas();
+window.addEventListener("DOMContentLoaded", async () => {
     cargarMenu();
 
     let valorNeto = document.getElementById("valorNeto");
 
     // Cuentas usuario
     let cuentas = await getCuentas();
+    actualizarSaldoCuentas(cuentas);
 
     let sumaSaldo = 0;
     cuentas.forEach(cuenta => {
@@ -18,7 +18,7 @@ window.addEventListener("load", async () => {
         let listadoCuentas = document.getElementById("vistaCuentas");
 
         let divCuenta = crearElemento("div", listadoCuentas);
-        if(cuenta.predeterminada == "Sí") {
+        if (cuenta.predeterminada == "Sí") {
             divCuenta.classList.add("predeterminada");
         }
 
@@ -29,7 +29,7 @@ window.addEventListener("load", async () => {
         saldoCuenta.classList.add("fuenteTransacciones");
 
         // Ir a cuenta
-        divCuenta.addEventListener("click", function() {
+        divCuenta.addEventListener("click", function () {
             localStorage.setItem("cuentaSeleccionada", JSON.stringify(cuenta));
             localStorage.setItem("tipoEditCuenta", "editar")
             window.location.href = "../nueva_editar_cuenta.html";
@@ -40,14 +40,42 @@ window.addEventListener("load", async () => {
     valorNeto.textContent = formateoDecimal(sumaSaldo);
 
     // Nueva cuenta
-    document.getElementById("nuevaCuenta").addEventListener("click", function() {
+    document.getElementById("nuevaCuenta").addEventListener("click", function () {
         localStorage.setItem("tipoEditCuenta", "nueva")
         window.location.href = "../nueva_editar_cuenta.html";
     });
 
     // Transferencia
-    document.getElementById("transferencia").addEventListener("click", function() {
-        localStorage.setItem("tipoEditTransferencia", "nueva")
+    document.getElementById("transferencia").addEventListener("click", function () {
         window.location.href = "../nueva_editar_transferencia.html";
     });
 });
+
+export async function actualizarSaldoCuentas(cuentas) {
+    let transaccionesUsuario = await getTransacciones();
+
+    cuentas.forEach(async cuenta => {
+        let saldoCuenta = cuenta.saldo;
+
+        let transaccionesCuenta = transaccionesUsuario.filter(transaccion => transaccion.idCuenta === cuenta.id);
+
+        transaccionesCuenta.forEach(transaccion => {
+            if (transaccion.tipo === 'ingreso') {
+                saldoCuenta += transaccion.importe;
+            } else if (transaccion.tipo === 'gasto') {
+                saldoCuenta -= transaccion.importe;
+            }
+        })
+
+        cuenta.saldo = saldoCuenta - cuenta.saldo;
+
+        await fetch(`${URL}/cuentas/${cuenta.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cuenta)
+        });
+        console.log("Saldo actualizado OK");
+    });
+}
