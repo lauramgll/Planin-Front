@@ -1,9 +1,9 @@
 'use strict'
 
-import { URL, cargarMenu } from './utils.js';
+import { URL, cargarMenu, getCuentas, crearElementoTexto } from './utils.js';
 import { } from './validaciones.js';
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
     cargarMenu();
 
     let tipoEdit = localStorage.getItem("tipoEditTransaccion");
@@ -18,11 +18,32 @@ window.addEventListener("DOMContentLoaded", () => {
     let fecha = document.getElementById("fecha");
     let notas = document.getElementById("textAreaNotas");
 
+    // Cuentas usuario
+    let cuentas = await getCuentas();
+    let listadoCuentas = document.getElementById("cuentas");
+
     titulos.forEach(titulo => {
         if (tipoEdit == "nueva") {
             titulo.textContent = "NUEVA TRANSACCIÓN";
             btnBorrar.style.display = "none";
             flechaCategoria.style.display = "block";
+
+            cuentas.sort((a, b) => {
+                if (a.predeterminada === "Sí" && b.predeterminada !== "Sí") {
+                    return -1; 
+                } else if (a.predeterminada !== "Sí" && b.predeterminada === "Sí") {
+                    return 1; 
+                } else {
+                    return 0; 
+                }
+            });
+
+            listadoCuentas.innerHTML = "";
+
+            cuentas.forEach(cuenta => {
+                let option = crearElementoTexto(cuenta.nombre, "option", listadoCuentas);
+                option.value = cuenta.id;
+            });
         } else {
             titulo.textContent = "EDITAR TRANSACCIÓN";
             btnBorrar.style.display = "block";
@@ -32,8 +53,21 @@ window.addEventListener("DOMContentLoaded", () => {
             flechaCategoria.style.display = "none";
             fecha.value = transaccionSeleccionada.fecha;
             notas.value = transaccionSeleccionada.notas;
+            
+            let idCuentaSeleccionada = transaccionSeleccionada.idCuenta;
 
-            // Cargar todas las cuentas y poner la primera la cuenta que está dentro transaccionSeleccionada
+            // Mover la cuenta seleccionada al inicio
+            let cuentaSeleccionada = cuentas.find(cuenta => cuenta.id == idCuentaSeleccionada);
+            if (cuentaSeleccionada) {
+                cuentas = [cuentaSeleccionada, ...cuentas.filter(cuenta => cuenta.id != idCuentaSeleccionada)];
+            }
+
+            listadoCuentas.innerHTML = "";
+
+            cuentas.forEach(cuenta => {
+                let option = crearElementoTexto(cuenta.nombre, "option", listadoCuentas);
+                option.value = cuenta.id;
+            });
         }
     });
 
@@ -46,9 +80,11 @@ window.addEventListener("DOMContentLoaded", () => {
     if((tipoTransaccion == "ingreso") || (tipoEdit == "nueva")){
         document.getElementById("ingreso").style.border = "1px solid #50CFBC";
         document.getElementById("gasto").style.border = "1px solid rgba(95, 95, 95, 0.20)";
+        localStorage.setItem("tipoTransaccion", "ingreso");
     } else {
         document.getElementById("gasto").style.border = "1px solid #FC7B7F";
         document.getElementById("ingreso").style.border = "1px solid rgba(95, 95, 95, 0.20)";
+        localStorage.setItem("tipoTransaccion", "gasto");
     }
 
     document.getElementById("ingreso").addEventListener('click', () => {
@@ -73,13 +109,28 @@ window.addEventListener("DOMContentLoaded", () => {
                 // Guardar transacción
             } else {
                 // EDITAR TRANSACCIÓN
-                // Validar errores
-                // Guardar transacción
+                const dataEditar = {
+                    idCuenta: cuentas.value,
+                    idCategoria: "",
+                    fecha: fecha.value,
+                    tipo: localStorage.getItem("tipoTransaccion"),
+                    importe: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
+                    notas: notas.value
+                };
+
+                await fetch(`${URL}/transacciones/${transaccionSeleccionada.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify((dataEditar))
+                })
+                console.log("Cambio transacción OK");
             }
         });
     });
 
-    // Borrar cuenta
+    // Borrar transacción
     btnBorrar.addEventListener('click', (e) => {
         Swal.fire({
             text: "Vas a borrar la transacción, ¿seguro que quieres hacerlo?",
@@ -91,7 +142,7 @@ window.addEventListener("DOMContentLoaded", () => {
             confirmButtonText: "Borrar",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await fetch(`${URL}/transaccion/${idTransaccion}`, {
+                await fetch(`${URL}/transacciones/${transaccionSeleccionada.id}`, {
                     method: 'DELETE',
                     headers: {
                     'Content-Type': 'application/json'
