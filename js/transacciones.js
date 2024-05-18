@@ -71,7 +71,8 @@ window.addEventListener("DOMContentLoaded", async () => {
             importeTransaccion.classList.add("fuenteTransacciones");
 
             divTransaccion.addEventListener("click", function () {
-                localStorage.setItem("transaccionSeleccionada", transaccion);
+                localStorage.setItem("transaccionSeleccionada", JSON.stringify(transaccion));
+                localStorage.setItem("nombreCategoria", nombreCategoria);
                 localStorage.setItem("tipoEditTransaccion", "editar");
                 location.href = "../nueva_editar_transaccion.html";
             });

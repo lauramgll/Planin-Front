@@ -50,18 +50,21 @@
                     <div></div>
                     <h5>Ingreso</h5>
                 </div>
-                <div id="gasto" class="oculto">
+                <div id="gasto">
                     <div></div>
                     <h5>Gasto</h5>
                 </div>
             </div>
-            <h2>0,00€</h2>
+            <div id="vistaSaldo">
+                <input type="text" id="numeroInput" value="0,00">
+                <h2>€</h2>
+            </div>
             <form>
                 <div id="categoria">
                     <label class="fuenteTransacciones" for="categoria">Categoría</label>
                     <div>
-                        <p class="fuenteTransacciones">ELEGIR</p>
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                        <p id="categoriaSeleccionada" class="fuenteTransacciones">ELEGIR</p>
+                        <ion-icon id="flechaCategoria" name="chevron-forward-outline"></ion-icon>
                     </div>
                 </div>
                 <div>
@@ -76,7 +79,7 @@
                     </select>
                 </div>
                 <div id="notas">
-                    <textarea class="fuenteTransacciones" id="notas" placeholder="Notas"></textarea>
+                    <textarea class="fuenteTransacciones" id="textAreaNotas" placeholder="Notas"></textarea>
                 </div>
             </form>
             <button id="btnBorrar">Borrar</button>
@@ -84,5 +87,7 @@
     </main>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="./js/nueva_editar_transaccion.js"></script>
 </body>
 </html>

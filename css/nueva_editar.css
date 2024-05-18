@@ -54,6 +54,7 @@ h5 {
 
 #ingreso {
     border: 1px solid #50CFBC;
+    cursor: pointer;
 }
 
 #ingreso div, #gasto div, #transferencia div {
@@ -68,6 +69,7 @@ h5 {
 
 #gasto {
     border: 1px solid #FC7B7F;
+    cursor: pointer;
 }
 
 #gasto div {
@@ -83,7 +85,7 @@ h5 {
 }
 
 .oculto {
-    border: 1px solid rgba(95, 95, 95, 0.20) !important;
+    border: 1px solid rgba(95, 95, 95, 0.20);
 }
 
 #vistaSaldo {
@@ -123,7 +125,7 @@ form > div:last-of-type {
     align-items: center;
 }
 
-#categoria div p, #notas, textarea::placeholder {
+#categoria div p, #textAreaNotas, textarea::placeholder {
     color: rgba(95, 95, 95, 0.50);
 }
 
