@@ -143,6 +143,10 @@ h5 {
     margin-bottom: 25px;
 }
 
+.cursor {
+    cursor: pointer;
+}
+
 @media (min-width: 840px) {
     body {
         grid-template-columns: 225px 350px auto;
