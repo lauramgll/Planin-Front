@@ -1,6 +1,6 @@
 'use strict'
 
-import { getCuentas, crearElemento, crearElementoTexto, formateoDecimal, cargarMenu } from './utils.js';
+import { URL, getCuentas, crearElemento, crearElementoTexto, formateoDecimal, cargarMenu, getTransacciones } from './utils.js';
 
 window.addEventListener("DOMContentLoaded", async () => {
     cargarMenu();

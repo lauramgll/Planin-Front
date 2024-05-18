@@ -124,36 +124,6 @@ export async function getCuentas() {
   return cuentas;
 }
 
-export async function actualizarSaldoCuentas() {
-  let cuentasUsuario = await getCuentas();
-  let transaccionesUsuario = await getTransacciones();
-
-  cuentasUsuario.forEach(async cuenta => {
-    let saldoCuenta = cuenta.saldo;
-
-    let transaccionesCuenta = transaccionesUsuario.filter(transaccion => transaccion.idCuenta === cuenta.id);
-
-    transaccionesCuenta.forEach(transaccion => {
-      if (transaccion.tipo === 'ingreso') {
-        saldoCuenta += transaccion.importe;
-      } else if (transaccion.tipo === 'gasto') {
-        saldoCuenta -= transaccion.importe;
-      }
-    })
-
-    cuenta.saldo = saldoCuenta - cuenta.saldo;
-
-    await fetch(`${URL}/cuentas/${cuenta.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(cuenta)
-    });
-    console.log("Saldo actualizado OK");
-  });
-}
-
 // Ocultar/desocultar password
 export function togglePassword() {
   const togglePassword = document.querySelector('.toggle-password');
