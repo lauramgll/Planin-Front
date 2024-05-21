@@ -23,7 +23,7 @@ window.addEventListener("load", async () => {
     let porcentajeGastos = calcularPorcentaje(gastos, total);
     document.getElementById("porcentajeGastos").textContent = porcentajeGastos.toFixed() + '%';
 
-    // Vista chart
+    // Vista chart totales
     let yValues = [porcentajeIngresos, porcentajeGastos];
 
     let barColors = [
@@ -63,6 +63,11 @@ window.addEventListener("load", async () => {
         document.getElementById("botonera").style.borderColor = "#727DF3";
 
         cargarTransacciones(transacciones);
+
+        document.getElementById("vistaChart").classList.remove("visible");
+        document.getElementById("vistaTotales").classList.remove("oculto");
+        document.getElementById("vistaChart").classList.add("oculto");
+        document.getElementById("vistaTotales").classList.add("visible");
     });
     
     document.getElementById("btnIngresos").addEventListener("click", async function() {
@@ -73,6 +78,13 @@ window.addEventListener("load", async () => {
 
         let transaccionesIngresos = await getListadoIngresos();
         cargarTransacciones(transaccionesIngresos);
+
+        porcentajesPorCategoria(transaccionesIngresos);
+
+        document.getElementById("vistaChart").classList.remove("oculto");
+        document.getElementById("vistaTotales").classList.remove("visible");
+        document.getElementById("vistaChart").classList.add("visible");
+        document.getElementById("vistaTotales").classList.add("oculto");
     });
     
     document.getElementById("btnGastos").addEventListener("click", async function() {
@@ -83,6 +95,13 @@ window.addEventListener("load", async () => {
 
         let transaccionesGastos = await getListadoGastos();
         cargarTransacciones(transaccionesGastos);
+
+        porcentajesPorCategoria(transaccionesGastos);
+
+        document.getElementById("vistaChart").classList.remove("oculto");
+        document.getElementById("vistaTotales").classList.remove("visible");
+        document.getElementById("vistaChart").classList.add("visible");
+        document.getElementById("vistaTotales").classList.add("oculto");
     });
 
     // Filtros
@@ -133,5 +152,70 @@ async function cargarTransacciones(transacciones) {
 
         let importeTransaccion = crearElementoTexto(importe, "p", divTransaccion);
         importeTransaccion.classList.add("fuenteTransacciones");
+    });
+}
+
+async function porcentajesPorCategoria(transacciones) {
+    let categorias = await getCategorias();
+
+    let totalesPorCategoria = {};
+
+    transacciones.forEach(transaccion => {
+        if (totalesPorCategoria[transaccion.idCategoria]) {
+            totalesPorCategoria[transaccion.idCategoria] += transaccion.importe;
+        } else {
+            totalesPorCategoria[transaccion.idCategoria] = transaccion.importe;
+        }
+    });
+
+    let totalImporte = Object.values(totalesPorCategoria).reduce((totales, total) => totales + total, 0);
+
+    // Ordenar las categorías de mayor a menor porcentaje
+    categorias.sort((a, b) => {
+        let porcentajeA = totalesPorCategoria[a.id] ? (totalesPorCategoria[a.id] / totalImporte) * 100 : 0;
+        let porcentajeB = totalesPorCategoria[b.id] ? (totalesPorCategoria[b.id] / totalImporte) * 100 : 0;
+        return porcentajeB - porcentajeA;
+    });
+
+    let categoriasHTML = "";
+    let yValues = [];
+    let barColors = [];
+
+    for (let categoria of categorias) {
+        let porcentaje = totalesPorCategoria[categoria.id] ? (totalesPorCategoria[categoria.id] / totalImporte) * 100 : 0;
+        let color = categoria.color;
+
+        if (porcentaje > 0) {
+            categoriasHTML += `
+                <p class="porcentajes">${porcentaje.toFixed()}%</p>
+                <div id="circulo2" style="background-color: ${color}"></div>
+                <p class="fuentePeque">${categoria.nombre}</p>
+            `;
+            yValues.push(porcentaje.toFixed(2));
+            barColors.push(color);
+        }
+    }
+
+    document.getElementById("categorias").innerHTML = categoriasHTML;
+
+    // Crear el chart
+    new Chart("chartCategorias", {
+        type: "doughnut",
+        data: {
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            tooltips: { enabled: false },
+            hover: { mode: null },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
     });
 }
