@@ -88,10 +88,6 @@ export async function getsaldoCuenta() {
   return await getImporteIngresos() - await getImporteGastos();
 }
 
-export function formateoDecimal(importe) {
-  return importe.toFixed(2).toString().replace('.', ',') + ' €';
-}
-
 export function calcularPorcentaje(valor, total) {
   return ((valor / total) * 100);
 }
@@ -176,4 +172,14 @@ export function cargarMenu() {
       window.location.href = "../inicio_sesion.html";
     });
   });
+}
+
+export function vistaDecimal(importe) {
+  let vista = localStorage.getItem("decimal");
+
+  if(vista === "true") {
+    return importe.toFixed(2).toString().replace('.', ',') + ' €';
+  } else {
+    return Math.round(importe) + ' €';
+  }
 }

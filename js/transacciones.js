@@ -1,6 +1,6 @@
 'use strict'
 
-import { cargarMenu, getTransacciones, crearElemento, crearElementoTexto, formateoDecimal, getCategorias } from './utils.js';
+import { cargarMenu, getTransacciones, crearElemento, crearElementoTexto, vistaDecimal, getCategorias } from './utils.js';
 import { } from './validaciones.js';
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -60,11 +60,11 @@ window.addEventListener("DOMContentLoaded", async () => {
     
             let importe;
             if (transaccion.tipo === 'ingreso') {
-                importe = "+" + formateoDecimal(transaccion.importe);
+                importe = "+" + vistaDecimal(transaccion.importe);
             } else if (transaccion.tipo === 'gasto') {
-                importe = "-" + formateoDecimal(transaccion.importe);
+                importe = "-" + vistaDecimal(transaccion.importe);
             } else {
-                importe = formateoDecimal(transaccion.importe);
+                importe = vistaDecimal(transaccion.importe);
             }
     
             let importeTransaccion = crearElementoTexto(importe, "p", divTransaccion);

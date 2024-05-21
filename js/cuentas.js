@@ -1,6 +1,6 @@
 'use strict'
 
-import { URL, getCuentas, crearElemento, crearElementoTexto, formateoDecimal, cargarMenu, getTransacciones } from './utils.js';
+import { URL, getCuentas, crearElemento, crearElementoTexto, vistaDecimal, cargarMenu, getTransacciones } from './utils.js';
 
 window.addEventListener("DOMContentLoaded", async () => {
     cargarMenu();
@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         let nombreCuenta = crearElementoTexto(cuenta.nombre, "p", divCuenta);
         nombreCuenta.classList.add("fuenteTransacciones");
 
-        let saldoCuenta = crearElementoTexto(formateoDecimal(cuenta.saldo), "p", divCuenta);
+        let saldoCuenta = crearElementoTexto(vistaDecimal(cuenta.saldo), "p", divCuenta);
         saldoCuenta.classList.add("fuenteTransacciones");
 
         // Ir a cuenta
@@ -37,7 +37,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     });
 
     // Valor neto
-    valorNeto.textContent = formateoDecimal(sumaSaldo);
+    valorNeto.textContent = vistaDecimal(sumaSaldo);
 
     // Nueva cuenta
     document.getElementById("nuevaCuenta").addEventListener("click", function () {

@@ -1,19 +1,19 @@
 'use strict'
 
-import { getsaldoCuenta, formateoDecimal, getImporteIngresos, getImporteGastos, calcularPorcentaje, getTransacciones, crearElemento, crearElementoTexto, getCategorias, getListadoIngresos, getListadoGastos, cargarMenu } from './utils.js';
+import { getsaldoCuenta, vistaDecimal, getImporteIngresos, getImporteGastos, calcularPorcentaje, getTransacciones, crearElemento, crearElementoTexto, getCategorias, getListadoIngresos, getListadoGastos, cargarMenu } from './utils.js';
 
 window.addEventListener("load", async () => {
     cargarMenu();
 
     // Vista totales
     let saldo = await getsaldoCuenta();
-    document.getElementById("saldo").textContent = formateoDecimal(saldo);
+    document.getElementById("saldo").textContent = vistaDecimal(saldo);
 
     let ingresos = await getImporteIngresos();
-    document.getElementById("ingresos").textContent = formateoDecimal(ingresos);
+    document.getElementById("ingresos").textContent = vistaDecimal(ingresos);
 
     let gastos = await getImporteGastos();
-    document.getElementById("gastos").textContent = formateoDecimal(gastos);
+    document.getElementById("gastos").textContent = vistaDecimal(gastos);
 
     let total = ingresos + gastos;
 
@@ -123,11 +123,12 @@ async function cargarTransacciones(transacciones) {
 
         let importe;
         if (transaccion.tipo === 'ingreso') {
-            importe = "+" + formateoDecimal(transaccion.importe);
+            importe = "+" + vistaDecimal(transaccion.importe);
+            console.log(importe);
         } else if (transaccion.tipo === 'gasto') {
-            importe = "-" + formateoDecimal(transaccion.importe);
+            importe = "-" + vistaDecimal(transaccion.importe);
         } else {
-            importe = formateoDecimal(transaccion.importe);
+            importe = vistaDecimal(transaccion.importe);
         }
 
         let importeTransaccion = crearElementoTexto(importe, "p", divTransaccion);
