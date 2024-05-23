@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planin · Inicio</title>
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/inicio.css">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+    <aside>
+        <div class="menuInicio">
+            <img src="./images/logo.png" alt="Inicio">
+            <p class="fuentePeque">Inicio</p>
+        </div>
+        <div class="menuTransacciones">
+            <img src="./images/transacciones.png" alt="Transacciones">
+            <p class="fuentePeque">Transacciones</p>
+        </div>
+        <div class="menuCuentas">
+            <img src="./images/cuentas.png" alt="Cuentas">
+            <p class="fuentePeque">Cuentas</p>
+        </div>
+        <div class="menuAjustes">
+            <img src="./images/ajustes.png" alt="Ajustes">
+            <p class="fuentePeque">Ajustes</p>
+        </div>
+        <div class="menuCerrarSesion">
+            <img src="./images/cerrar_sesion.png" alt="Cerrar sesión">
+            <p class="fuentePeque">Cerrar sesión</p>
+        </div>
+    </aside>
+    <header>
+        <div>
+            <ion-icon name="chevron-back-outline"></ion-icon>
+            <h4 class="tituloTipo">MARZO 2024</h4>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+        <ion-icon class="iconoFiltro" name="filter-outline"></ion-icon>
+    </header>
+    <main>
+        <div id="transparenciaFiltrado">
+            <div id="rectanguloFiltros">
+                <div>
+                    <ion-icon name="refresh-outline"></ion-icon>
+                    <p class="fuentePeque">Guardar</p>
+                </div>
+                <h4 class="tituloFiltro">RANGO DE FECHAS</h4>
+                <div id="filtroFecha">
+                    <p class="filtroActivo fuenteTransacciones">Mes</p>
+                    <p class="filtroInactivo fuenteTransacciones">Año</p>
+                </div>
+                <h4 class="tituloFiltro">CUENTA</h4>
+                <div id="filtroCuenta">
+                    <p class="filtroActivo fuenteTransacciones">Todos</p>
+                    <p class="filtroInactivo fuenteTransacciones">Principal</p>
+                    <p class="filtroInactivo fuenteTransacciones">Ahorro</p>
+                </div>
+            </div>
+        </div>
+        <header>
+            <div>
+                <ion-icon name="chevron-back-outline"></ion-icon>
+                <h4 class="tituloTipo">MARZO 2024</h4>
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+            </div>
+            <ion-icon class="iconoFiltro" name="filter-outline"></ion-icon>
+        </header>
+        <div id="vistaChart" class="oculto">
+            <div id="categorias">
+                <p class="porcentajes">79%</p>
+                <div id="circulo2"></div>
+                <p class="fuentePeque">Alquiler</p>
+                <p class="porcentajes">10%</p>
+                <div id="circulo2"></div>
+                <p class="fuentePeque">Alimentación</p>
+                <p class="porcentajes">7%</p>
+                <div id="circulo2"></div>
+                <p class="fuentePeque">Gasolina</p>
+                <p class="porcentajes">4%</p>
+                <div id="circulo2"></div>
+                <p class="fuentePeque">Ocio</p>
+            </div>
+            <div id="chart">
+                <canvas id="chartCategorias" style="display: block; margin: 0; padding: 0; height: 100%; width: 100%;"></canvas>
+            </div>
+        </div>
+        <div id="vistaTotales" class="visible">
+            <div id="chartTotales">
+                <canvas id="chartIngresosGastos" style="display: block; margin: 0; padding: 0; height: 100%; width: 100%;"></canvas>
+            </div>
+            <div>
+                <h6>Saldo</h6>
+                <h3 id="saldo"></h3>
+            </div>
+            <div>
+                <p class="porcentajes" id="porcentajeIngresos"></p>
+                <h6>Ingresos</h6>
+                <h3 id="ingresos"></h3>
+            </div>
+            <div>
+                <p class="porcentajes" id="porcentajeGastos"></p>
+                <h6>Gastos</h6>
+                <h3 id="gastos"></h3>
+            </div>
+        </div>
+        <div id="vistaDesglose">
+            <div id="botonera">
+                <h5 class="todos" id="btnTodos">Todos</h5>
+                <h5 id="btnIngresos">Ingresos</h5>
+                <h5 id="btnGastos">Gastos</h5>
+            </div>
+            <div id="listado">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="menuInicio">
+            <img src="./images/logo.png" alt="Inicio">
+            <p class="fuentePeque">Inicio</p>
+        </div>
+        <div class="menuTransacciones">
+            <img src="./images/transacciones.png" alt="Transacciones">
+            <p class="fuentePeque">Transacciones</p>
+        </div>
+        <div class="menuCuentas">
+            <img src="./images/cuentas.png" alt="Cuentas">
+            <p class="fuentePeque">Cuentas</p>
+        </div>
+        <div class="menuAjustes">
+            <img src="./images/ajustes.png" alt="Ajustes">
+            <p class="fuentePeque">Ajustes</p>
+        </div>
+    </footer>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script type="module" src="./js/inicio.js"></script>
+</body>
+</html>
