@@ -199,9 +199,16 @@ h5 {
 
 #rectanguloFiltros > div:nth-of-type(1) {
     display: flex;
+    justify-content: space-between;
+    column-gap: 11px;
+}
+
+#rectanguloFiltros > div:nth-of-type(1) > div {
+    display: flex;
     align-items: center;
     justify-content: right;
     column-gap: 11px;
+    padding-bottom: 15px;
 }
 
 #rectanguloFiltros h4 {
@@ -230,6 +237,10 @@ h5 {
     flex-wrap: wrap;
     gap: 11px; 
     margin-bottom: 25px;
+}
+
+#iconoGuardado, #filtroFecha p, #filtroCuenta p {
+    cursor: pointer;
 }
 
 @media (min-width: 840px) {
