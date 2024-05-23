@@ -143,8 +143,13 @@ async function cargarTransacciones(cuenta, fecha) {
     const month = fecha.getMonth() + 1; 
     const fechaFormateada = `${year}-${month < 10 ? '0' + month : month}`;
 
+    // NO VA
+    const url = new URL(`${URL}/transacciones/filtradas`);
+    if (cuenta.getAttribute("id") !== "todos") url.searchParams.append('idCuenta', cuenta.getAttribute("id"));
+    url.searchParams.append('fecha', fechaFormateada);
+
     // Obtener las transacciones para la cuenta y la fecha seleccionadas
-    const transaccionesResponse = await fetch(`${URL}/transacciones/filtradas`, {
+    const transaccionesResponse = await fetch(url , {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
