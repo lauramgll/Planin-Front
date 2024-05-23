@@ -29,21 +29,48 @@ export async function getUsuarios() {
 
 export async function getTransacciones() {
   let idUsuario = localStorage.getItem("id");
+  let ft = localStorage.getItem("filtroTemporal");
+  let fc = localStorage.getItem("filtroCuentas");
 
-  const transaccionesResponse = await fetch(`${URL}/transacciones/usuario/${idUsuario}`, {
-    method: 'GET',
+  //EJEMPLO: /transacciones/usuario/2/mes mayo 2024/todos
+  //ERROR si no hay nada en ese mes y para ese usuario
+  const transaccionesResponse = await fetch(
+    `${URL}/transacciones/usuario/${idUsuario}/${ft}/${fc}`,
+    {
+      method: "GET",
     headers: {
-      'Content-Type': 'application/json'
+        "Content-Type": "application/json",
     },
-  });
+    }
+  );
+
+  // Verificar si la respuesta es exitosa
+  if (!transaccionesResponse.ok) {
+    // Manejar el error según el código de estado HTTP
+    if (transaccionesResponse.status === 404) {
+      console.error("No se encontraron transacciones.");
+      return [];
+    } else {
+      throw new Error("Error en la solicitud: " + transaccionesResponse.status);
+    }
+  }
 
   let transacciones = await transaccionesResponse.json();
 
   // Quitar las transferencias
-  transacciones = transacciones.filter(transaccion => transaccion.tipo === 'ingreso' || transaccion.tipo === 'gasto');
+  transacciones = transacciones.filter(
+    (transaccion) =>
+      transaccion.tipo === "ingreso" || transaccion.tipo === "gasto"
+  );
 
   console.log(transacciones);
+
+  // Devolver las transacciones si no están vacías
+  if (transacciones.length > 0) {
   return transacciones;
+  } else {
+    return [];
+  }
 }
 
 export async function getListadoIngresos() {
