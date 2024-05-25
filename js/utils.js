@@ -29,13 +29,33 @@ export async function getUsuarios() {
 
 export async function getTransacciones() {
   let idUsuario = localStorage.getItem("id");
+
+  const transaccionesResponse = await fetch(`${URL}/transacciones/usuario/${idUsuario}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+
+  let transacciones = await transaccionesResponse.json();
+
+  // Quitar las transferencias
+  transacciones = transacciones.filter(transaccion => transaccion.tipo === 'ingreso' || transaccion.tipo === 'gasto');
+
+  //console.log(transacciones);
+  return transacciones;
+}
+
+/*
+export async function getTransacciones() {
+  let idUsuario = localStorage.getItem("id");
   let ft = localStorage.getItem("filtroTemporal");
   let fc = localStorage.getItem("filtroCuentas");
 
   //EJEMPLO: /transacciones/usuario/2/mes mayo 2024/todos
   //ERROR si no hay nada en ese mes y para ese usuario
   const transaccionesResponse = await fetch(
-    `${URL}/transacciones/usuario/${idUsuario}/${ft}/${fc}`,
+    `${URL}/transacciones/usuario/${idUsuario}/${ft}/${0}`,
     {
       method: "GET",
     headers: {
@@ -72,47 +92,16 @@ export async function getTransacciones() {
     return [];
   }
 }
+*/
 
-export async function getListadoIngresos() {
-  const transacciones = await getTransacciones();
+export function getImporte(datos) {
+  let importe = 0;
 
-  const ingresos = transacciones.filter(transaccion => transaccion.tipo === 'ingreso');
-  return ingresos;
-}
-
-export async function getListadoGastos() {
-  const transacciones = await getTransacciones();
-
-  const gastos = transacciones.filter(transaccion => transaccion.tipo === 'gasto');
-  return gastos;
-}
-
-export async function getImporteIngresos() {
-  const ingresos = await getListadoIngresos();
-
-  let importeIngresos = 0;
-
-  ingresos.forEach(ingreso => {
-    importeIngresos += ingreso.importe;
+  datos.forEach(dato => {
+    importe += dato.importe;
   });
 
-  return importeIngresos;
-}
-
-export async function getImporteGastos() {
-  const gastos = await getListadoGastos();
-
-  let importeGastos = 0;
-
-  gastos.forEach(gasto => {
-    importeGastos += gasto.importe;
-  });
-
-  return importeGastos;
-}
-
-export async function getsaldoCuenta() {
-  return await getImporteIngresos() - await getImporteGastos();
+  return importe;
 }
 
 export function calcularPorcentaje(valor, total) {

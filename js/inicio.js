@@ -1,81 +1,64 @@
 'use strict'
 
-import { calcularPorcentaje, crearElemento, crearElementoTexto, getCategorias, getListadoGastos, getListadoIngresos, getTransacciones, vistaDecimal } from './utils.js';
+import { URL, vistaDecimal, getImporte, calcularPorcentaje, getCuentas, crearElemento, crearElementoTexto, getCategorias, cargarMenu } from './utils.js';
 
-window.addEventListener("load", async () => {
-    //Declaración de los posibles valores de meses para el calculo de fechas
-    const meses = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"]
-    // Filtros
-    const transparenciaFiltrado = document.getElementById("transparenciaFiltrado");
-    /*Inicialización de los filtros en localStorage.
-    En caso de que ya existan se mantienen y sino se pone por defecto el mes actual
-    */
-    if (localStorage.getItem("filtroTemporal") == null || localStorage.getItem("filtroTemporal").includes("mes")) {
-        localStorage.setItem("filtroTemporal", "mes " + document.getElementById("fechaMensual").innerHTML
-        );
-        //Ocultamos la fecha Anual (para mostrar solo la mensual)
-        document.getElementById("fechaAnual").style.display = "none"
-        document.getElementById("fechaAnualEsc").style.display = "none"
-        //Damos estilos a los filtros en el popup
-        document.getElementById("filtroMes").classList.add("filtroActivo");
-        document.getElementById("filtroMes").classList.remove("filtroInactivo");
-        document.getElementById("filtroAnyo").classList.remove("filtroActivo");
-        document.getElementById("filtroAnyo").classList.add("filtroInactivo");
-    } else {
-        //Operación contraria, mostramos el filtro de año y damos estilos a los filtros
-        localStorage.setItem("filtroTemporal", "anyo " + document.getElementById("fechaAnual").innerHTML)
-        document.getElementById("fechaMensual").style.display = "none"
-        document.getElementById("fechaMensualEsc").style.display = "none"
-        document.getElementById("filtroMes").classList.remove("filtroActivo");
-        document.getElementById("filtroMes").classList.add("filtroInactivo");
-        document.getElementById("filtroAnyo").classList.add("filtroActivo");
-        document.getElementById("filtroAnyo").classList.remove("filtroInactivo");
-    }
+let fechaActual = new Date();
+let filtroActivo = "Mes";
+let cuentaActiva = "filtroTodas";
+let idUsuario = localStorage.getItem("id");
 
-    //TODO Habria que añadir la cuenta seleccionada y cambiar los estilos de los filtros (a ver si me da tiempo, si lees esto es que no jjajaja)
-    if (localStorage.getItem("filtroCuentas") == null) {
-        localStorage.setItem("filtroCuentas", "todos");
-    }
+window.addEventListener("DOMContentLoaded", async () => {
+    cargarMenu();
 
-    // Cargamos el listado inicial de trasnferencias arreglo a los filtros anteriores de mes y cuenta
-    let transacciones = await getTransacciones();
-    //Añadimos las transacciones a sus respectivas categorias
-    cargarTransacciones(transacciones);
+    const filtroMes = document.getElementById("filtroMes");
+    const filtroYear = document.getElementById("filtroYear");
+    const flechaIzq = document.querySelectorAll(".flechaIzquierda");
+    const flechaDer = document.querySelectorAll(".flechaDerecha");
+
+    filtroMes.addEventListener('click', () => cambiarFiltroFecha("Mes"));
+    filtroYear.addEventListener('click', () => cambiarFiltroFecha("Año"));
+
+    flechaIzq.forEach(element => {
+        element.addEventListener('click', () => cambiarFechaYTransacciones(-1));
+    });
+    
+    flechaDer.forEach(element => {
+        element.addEventListener('click', () => cambiarFechaYTransacciones(1));
+    });
+
+    // Inicializar
+    actualizarTituloFecha();
+    cargarCuentas();
+    cargarTransaccionesSegunFiltro();
 
     // Vista desglose
-    document
-        .getElementById("btnTodos")
-        .addEventListener("click", async function () {
-            document.getElementById("btnTodos").classList.add("todos");
-            document.getElementById("btnIngresos").classList.remove("ingresos");
-            document.getElementById("btnGastos").classList.remove("gastos");
-            document.getElementById("botonera").style.borderColor = "#727DF3";
+    document.getElementById("btnTodos").addEventListener("click", async function () {
+        document.getElementById("btnTodos").classList.add("todos");
+        document.getElementById("btnIngresos").classList.remove("ingresos");
+        document.getElementById("btnGastos").classList.remove("gastos");
+        document.getElementById("botonera").style.borderColor = "#727DF3";
 
-            cargarTransacciones(transacciones);
+        cargarTransaccionesSegunFiltro();
 
-            document.getElementById("vistaChart").classList.remove("visible");
-            document.getElementById("vistaTotales").classList.remove("oculto");
-            document.getElementById("vistaChart").classList.add("oculto");
-            document.getElementById("vistaTotales").classList.add("visible");
-        });
+        document.getElementById("vistaChart").classList.remove("visible");
+        document.getElementById("vistaTotales").classList.remove("oculto");
+        document.getElementById("vistaChart").classList.add("oculto");
+        document.getElementById("vistaTotales").classList.add("visible");
+    });
 
-    document
-        .getElementById("btnIngresos")
-        .addEventListener("click", async function () {
-            document.getElementById("btnIngresos").classList.add("ingresos");
-            document.getElementById("btnTodos").classList.remove("todos");
-            document.getElementById("btnGastos").classList.remove("gastos");
-            document.getElementById("botonera").style.borderColor = "#50CFBC";
+    document.getElementById("btnIngresos").addEventListener("click", async function () {
+        document.getElementById("btnIngresos").classList.add("ingresos");
+        document.getElementById("btnTodos").classList.remove("todos");
+        document.getElementById("btnGastos").classList.remove("gastos");
+        document.getElementById("botonera").style.borderColor = "#50CFBC";
 
-            let transaccionesIngresos = await getListadoIngresos();
-            cargarTransacciones(transaccionesIngresos);
+        cargarTransaccionesSegunFiltro();
 
-            porcentajesPorCategoria(transaccionesIngresos);
-            document.getElementById("vistaChart").classList.remove("oculto");
-            document.getElementById("vistaTotales").classList.remove("visible");
-            document.getElementById("vistaChart").classList.add("visible");
-            document.getElementById("vistaTotales").classList.add("oculto");
-        });
+        document.getElementById("vistaChart").classList.remove("oculto");
+        document.getElementById("vistaTotales").classList.remove("visible");
+        document.getElementById("vistaChart").classList.add("visible");
+        document.getElementById("vistaTotales").classList.add("oculto");
+    });
 
     document.getElementById("btnGastos").addEventListener("click", async function () {
         document.getElementById("btnGastos").classList.add("gastos");
@@ -83,416 +66,375 @@ window.addEventListener("load", async () => {
         document.getElementById("btnIngresos").classList.remove("ingresos");
         document.getElementById("botonera").style.borderColor = "#FC7B7F";
 
-        let transaccionesGastos = await getListadoGastos();
-        cargarTransacciones(transaccionesGastos);
+        cargarTransaccionesSegunFiltro();
 
-        porcentajesPorCategoria(transaccionesGastos);
         document.getElementById("vistaChart").classList.remove("oculto");
         document.getElementById("vistaTotales").classList.remove("visible");
         document.getElementById("vistaChart").classList.add("visible");
         document.getElementById("vistaTotales").classList.add("oculto");
     });
 
-    //Funcionalidad al pulsar la flecha izquierda de la fecha
-    document
-        .getElementById("flechaIzq")
-        .addEventListener("click", async function () {
-            //Calculamos la fehc aen caso de ser mes
-            if (localStorage.getItem("filtroTemporal").includes("mes")) {
-                let mes = document.getElementById("fechaMensual").innerHTML.match(/[a-zA-Z]+/)[0];
-                let anyo = document.getElementById("fechaMensual").innerHTML.match(/\d+/)[0];
-                let mesInt = meses.indexOf(mes)
-                mesInt = mesInt - 1
+    // Filtros
+    const transparenciaFiltrado = document.getElementById("transparenciaFiltrado");
 
-                if (mesInt == -1) {
-                    mesInt = 11
-                    anyo = parseInt(anyo) - 1
-                }
-                document.getElementById("fechaMensual").innerHTML = ""
-                document.getElementById("fechaMensual").innerHTML = meses[mesInt] + " " + anyo;
-                //Metemos en filtro la fecha, ejemplo: mes ABRIL 2024
-                localStorage.setItem("filtroTemporal", "mes " + document.getElementById("fechaMensual").innerHTML);
-
-            } else {
-                //Que facil es para año joder...
-                document.getElementById("fechaAnual").innerHTML = parseInt(document.getElementById("fechaAnual").innerHTML) - 1
-                localStorage.setItem("filtroTemporal", "anyo " + document.getElementById("fechaAnual").innerHTML);
-
-            }
-            //Una vez finalizado el calculo de las fechas y cambiado el filtroTemporal realizamos la consulta
-            transacciones = await getTransacciones();
-            //Recargar los listados
-            cargarTransacciones(transacciones)
-            //Pintamos grafica y calculo de Saldo Gasto e Ingreso
-            calcularValores(transacciones)
-
-        });
-
-    //Funcionalidad al pulsar la flecha derecha de la fecha (Mismo que la anterior pero sumando meses y años LOL)
-    document
-        .getElementById("flechaDer")
-        .addEventListener("click", async function () {
-            if (localStorage.getItem("filtroTemporal").includes("mes")) {
-                let mes = document.getElementById("fechaMensual").innerHTML.match(/[a-zA-Z]+/)[0];
-                let anyo = document.getElementById("fechaMensual").innerHTML.match(/\d+/)[0];
-                let mesInt = meses.indexOf(mes)
-                mesInt = mesInt + 1
-
-                if (mesInt == 12) {
-                    mesInt = 1
-                    anyo = parseInt(anyo) + 1
-                }
-                document.getElementById("fechaMensual").innerHTML = ""
-                document.getElementById("fechaMensual").innerHTML = meses[mesInt] + " " + anyo;
-                localStorage.setItem("filtroTemporal", "mes " + document.getElementById("fechaMensual").innerHTML);
-
-            } else {
-
-                document.getElementById("fechaAnual").innerHTML = parseInt(document.getElementById("fechaAnual").innerHTML) + 1
-                localStorage.setItem("filtroTemporal", "anyo " + document.getElementById("fechaAnual").innerHTML);
-            }
-            transacciones = await getTransacciones()
-            cargarTransacciones(transacciones)
-            calcularValores(transacciones)
-
-        });
-
-    //FLECHAS ESCRITORIO
-    //Funcionalidad al pulsar la flecha izquierda de la fecha
-    document
-        .getElementById("flechaIzqEsc")
-        .addEventListener("click", async function () {
-            //Calculamos la fehc aen caso de ser mes
-            if (localStorage.getItem("filtroTemporal").includes("mes")) {
-                let mes = document.getElementById("fechaMensualEsc").innerHTML.match(/[a-zA-Z]+/)[0];
-                let anyo = document.getElementById("fechaMensualEsc").innerHTML.match(/\d+/)[0];
-                let mesInt = meses.indexOf(mes)
-                mesInt = mesInt - 1
-
-                if (mesInt == -1) {
-                    mesInt = 11
-                    anyo = parseInt(anyo) - 1
-                }
-                document.getElementById("fechaMensualEsc").innerHTML = ""
-                document.getElementById("fechaMensualEsc").innerHTML = meses[mesInt] + " " + anyo;
-                //Metemos en filtro la fecha, ejemplo: mes ABRIL 2024
-                localStorage.setItem("filtroTemporal", "mes " + document.getElementById("fechaMensualEsc").innerHTML);
-
-            } else {
-                //Que facil es para año joder...
-                document.getElementById("fechaAnualEsc").innerHTML = parseInt(document.getElementById("fechaAnualEsc").innerHTML) - 1
-                localStorage.setItem("filtroTemporal", "anyo " + document.getElementById("fechaAnualEsc").innerHTML);
-
-            }
-            //Una vez finalizado el calculo de las fechas y cambiado el filtroTemporal realizamos la consulta
-            transacciones = await getTransacciones();
-            //Recargar los listados
-            cargarTransacciones(transacciones)
-            //Pintamos grafica y calculo de Saldo Gasto e Ingreso
-            calcularValores(transacciones)
-
-        });
-
-    //Funcionalidad al pulsar la flecha derecha de la fecha (Mismo que la anterior pero sumando meses y años LOL)
-    document
-        .getElementById("flechaDerEsc")
-        .addEventListener("click", async function () {
-            if (localStorage.getItem("filtroTemporal").includes("mes")) {
-                let mes = document.getElementById("fechaMensualEsc").innerHTML.match(/[a-zA-Z]+/)[0];
-                let anyo = document.getElementById("fechaMensualEsc").innerHTML.match(/\d+/)[0];
-                let mesInt = meses.indexOf(mes)
-                mesInt = mesInt + 1
-
-                if (mesInt == 12) {
-                    mesInt = 1
-                    anyo = parseInt(anyo) + 1
-                }
-                document.getElementById("fechaMensualEsc").innerHTML = ""
-                document.getElementById("fechaMensualEsc").innerHTML = meses[mesInt] + " " + anyo;
-                localStorage.setItem("filtroTemporal", "mes " + document.getElementById("fechaMensualEsc").innerHTML);
-
-            } else {
-
-                document.getElementById("fechaAnualEsc").innerHTML = parseInt(document.getElementById("fechaAnualEsc").innerHTML) + 1
-                localStorage.setItem("filtroTemporal", "anyo " + document.getElementById("fechaAnualEsc").innerHTML);
-            }
-            transacciones = await getTransacciones()
-            cargarTransacciones(transacciones)
-            calcularValores(transacciones)
-
-        });
-
-    document.querySelectorAll(".iconoFiltro").forEach((icono) => {
+    document.querySelectorAll(".iconoFiltro").forEach(icono => {
         icono.addEventListener("click", function () {
             transparenciaFiltrado.style.display = "block";
         });
     });
 
-    //POPUP filtrado, acciones de cada boton, consiste en cambiar estilos de los botones, nada mas y añadir mes o año y tipo de centa a los filtros
-    document
-        .getElementById("filtroMes")
-        .addEventListener("click", async function () {
-            localStorage.setItem("filtroTemporal", "mes");
+    // Cerrar popup
+    document.getElementById("cerrar").addEventListener("click", function () {
+        transparenciaFiltrado.style.display = "none";
+    });
 
-            document.getElementById("filtroMes").classList.add("filtroActivo");
-            document.getElementById("filtroMes").classList.remove("filtroInactivo");
-            document.getElementById("filtroAnyo").classList.remove("filtroActivo");
-            document.getElementById("filtroAnyo").classList.add("filtroInactivo");
-        });
-    document
-        .getElementById("filtroAnyo")
-        .addEventListener("click", async function () {
-            localStorage.setItem("filtroTemporal", "anyo");
+    // Resetear
+    document.getElementById("refrescar").addEventListener("click", function () {
+        //Fecha
+        document.getElementById("filtroMes").classList.remove("filtroInactivo");
+        document.getElementById("filtroYear").classList.remove("filtroActivo");
+        document.getElementById("filtroMes").classList.add("filtroActivo");
+        document.getElementById("filtroYear").classList.add("filtroInactivo");
 
-            document.getElementById("filtroMes").classList.remove("filtroActivo");
-            document.getElementById("filtroMes").classList.add("filtroInactivo");
-            document.getElementById("filtroAnyo").classList.add("filtroActivo");
-            document.getElementById("filtroAnyo").classList.remove("filtroInactivo");
-        });
-    document
-        .getElementById("filtroTodos")
-        .addEventListener("click", async function () {
-            localStorage.setItem("filtroCuentas", "todos");
-            document.getElementById("filtroTodos").classList.add("filtroActivo");
-            document.getElementById("filtroTodos").classList.remove("filtroInactivo");
-            document
-                .getElementById("filtroPrincipal")
-                .classList.add("filtroInactivo");
-            document
-                .getElementById("filtroPrincipal")
-                .classList.remove("filtroActivo");
-            document.getElementById("filtroAhorro").classList.add("filtroInactivo");
-            document.getElementById("filtroAhorro").classList.remove("filtroActivo");
-        });
-    document
-        .getElementById("filtroPrincipal")
-        .addEventListener("click", async function () {
-            localStorage.setItem("filtroCuentas", "principal");
-            document.getElementById("filtroTodos").classList.remove("filtroActivo");
-            document.getElementById("filtroTodos").classList.add("filtroInactivo");
-            document
-                .getElementById("filtroPrincipal")
-                .classList.remove("filtroInactivo");
-            document.getElementById("filtroPrincipal").classList.add("filtroActivo");
-            document.getElementById("filtroAhorro").classList.add("filtroInactivo");
-            document.getElementById("filtroAhorro").classList.remove("filtroActivo");
-        });
-    document
-        .getElementById("filtroAhorro")
-        .addEventListener("click", async function () {
-            localStorage.setItem("filtroCuentas", "ahorro");
-            document.getElementById("filtroTodos").classList.remove("filtroActivo");
-            document.getElementById("filtroTodos").classList.add("filtroInactivo");
-            document
-                .getElementById("filtroPrincipal")
-                .classList.add("filtroInactivo");
-            document
-                .getElementById("filtroPrincipal")
-                .classList.remove("filtroActivo");
-            document
-                .getElementById("filtroAhorro")
-                .classList.remove("filtroInactivo");
-            document.getElementById("filtroAhorro").classList.add("filtroActivo");
+        // Cuentas
+        let cuentas = document.querySelectorAll("#filtroCuenta p");
+
+        cuentas.forEach(function (cuenta) {
+            cuenta.classList.remove("filtroActivo");
+            cuenta.classList.add("filtroInactivo");
         });
 
-    //Ocultamos el popup y recargamos listados, no he encontrado otra forma que el location reload para cargar de nuevo todo...
-    document
-        .getElementById("iconoGuardado")
-        .addEventListener("click", async function () {
-            cargarTransacciones(transacciones);
-            transparenciaFiltrado.style.display = "none";
-            location.reload()
-        });
+        document.getElementById("filtroTodas").classList.remove("filtroInactivo");
+        document.getElementById("filtroTodas").classList.add("filtroActivo");
 
-    //Cerramos el popup, (lo que no se hace es mantener las anteriores opciones, así que es un poco absurdo, pero queda bonito, no se van a dar cuenta que falla)
-    document
-        .getElementById("iconoCerrarFiltro")
-        .addEventListener("click", async function () {
-            transparenciaFiltrado.style.display = "none";
-        });
-});
+        fechaActual = new Date();
+        filtroActivo = "Mes";
+        cuentaActiva = "filtroTodas";
+    });
 
-//Organizamos las transacciones por el tipo
-async function cargarTransacciones(transacciones) {
+    // Guardar cambios y cargar transacciones acorde a los filtros
+    document.getElementById("guardar").addEventListener("click", async function () {
+        actualizarTituloFecha();
+
+        transparenciaFiltrado.style.display = "none";
+
+        await cargarTransaccionesSegunFiltro();
+    });
+})
+
+// Función para cargar las transacciones según el filtro seleccionado
+function cargarTransaccionesSegunFiltro() {
+    if (document.getElementById("btnTodos").classList.contains("todos")) {
+        cargarTransacciones(cuentaActiva, fechaActual);
+    } else if (document.getElementById("btnIngresos").classList.contains("ingresos")) {
+        cargarTransacciones(cuentaActiva, fechaActual, "ingreso");
+    } else if (document.getElementById("btnGastos").classList.contains("gastos")) {
+        cargarTransacciones(cuentaActiva, fechaActual, "gasto");
+    }
+}
+
+// Función para cambiar la fecha y cargar las transacciones
+async function cambiarFechaYTransacciones(incremento) {
+    cambiarFecha(incremento);
+    cargarTransaccionesSegunFiltro();
+}
+
+async function cargarTransacciones(cuenta, fecha, tipo = "") {
     let listadoTransacciones = document.getElementById("listado");
     let categorias = await getCategorias();
 
-    listadoTransacciones.innerHTML = "";
+    // Obtener el año y el mes de la fecha
+    let year = fecha.getFullYear();
+    let month = fecha.getMonth() + 1;
+    month = month < 10 ? '0' + month : month;
 
-    transacciones.forEach(transaccion => {
-        let divTransaccion = crearElemento("div", listadoTransacciones);
+    let url = `${URL}/transacciones/${idUsuario}`;
 
-        let nombreCategoria;
-        let colorCategoria;
+    if (filtroActivo == "Mes" && cuenta !== "filtroTodas") {
+        url += `/mes/${month}/year/${year}/cuenta/${cuentaActiva}`;
+    } else if (filtroActivo == "Mes" && cuenta == "filtroTodas") {
+        url += `/mes/${month}/year/${year}`;
+    } else if (filtroActivo !== "Mes" && cuenta !== "filtroTodas") {
+        url += `/year/${year}/cuenta/${cuentaActiva}`;
+    } else {
+        url += `/year/${year}`;
+    }
 
-        categorias.forEach(categoria => {
-            if (categoria.id === transaccion.idCategoria) {
-                nombreCategoria = categoria.nombre;
-                colorCategoria = categoria.color;
+    const transaccionesResponse = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    let transacciones = await transaccionesResponse.json();
+    // Quitar las transferencias
+    transacciones = transacciones.filter(
+        (transaccion) =>
+        transaccion.tipo === "ingreso" || transaccion.tipo === "gasto"
+    );
+
+    // Cargar datos vista totales
+    vistaTotales(transacciones);
+
+    // Filtrar por tipo
+    if (tipo) {
+        transacciones = transacciones.filter(transaccion => transaccion.tipo == tipo);
+        await porcentajesPorCategoria(transacciones);
+    }
+
+    console.log(transacciones);
+
+    if (transacciones.length == 0) {
+        listadoTransacciones.innerHTML = "";
+        let noDatos = crearElementoTexto("No hay transacciones registradas para este período.", "p", listadoTransacciones);
+        noDatos.classList.add("fuenteTransacciones", "noDatos");
+    } else {
+        listadoTransacciones.innerHTML = "";
+
+        transacciones.forEach(transaccion => {
+            let divTransaccion = crearElemento("div", listadoTransacciones);
+
+            let nombreCategoria;
+            let colorCategoria;
+
+            categorias.forEach(categoria => {
+                if (categoria.id === transaccion.idCategoria) {
+                    nombreCategoria = categoria.nombre;
+                    colorCategoria = categoria.color;
+                }
+            });
+
+            let circuloTransaccion = crearElemento("div", divTransaccion);
+            circuloTransaccion.id = "circulo";
+            circuloTransaccion.style.backgroundColor = colorCategoria;
+
+            let categoriaTransaccion = crearElementoTexto(nombreCategoria, "p", divTransaccion);
+            categoriaTransaccion.classList.add("fuenteTransacciones");
+
+            let importe;
+            if (transaccion.tipo === 'ingreso') {
+                importe = "+" + vistaDecimal(transaccion.importe);
+                console.log(importe);
+            } else if (transaccion.tipo === 'gasto') {
+                importe = "-" + vistaDecimal(transaccion.importe);
+            } else {
+                importe = vistaDecimal(transaccion.importe);
+            }
+
+            let importeTransaccion = crearElementoTexto(importe, "p", divTransaccion);
+            importeTransaccion.classList.add("fuenteTransacciones");
+        });
+    }
+
+    async function porcentajesPorCategoria(transacciones) {
+        let categorias = await getCategorias();
+
+        let totalesPorCategoria = {};
+
+        transacciones.forEach(transaccion => {
+            if (totalesPorCategoria[transaccion.idCategoria]) {
+                totalesPorCategoria[transaccion.idCategoria] += transaccion.importe;
+            } else {
+                totalesPorCategoria[transaccion.idCategoria] = transaccion.importe;
             }
         });
 
-        let circuloTransaccion = crearElemento("div", divTransaccion);
-        circuloTransaccion.id = "circulo";
-        circuloTransaccion.style.backgroundColor = colorCategoria;
+        let totalImporte = Object.values(totalesPorCategoria).reduce((totales, total) => totales + total, 0);
 
-        let categoriaTransaccion = crearElementoTexto(nombreCategoria, "p", divTransaccion);
-        categoriaTransaccion.classList.add("fuenteTransacciones");
+        // Ordenar las categorías de mayor a menor porcentaje
+        categorias.sort((a, b) => {
+            let porcentajeA = totalesPorCategoria[a.id] ? (totalesPorCategoria[a.id] / totalImporte) * 100 : 0;
+            let porcentajeB = totalesPorCategoria[b.id] ? (totalesPorCategoria[b.id] / totalImporte) * 100 : 0;
+            return porcentajeB - porcentajeA;
+        });
 
-        let importe;
-        if (transaccion.tipo === 'ingreso') {
-            importe = "+" + vistaDecimal(transaccion.importe);
-            console.log(importe);
-        } else if (transaccion.tipo === 'gasto') {
-            importe = "-" + vistaDecimal(transaccion.importe);
-        } else {
-            importe = vistaDecimal(transaccion.importe);
+        let categoriasHTML = "";
+        let yValues = [];
+        let barColors = [];
+
+        for (let categoria of categorias) {
+            let porcentaje = totalesPorCategoria[categoria.id] ? (totalesPorCategoria[categoria.id] / totalImporte) * 100 : 0;
+            let color = categoria.color;
+
+            if (porcentaje > 0) {
+                categoriasHTML += `
+                    <p class="porcentajes">${porcentaje.toFixed()}%</p>
+                    <div id="circulo2" style="background-color: ${color}"></div>
+                    <p class="fuentePeque">${categoria.nombre}</p>
+                `;
+                yValues.push(porcentaje.toFixed(2));
+                barColors.push(color);
+            }
         }
 
-        let importeTransaccion = crearElementoTexto(importe, "p", divTransaccion);
-        importeTransaccion.classList.add("fuenteTransacciones");
-    });
+        document.getElementById("categorias").innerHTML = categoriasHTML;
 
-    //Refrescamos los valores al cambiar de pestaña, esto tengo dudas de si deberiamos o no
-    await calcularValores(transacciones);
+        // Crear el chart
+        new Chart("chartCategorias", {
+            type: "doughnut",
+            data: {
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                tooltips: { enabled: false },
+                hover: { mode: null },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
 }
 
-// Vista totales
-async function calcularValores(transacciones) {
-    let saldo = 0;
-    let ingresos = 0;
-    let gastos = 0;
-    let porcentajeIngresos = 0;
-    let porcentajeGastos = 0;
-    let total = 0;
+function cambiarFecha(incremento) {
+    if (filtroActivo == "Mes") {
+        fechaActual.setMonth(fechaActual.getMonth() + incremento);
+    } else {
+        fechaActual.setFullYear(fechaActual.getFullYear() + incremento);
+    }
+    actualizarTituloFecha();
+    cargarTransacciones(cuentaActiva, fechaActual);
+}
 
-    transacciones.forEach((transaccion) => {
-        if (
-            transaccion.tipo == "gasto" ||
-            transaccion.tipo == "transferencia_origen"
-        ) {
-            gastos += transaccion.importe;
+function actualizarTituloFecha() {
+    const titulos = document.querySelectorAll(".tituloTipo");
+
+    titulos.forEach(tituloTipo => {
+        if (filtroActivo == "Mes") {
+            const opcionesMes = { month: 'long', year: 'numeric' };
+            tituloTipo.textContent = fechaActual.toLocaleDateString('es-ES', opcionesMes).toUpperCase();
         } else {
-            ingresos += transaccion.importe;
+            tituloTipo.textContent = fechaActual.getFullYear().toString();
         }
-        saldo = ingresos - gastos;
-        total = ingresos + gastos;
-
-        porcentajeIngresos = calcularPorcentaje(ingresos, total);
-        document.getElementById("porcentajeIngresos").textContent =
-            porcentajeIngresos.toFixed() + "%";
-
-        porcentajeGastos = calcularPorcentaje(gastos, total);
-        document.getElementById("porcentajeGastos").textContent =
-            porcentajeGastos.toFixed() + "%";
-
     });
+}
+
+function cambiarFiltroFecha(nuevoFiltro) {
+    if (nuevoFiltro == "Mes") {
+        filtroMes.classList.add("filtroActivo");
+        filtroMes.classList.remove("filtroInactivo");
+        filtroYear.classList.add("filtroInactivo");
+        filtroYear.classList.remove("filtroActivo");
+    } else {
+        filtroYear.classList.add("filtroActivo");
+        filtroYear.classList.remove("filtroInactivo");
+        filtroMes.classList.add("filtroInactivo");
+        filtroMes.classList.remove("filtroActivo");
+    }
+    filtroActivo = nuevoFiltro;
+}
+
+function cambiarFiltroCuenta(event) {
+    const elementosFiltroCuenta = document.querySelectorAll("#filtroCuenta p");
+    elementosFiltroCuenta.forEach(elemento => {
+        elemento.classList.remove("filtroActivo");
+        elemento.classList.add("filtroInactivo");
+    });
+
+    const elementoSeleccionado = event.target;
+    elementoSeleccionado.classList.add("filtroActivo");
+    elementoSeleccionado.classList.remove("filtroInactivo");
+
+    cuentaActiva = elementoSeleccionado.getAttribute("id");
+}
+
+async function cargarCuentas() {
+    let cuentas = await getCuentas();
+
+    cuentas.forEach(cuenta => {
+        let divFiltroCuenta = document.getElementById("filtroCuenta");
+
+        let cuentaP = crearElementoTexto(cuenta.nombre, "p", divFiltroCuenta);
+        cuentaP.classList.add("filtroInactivo", "fuenteTransacciones");
+
+        cuentaP.setAttribute("id", cuenta.id);
+
+        cuentaP.addEventListener('click', cambiarFiltroCuenta);
+    });
+
+    document.getElementById("filtroTodas").addEventListener('click', cambiarFiltroCuenta);
+}
+
+function vistaTotales(transacciones) {
+    const ingresos = transacciones.filter(transaccion => transaccion.tipo === 'ingreso');
+    const gastos = transacciones.filter(transaccion => transaccion.tipo === 'gasto');
+
+    let importeIngresos = getImporte(ingresos);
+    let importeGastos = getImporte(gastos);
+    console.log("Ingresos", importeIngresos);
+    console.log("Gastos", importeGastos);
+
+    // Vista totales
+    let saldo = importeIngresos - importeGastos;
     document.getElementById("saldo").textContent = vistaDecimal(saldo);
-    document.getElementById("ingresos").textContent = vistaDecimal(ingresos);
-    document.getElementById("gastos").textContent = vistaDecimal(gastos);
-    pintarGrafico(porcentajeIngresos, porcentajeGastos);
-}
 
-async function pintarGrafico(porcentajeIngresos, porcentajeGastos) {
-    // Vista chart
+    document.getElementById("ingresos").textContent = vistaDecimal(importeIngresos);
+
+    document.getElementById("gastos").textContent = vistaDecimal(importeGastos);
+
+    let total = importeIngresos + importeGastos;
+    let porcentajeIngresos = calcularPorcentaje(importeIngresos, total);
+    let porcentajeGastos = calcularPorcentaje(importeGastos, total);
+
+    if (importeIngresos == 0 && importeGastos == 0) {
+        document.getElementById("porcentajeIngresos").textContent = '0%';
+        document.getElementById("porcentajeGastos").textContent = '0%';
+        porcentajeIngresos = 0;
+        porcentajeGastos = 0;
+    } else if (importeIngresos == 0) {
+        document.getElementById("porcentajeIngresos").textContent = '0%';
+        document.getElementById("porcentajeGastos").textContent = porcentajeGastos.toFixed() + '%';
+        porcentajeIngresos = 0;
+    } else if (importeGastos == 0) {
+        document.getElementById("porcentajeGastos").textContent = '0%';
+        document.getElementById("porcentajeIngresos").textContent = porcentajeIngresos.toFixed() + '%';
+        porcentajeGastos = 0;
+    } else {
+        document.getElementById("porcentajeIngresos").textContent = porcentajeIngresos.toFixed() + '%';
+        document.getElementById("porcentajeGastos").textContent = porcentajeGastos.toFixed() + '%';
+    }
+
+    // Vista chart totales
     let yValues = [porcentajeIngresos, porcentajeGastos];
-    let barColors = ["#50CFBC", "#FC7B7F"];
+
+    let barColors = [
+        "#50CFBC",
+        "#FC7B7F",
+    ];
 
     // Verificar si no hay datos
     let isEmpty = yValues.every(value => value === 0);
 
     let data;
     if (isEmpty) {
-        // Mostrar una rosca vacía
         data = {
-            datasets: [
-                {
-                    backgroundColor: ["#e0e0e0"], // Color gris para indicar que está vacío
-                    data: [1], // Valor ficticio para mostrar el gráfico
-                    borderWidth: 0,
-                },
-            ],
+            datasets: [{
+                backgroundColor: ["#D9D9D9"], 
+                data: [100], 
+                borderWidth: 0,
+            }],
         };
     } else {
-        // Mostrar los datos reales
         data = {
-            datasets: [
-                {
-                    backgroundColor: barColors,
-                    data: yValues,
-                    borderWidth: 0,
-                },
-            ],
-        };
-    }
-
-    new Chart("chartIngresosGastos", {
-        type: "doughnut",
-        data: data,
-        options: {
-            tooltips: { enabled: false },
-            hover: { mode: null },
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-        },
-    });
-}
-async function porcentajesPorCategoria(transacciones) {
-    let categorias = await getCategorias();
-
-    let totalesPorCategoria = {};
-
-    transacciones.forEach(transaccion => {
-        if (totalesPorCategoria[transaccion.idCategoria]) {
-            totalesPorCategoria[transaccion.idCategoria] += transaccion.importe;
-        } else {
-            totalesPorCategoria[transaccion.idCategoria] = transaccion.importe;
-        }
-    });
-
-    let totalImporte = Object.values(totalesPorCategoria).reduce((totales, total) => totales + total, 0);
-
-    // Ordenar las categorías de mayor a menor porcentaje
-    categorias.sort((a, b) => {
-        let porcentajeA = totalesPorCategoria[a.id] ? (totalesPorCategoria[a.id] / totalImporte) * 100 : 0;
-        let porcentajeB = totalesPorCategoria[b.id] ? (totalesPorCategoria[b.id] / totalImporte) * 100 : 0;
-        return porcentajeB - porcentajeA;
-    });
-
-    let categoriasHTML = "";
-    let yValues = [];
-    let barColors = [];
-
-    for (let categoria of categorias) {
-        let porcentaje = totalesPorCategoria[categoria.id] ? (totalesPorCategoria[categoria.id] / totalImporte) * 100 : 0;
-        let color = categoria.color;
-
-        if (porcentaje > 0) {
-            categoriasHTML += `
-                <p class="porcentajes">${porcentaje.toFixed()}%</p>
-                <div id="circulo2" style="background-color: ${color}"></div>
-                <p class="fuentePeque">${categoria.nombre}</p>
-            `;
-            yValues.push(porcentaje.toFixed(2));
-            barColors.push(color);
-        }
-    }
-
-    document.getElementById("categorias").innerHTML = categoriasHTML;
-
-    // Crear el chart
-    new Chart("chartCategorias", {
-        type: "doughnut",
-        data: {
             datasets: [{
                 backgroundColor: barColors,
                 data: yValues,
-                borderWidth: 0
-            }]
-        },
+                borderWidth: 0,
+            }],
+        };
+    }
+
+    // Mostrar gráfico
+    new Chart("chartIngresosGastos", {
+        type: "doughnut",
+        data: data,
         options: {
             tooltips: { enabled: false },
             hover: { mode: null },

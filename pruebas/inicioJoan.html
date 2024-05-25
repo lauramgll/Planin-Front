@@ -33,11 +33,13 @@
             <p class="fuentePeque">Cerrar sesión</p>
         </div>
     </aside>
+    <!--Version tlf-->
     <header>
         <div>
-            <ion-icon name="chevron-back-outline"></ion-icon>
-            <h4 class="tituloTipo">MARZO 2024</h4>
-            <ion-icon name="chevron-forward-outline"></ion-icon>
+            <ion-icon id="flechaIzq" name="chevron-back-outline"></ion-icon>
+            <h4 id="fechaMensual" class="tituloTipo">MAYO 2024</h4>
+            <h4 id="fechaAnual" class="tituloTipo">2024</h4>
+            <ion-icon id="flechaDer" name="chevron-forward-outline"></ion-icon>
         </div>
         <ion-icon class="iconoFiltro" name="filter-outline"></ion-icon>
     </header>
@@ -45,25 +47,32 @@
         <div id="transparenciaFiltrado">
             <div id="rectanguloFiltros">
                 <div>
-                    <ion-icon name="refresh-outline"></ion-icon>
-                    <p class="fuentePeque">Guardar</p>
+                    <ion-icon id="iconoCerrarFiltro" name="close-outline"></ion-icon>
+                    <div>
+                        <ion-icon id="refrescar" name="refresh-outline"></ion-icon>
+                        <p id="iconoGuardado" class="fuentePeque">Guardar</p>
+                    </div>
                 </div>
                 <h4 class="tituloFiltro">RANGO DE FECHAS</h4>
                 <div id="filtroFecha">
-                    <p class="filtroActivo fuenteTransacciones" id="filtroMes">Mes</p>
-                    <p class="filtroInactivo fuenteTransacciones" id="filtroYear">Año</p>
+                    <p id="filtroMes" class="filtroActivo fuenteTransacciones">Mes</p>
+                    <p id="filtroAnyo" class="filtroInactivo fuenteTransacciones">Año</p>
                 </div>
                 <h4 class="tituloFiltro">CUENTA</h4>
                 <div id="filtroCuenta">
-                    <p class="filtroActivo fuenteTransacciones" id="filtroTodas">Todos</p>
+                    <p id="filtroTodos" class="filtroActivo fuenteTransacciones">Todos</p>
+                    <p id="filtroPrincipal" class="filtroInactivo fuenteTransacciones">Principal</p>
+                    <p id="filtroAhorro" class="filtroInactivo fuenteTransacciones">Ahorro</p>
                 </div>
             </div>
         </div>
+        <!--Version escritorio-->
         <header>
             <div>
-                <ion-icon name="chevron-back-outline" id="flechaIzquierda"></ion-icon>
-                <h4 class="tituloTipo">MARZO 2024</h4>
-                <ion-icon name="chevron-forward-outline" id="flechaDerecha"></ion-icon>
+                <ion-icon id="flechaIzqEsc" name="chevron-back-outline"></ion-icon>
+                <h4 id="fechaMensualEsc" class="tituloTipo">MAYO 2024</h4>
+                <h4 id="fechaAnualEsc" class="tituloTipo">2024</h4>
+                <ion-icon id="flechaDerEsc" name="chevron-forward-outline"></ion-icon>
             </div>
             <ion-icon class="iconoFiltro" name="filter-outline"></ion-icon>
         </header>

@@ -164,12 +164,12 @@ h5 {
     display: grid;
     row-gap: 17px;
     column-gap: 7px;
-    min-width: 120px;
+    min-width: 150px;
     grid-template-columns: auto 10px auto;
     align-items: center;
     overflow-y: hidden;
     max-height: 115px;
-    /* padding-right: 17px; */
+    overflow-x: none;
 }
 
 #categorias:hover {
@@ -239,8 +239,13 @@ h5 {
     margin-bottom: 25px;
 }
 
-#iconoGuardado, #filtroFecha p, #filtroCuenta p {
+#cerrar,#guardar, #filtroFecha p, #filtroCuenta p {
     cursor: pointer;
+}
+
+.noDatos {
+    text-align: center;
+    color: rgba(95, 95, 95, 0.60);
 }
 
 @media (min-width: 840px) {
