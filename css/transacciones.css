@@ -32,16 +32,21 @@ footer > div:nth-of-type(1) img {
 main > div {
     display: flex;
     flex-direction: column;
-    padding: 20px 25px 25px 35px;
+    padding: 20px 35px 25px 35px;
     justify-content: space-between;
     height: 100%;
 }
 
 #vistaTransacciones {
     padding-bottom: 20px;
-    overflow-y: auto;
+    overflow-y: hidden;
     max-height: calc(100vh - 305px);
 }
+
+#vistaTransacciones:hover {
+    overflow-y: auto; 
+}
+
 
 .grupoFecha > div {
     border-bottom: 0.5px solid rgba(95, 95, 95, 0.60);
@@ -89,13 +94,12 @@ h5 {
 }
 
 #transparenciaFiltrado {
-    /* display: block; */
     display: none;
     background-color: rgba(255, 255, 255, 0.85);
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 2;
+    z-index: 10;
 }
 
 #rectanguloFiltros {
@@ -110,9 +114,16 @@ h5 {
 
 #rectanguloFiltros > div:nth-of-type(1) {
     display: flex;
+    justify-content: space-between;
+    column-gap: 11px;
+}
+
+#rectanguloFiltros > div:nth-of-type(1) > div {
+    display: flex;
     align-items: center;
     justify-content: right;
     column-gap: 11px;
+    padding-bottom: 15px;
 }
 
 #rectanguloFiltros h4 {
@@ -147,6 +158,19 @@ h5 {
     cursor: pointer;
 }
 
+#cerrar, #guardar, #filtroFecha p, #filtroCuenta p, #filtroTipo p, #filtroCategoria p {
+    cursor: pointer;
+}
+
+#filtrado {
+    max-height: calc(100vh - 130px);
+    overflow-y: hidden;
+}
+
+#filtrado:hover {
+    overflow-y: auto; 
+}
+
 @media (min-width: 840px) {
     body {
         grid-template-columns: 225px 350px auto;
@@ -155,7 +179,7 @@ h5 {
     }
 
     header {
-        padding: 68px 80px 20px 80px;
+        padding: 68px 0px 20px 0px;
         box-shadow: none;
     }
     
@@ -180,27 +204,24 @@ h5 {
 
     #transparenciaFiltrado {
         display: flex;
-        background-color: rgba(255, 255, 255, 0.85);
+        background-color: #FFFFFF;
         grid-column: 2;
         width: 350px;
         border-radius: none;
         justify-content: center;
         align-items: center;
+        padding: 0px 20px;
     }
 
     #rectanguloFiltros {
         box-shadow: none;
-        margin: 0px;
-        padding: 0px 50px;
         background-color: transparent;
-    }
-
-    #rectanguloFiltros > div:nth-of-type(1) {
-        padding-bottom: 20px;
+        margin: 30px 0px;
     }
 
     #vistaTransacciones {
         min-width: 540px;
+        min-height: calc(100vh - 330px);
         max-height: calc(100vh - 370px);
         padding-top: 0px;
     }
@@ -210,7 +231,17 @@ h5 {
         margin-bottom: -15px;
     }
 
+    aside {
+        z-index: 20;
+    }
+
     aside > div:nth-of-type(1) img {
         rotate: 0deg;
+    }
+
+    .main-expandido {
+        grid-column: 2 / span 2; 
+        padding-right: 100px;
+        padding-left: 100px;
     }
 }
