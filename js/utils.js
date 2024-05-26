@@ -27,7 +27,6 @@ export async function getUsuarios() {
   return usuarios;
 }
 
-/*
 export async function getTransacciones() {
   let idUsuario = localStorage.getItem("id");
 
@@ -186,6 +185,7 @@ export function cargarMenu() {
   let menuCerrarSesion = document.querySelectorAll(".menuCerrarSesion");
   menuCerrarSesion.forEach(menu => {
     menu.addEventListener("click", function() {
+      localStorage.clear();
       window.location.href = "../inicio_sesion.html";
     });
   });

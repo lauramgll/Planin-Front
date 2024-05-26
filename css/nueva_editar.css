@@ -236,6 +236,10 @@ span.error {
     display: none;
 }
 
+#elegirCat {
+    cursor: pointer;
+}
+
 @media (min-width: 840px) {
     main > div:last-of-type {
         display: none;
