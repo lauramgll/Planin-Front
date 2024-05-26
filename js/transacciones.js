@@ -10,6 +10,10 @@ let categoriaActiva = "filtroTodasCategoria";
 let tipoActivo = "filtroTodasTipo";
 let idUsuario = localStorage.getItem("id");
 
+localStorage.removeItem("idCategoria");
+localStorage.removeItem("tipoTransaccion");
+localStorage.removeItem("transaccionSeleccionada");
+
 window.addEventListener("DOMContentLoaded", async () => {
     checkUser();
     cargarMenu();

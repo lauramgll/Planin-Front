@@ -1,7 +1,7 @@
 'use strict'
 
 import { URL, cargarMenu, getCuentas, crearElementoTexto, checkUser } from './utils.js';
-import { } from './validaciones.js';
+import { validaCategoria, validaFecha, mostrarErroresTransaccion } from './validaciones.js';
 
 window.addEventListener("DOMContentLoaded", async () => {
     checkUser();
@@ -12,6 +12,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     let btnBorrar = document.getElementById("btnBorrar");
     let flechaCategoria = document.getElementById("flechaCategoria");
 
+    let idCategoria = localStorage.getItem("idCategoria");
     let transaccionSeleccionada = JSON.parse(localStorage.getItem("transaccionSeleccionada"));
     console.log(transaccionSeleccionada);
     let numeroInput = document.getElementById('numeroInput');
@@ -45,6 +46,17 @@ window.addEventListener("DOMContentLoaded", async () => {
                 let option = crearElementoTexto(cuenta.nombre, "option", listadoCuentas);
                 option.value = cuenta.id;
             });
+
+            // Elegir categoría
+            document.getElementById("elegirCat").addEventListener('click', () => {
+                window.location.href = "../categorias.html";
+            });
+
+            if(idCategoria != null) {
+                categoria.textContent = localStorage.getItem("nombreCategoria");
+                categoria.style.color = "#5F5F5F";
+                flechaCategoria.style.display = "none";
+            }
         } else {
             titulo.textContent = "EDITAR TRANSACCIÓN";
             btnBorrar.style.display = "block";
@@ -54,6 +66,10 @@ window.addEventListener("DOMContentLoaded", async () => {
             flechaCategoria.style.display = "none";
             fecha.value = transaccionSeleccionada.fecha;
             notas.value = transaccionSeleccionada.notas;
+
+            document.getElementById("elegirCat").addEventListener('click', () => {
+                window.location.href = "../categorias.html";
+            });
             
             let idCuentaSeleccionada = transaccionSeleccionada.idCuenta;
 
@@ -76,9 +92,14 @@ window.addEventListener("DOMContentLoaded", async () => {
     ajustarAncho();
     numeroInput.addEventListener("input", ajustarAncho);
 
-    let tipoTransaccion = transaccionSeleccionada.tipo;
+    let tipoTransaccion;
+    if (transaccionSeleccionada !== null) {
+        tipoTransaccion = transaccionSeleccionada.tipo;
+    } else {
+        tipoTransaccion = localStorage.getItem("tipoTransaccion");
+    }
 
-    if((tipoTransaccion == "ingreso") || (tipoEdit == "nueva")){
+    if((tipoTransaccion == "ingreso")){
         document.getElementById("ingreso").style.border = "1px solid #50CFBC";
         document.getElementById("gasto").style.border = "1px solid rgba(95, 95, 95, 0.20)";
         localStorage.setItem("tipoTransaccion", "ingreso");
@@ -91,11 +112,13 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("ingreso").addEventListener('click', () => {
         document.getElementById("ingreso").style.border = "1px solid #50CFBC";
         document.getElementById("gasto").style.border = "1px solid rgba(95, 95, 95, 0.20)";
+        localStorage.setItem("tipoTransaccion", "ingreso");
     });
 
     document.getElementById("gasto").addEventListener('click', () => {
         document.getElementById("gasto").style.border = "1px solid #FC7B7F";
         document.getElementById("ingreso").style.border = "1px solid rgba(95, 95, 95, 0.20)";
+        localStorage.setItem("tipoTransaccion", "gasto");
     });
 
 
@@ -106,27 +129,80 @@ window.addEventListener("DOMContentLoaded", async () => {
             e.preventDefault();
             if (tipoEdit == "nueva") { 
                 // TRANSACCIÓN NUEVA
-                // Validar errores
-                // Guardar transacción
+                let errores = validaTransaccion(categoria.textContent, fecha.value);
+                console.log(errores);
+                
+                if (Object.keys(errores).length > 0) {
+                    mostrarErroresTransaccion("categoria", errores);
+                    mostrarErroresTransaccion("fecha", errores);
+                } else {
+                    if (numeroInput.value != "0,00") {
+                        const dataNueva = {
+                            idCuenta: listadoCuentas.value,
+                            idCategoria: idCategoria,
+                            fecha: fecha.value,
+                            tipo: localStorage.getItem("tipoTransaccion"),
+                            importe: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
+                            notas: notas.value
+                        };
+    
+                        console.log(dataNueva);
+    
+                        await fetch(`${URL}/transacciones/crearTransaccion`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify((dataNueva))
+                        })
+                        console.log("Transacción creada OK");
+                        localStorage.removeItem("idCategoria");
+                        localStorage.removeItem("tipoTransaccion");
+                    }
+                    localStorage.removeItem("idCategoria");
+                    localStorage.removeItem("tipoTransaccion");
+                    window.location.href = "../transacciones.html";
+                }
             } else {
                 // EDITAR TRANSACCIÓN
-                const dataEditar = {
-                    idCuenta: cuentas.value,
-                    idCategoria: "",
-                    fecha: fecha.value,
-                    tipo: localStorage.getItem("tipoTransaccion"),
-                    importe: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
-                    notas: notas.value
+                let idCat;
+                if (idCategoria == null) {
+                    idCat = transaccionSeleccionada.idCategoria;
+                } else {
+                    idCat = localStorage.getItem("idCategoria");
                 };
 
-                await fetch(`${URL}/transacciones/${transaccionSeleccionada.id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify((dataEditar))
-                })
-                console.log("Cambio transacción OK");
+                let errores = validaTransaccion(categoria.textContent, fecha.value);
+                console.log(errores);
+                
+                if (Object.keys(errores).length > 0) {
+                    mostrarErroresTransaccion("categoria", errores);
+                    mostrarErroresTransaccion("fecha", errores);
+                } else {
+                    if (numeroInput.value != "0,00") {
+
+                    const dataEditar = {
+                        idCuenta: listadoCuentas.value,
+                        idCategoria: idCat,
+                        fecha: fecha.value,
+                        tipo: localStorage.getItem("tipoTransaccion"),
+                        importe: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
+                        notas: notas.value
+                    };
+
+                    await fetch(`${URL}/transacciones/${transaccionSeleccionada.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify((dataEditar))
+                    })
+                    console.log("Cambio transacción OK");
+                    localStorage.removeItem("idCategoria");
+                    localStorage.removeItem("tipoTransaccion");
+                    window.location.href = "../transacciones.html";
+                    }
+                }
             }
         });
     });
@@ -195,4 +271,13 @@ function ajustarAncho() {
     const value = numeroInput.value;
     const inputWidth = value.length * 14 + 25;
     numeroInput.style.width = inputWidth + "px";
+}
+
+function validaTransaccion(categoria, fecha) {
+    const errores = {};
+
+    validaCategoria(categoria, errores);
+    validaFecha(fecha, errores);
+
+    return errores;
 }

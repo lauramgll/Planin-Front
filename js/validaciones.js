@@ -63,6 +63,24 @@ export async function comprobarUsuarioAjustes(email, idUsuario, errores) {
   return correcto;
 }
 
+export function validaCategoria(campo, errores) {
+  let correcto = true;
+  if (campo == "" || campo == null || campo == "ELEGIR") {
+    errores["categoria"] = "No hay ninguna categoría seleccionada.";
+    correcto = false;
+  }
+  return correcto;
+}
+
+export function validaFecha(campo, errores) {
+  let correcto = true;
+  if (campo == "" || campo == null) {
+    errores["fecha"] = "No hay ninguna fecha seleccionada.";
+    correcto = false;
+  }
+  return correcto;
+}
+
 export function mostrarErrores(form, errores) {
   const inputs = form.querySelectorAll("input");
 
@@ -87,20 +105,46 @@ export function mostrarErrores(form, errores) {
 }
 
 export function mostrarErroresNombreCuenta(campo, errores) {
-    const error = errores[campo.id];
-    const contenedor = document.querySelector("span");
-    let errorAnterior = contenedor.querySelector(".error");
+  const error = errores[campo.id];
+  const contenedor = document.querySelector("span");
+  let errorAnterior = contenedor.querySelector(".error");
 
-    if (error) {
-      if (errorAnterior) {
-        errorAnterior.textContent = error;
-      } else {
-        const nuevoError = crearElementoTexto(error, "p", contenedor);
-        nuevoError.classList.add("error");
-      }
+  if (error) {
+    if (errorAnterior) {
+      errorAnterior.textContent = error;
     } else {
-      if (errorAnterior) {
-        errorAnterior.remove();
-      }
+      const nuevoError = crearElementoTexto(error, "p", contenedor);
+      nuevoError.classList.add("error");
     }
+  } else {
+    if (errorAnterior) {
+      errorAnterior.remove();
+    }
+  }
+}
+
+export function mostrarErroresTransaccion(campo, errores) {
+  const error = errores[campo];
+  
+  let contenedor;
+  if (campo === "categoria") {
+    contenedor = document.getElementById("errorCategoria");
+  } else if (campo === "fecha") {
+    contenedor = document.getElementById("errorFecha");
+  }
+
+  let errorAnterior = contenedor.querySelector(".error");
+
+  if (error) {
+    if (errorAnterior) {
+      errorAnterior.textContent = error;
+    } else {
+      const nuevoError = crearElementoTexto(error, "p", contenedor);
+      nuevoError.classList.add("error");
+    }
+  } else {
+    if (errorAnterior) {
+      errorAnterior.remove();
+    }
+  }
 }

@@ -62,15 +62,17 @@
             <form>
                 <div id="categoria">
                     <label class="fuenteTransacciones" for="categoria">Categoría</label>
-                    <div>
+                    <div id="elegirCat">
                         <p id="categoriaSeleccionada" class="fuenteTransacciones">ELEGIR</p>
                         <ion-icon id="flechaCategoria" name="chevron-forward-outline"></ion-icon>
                     </div>
                 </div>
+                <span id="errorCategoria"></span>
                 <div>
                     <label class="fuenteTransacciones" for="fecha">Fecha</label>
                     <input class="fuenteTransacciones" id="fecha" type="date"/>
                 </div>
+                <span id="errorFecha"></span>
                 <div id="cuenta">
                     <label class="fuenteTransacciones" for="cuenta">Cuenta</label>
                     <select class="fuenteTransacciones" name="cuentas" id="cuentas">
