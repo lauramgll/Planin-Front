@@ -46,6 +46,8 @@ main {
     align-items: center;
     justify-content: center;
     row-gap: 15px;
+    width: 90px;
+    height: 90px;
 }
 
 #vistaCategorias > div > div {
@@ -59,76 +61,81 @@ i {
     font-size: 35px;
 }
 
-#catSalario i {
+#Salario_1 i {
     color: #86CE8E;
 }
 
-#catAlimentacion i {
+#Alimentación_2 i {
     color: #A7B5FE;
 }
 
-#catGasolina i {
+#Gasolina_3 i {
     color: #FFBC54;
 }
 
-#catAlquiler i {
+#Alquiler_4 i {
     color: #FF8961;
 }
 
-#catViajes i {
+#Viajes_5 i {
     color: #FFD45A;
 }
 
-#catDeporte i {
+#Deporte_6 i {
     color: #CE6EAE;
 }
 
-#catOcio i {
+#Ocio_7 i {
     color: #71C7E2;
 }
 
-#catAhorro i {
+#Ahorro_8 i {
     color: #FFAA5F;
 }
 
-#catSuministros i {
+#Suministros_9 i {
     color: #999;
 }
 
-#catRegalos i {
+#Regalos_10 i {
     color: #FFB0B9;
 }
 
-#catInversiones i {
+#Inversiones_11 i {
     color: #CD9AE8;
 }
 
-#catTransporte i {
+#Transporte_12 i {
     color: #8C9EDD;
 }
 
-#catRopa i {
+#Ropa_13 i {
     color: #F2D08D;
 }
 
-#catSalud i {
+#Salud_14 i {
     color: #F792C8;
 }
 
-#catMascotas i {
+#Mascotas_15 i {
     color: #A8E2C9;
 }
 
-#catDonaciones i {
+#Donaciones_16 i {
     color: #9B71CC;
 }
 
-#catBelleza i {
+#Belleza_17 i {
     color: #FF9292;
 }
 
-#catOtros i {
+#Otros_18 i {
     color: #CECECE;
+}
+
+#vistaCategorias div:hover {
+    border: 1px solid rgba(114, 125, 243, 0.5);
+    border-radius: 5px;
 }
 
 @media (min-width: 840px) {
