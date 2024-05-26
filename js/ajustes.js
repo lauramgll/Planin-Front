@@ -1,9 +1,10 @@
 'use strict'
 
-import { URL, cargarMenu, togglePassword } from './utils.js';
+import { URL, cargarMenu, checkUser, togglePassword, checkUser } from './utils.js';
 import { mostrarErrores, validaEmail, validaNombre, validaPassword, comprobarUsuarioAjustes } from './validaciones.js';
 
-window.addEventListener("load", async () => {
+window.addEventListener("DOMContentLoaded", async () => {
+    checkUser();
     togglePassword();
     cargarMenu();
 

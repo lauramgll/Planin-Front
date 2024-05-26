@@ -27,6 +27,7 @@ export async function getUsuarios() {
   return usuarios;
 }
 
+/*
 export async function getTransacciones() {
   let idUsuario = localStorage.getItem("id");
 
@@ -197,5 +198,11 @@ export function vistaDecimal(importe) {
     return importe.toFixed(2).toString().replace('.', ',') + ' €';
   } else {
     return Math.round(importe) + ' €';
+  }
+}
+
+export function checkUser() {
+  if (localStorage.getItem('id') === null || localStorage.getItem('id') === '' || localStorage.getItem('id') === undefined) {
+    window.location.href = "index.html";
   }
 }

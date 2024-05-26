@@ -1,6 +1,6 @@
 'use strict'
 
-import { URL, cargarMenu, getTransacciones, crearElemento, crearElementoTexto, vistaDecimal, getCategorias, getCuentas } from './utils.js';
+import { URL, cargarMenu, crearElemento, crearElementoTexto, vistaDecimal, getCategorias, getCuentas, checkUser } from './utils.js';
 import { } from './validaciones.js';
 
 let fechaActual = new Date();
@@ -11,6 +11,7 @@ let tipoActivo = "filtroTodasTipo";
 let idUsuario = localStorage.getItem("id");
 
 window.addEventListener("DOMContentLoaded", async () => {
+    checkUser();
     cargarMenu();
 
     // Botón crear transacción

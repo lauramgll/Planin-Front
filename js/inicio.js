@@ -1,6 +1,6 @@
 'use strict'
 
-import { URL, vistaDecimal, getImporte, calcularPorcentaje, getCuentas, crearElemento, crearElementoTexto, getCategorias, cargarMenu } from './utils.js';
+import { URL, vistaDecimal, getImporte, calcularPorcentaje, getCuentas, crearElemento, crearElementoTexto, getCategorias, cargarMenu, checkUser } from './utils.js';
 
 let fechaActual = new Date();
 let filtroActivo = "Mes";
@@ -8,6 +8,7 @@ let cuentaActiva = "filtroTodas";
 let idUsuario = localStorage.getItem("id");
 
 window.addEventListener("DOMContentLoaded", async () => {
+    checkUser();
     cargarMenu();
 
     const filtroMes = document.getElementById("filtroMes");

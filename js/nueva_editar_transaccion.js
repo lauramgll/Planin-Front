@@ -1,9 +1,10 @@
 'use strict'
 
-import { URL, cargarMenu, getCuentas, crearElementoTexto } from './utils.js';
+import { URL, cargarMenu, getCuentas, crearElementoTexto, checkUser } from './utils.js';
 import { } from './validaciones.js';
 
 window.addEventListener("DOMContentLoaded", async () => {
+    checkUser();
     cargarMenu();
 
     let tipoEdit = localStorage.getItem("tipoEditTransaccion");

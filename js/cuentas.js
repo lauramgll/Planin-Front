@@ -1,8 +1,9 @@
 'use strict'
 
-import { URL, getCuentas, crearElemento, crearElementoTexto, vistaDecimal, cargarMenu, getTransacciones } from './utils.js';
+import { URL, getCuentas, crearElemento, crearElementoTexto, vistaDecimal, cargarMenu, getTransacciones, checkUser } from './utils.js';
 
 window.addEventListener("DOMContentLoaded", async () => {
+    checkUser();
     cargarMenu();
 
     let valorNeto = document.getElementById("valorNeto");
