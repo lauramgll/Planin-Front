@@ -39,11 +39,16 @@ export async function getTransacciones() {
 
   let transacciones = await transaccionesResponse.json();
 
-  // Quitar las transferencias
-  transacciones = transacciones.filter(transaccion => transaccion.tipo === 'ingreso' || transaccion.tipo === 'gasto');
-
-  //console.log(transacciones);
-  return transacciones;
+  if (transacciones == 0) {
+    console.log('No hay transacciones disponibles para este usuario');
+    return []; 
+  } else {
+    // Quitar las transferencias
+    transacciones = transacciones.filter(transaccion => transaccion.tipo === 'ingreso' || transaccion.tipo === 'gasto');
+  
+    console.log(transacciones);
+    return transacciones;
+  }
 }
 
 /*

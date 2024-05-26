@@ -41,10 +41,13 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         cargarTransaccionesSegunFiltro();
 
-        document.getElementById("vistaChart").classList.remove("visible");
-        document.getElementById("vistaTotales").classList.remove("oculto");
-        document.getElementById("vistaChart").classList.add("oculto");
-        document.getElementById("vistaTotales").classList.add("visible");
+        const vistaChart = document.getElementById("vistaChart");
+        const vistaTotales = document.getElementById("vistaTotales");
+    
+        vistaChart.classList.remove("visible");
+        vistaChart.classList.add("oculto");
+        vistaTotales.classList.remove("oculto");
+        vistaTotales.classList.add("visible");
     });
 
     document.getElementById("btnIngresos").addEventListener("click", async function () {
@@ -55,10 +58,13 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         cargarTransaccionesSegunFiltro();
 
-        document.getElementById("vistaChart").classList.remove("oculto");
-        document.getElementById("vistaTotales").classList.remove("visible");
-        document.getElementById("vistaChart").classList.add("visible");
-        document.getElementById("vistaTotales").classList.add("oculto");
+        const vistaChart = document.getElementById("vistaChart");
+        const vistaTotales = document.getElementById("vistaTotales");
+    
+        vistaChart.classList.remove("oculto");
+        vistaChart.classList.add("visible");
+        vistaTotales.classList.remove("visible");
+        vistaTotales.classList.add("oculto");
     });
 
     document.getElementById("btnGastos").addEventListener("click", async function () {
@@ -69,10 +75,13 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         cargarTransaccionesSegunFiltro();
 
-        document.getElementById("vistaChart").classList.remove("oculto");
-        document.getElementById("vistaTotales").classList.remove("visible");
-        document.getElementById("vistaChart").classList.add("visible");
-        document.getElementById("vistaTotales").classList.add("oculto");
+        const vistaChart = document.getElementById("vistaChart");
+        const vistaTotales = document.getElementById("vistaTotales");
+    
+        vistaChart.classList.remove("oculto");
+        vistaChart.classList.add("visible");
+        vistaTotales.classList.remove("visible");
+        vistaTotales.classList.add("oculto");
     });
 
     // Filtros
@@ -190,7 +199,43 @@ async function cargarTransacciones(cuenta, fecha, tipo = "") {
         listadoTransacciones.innerHTML = "";
         let noDatos = crearElementoTexto("No hay transacciones registradas para este período.", "p", listadoTransacciones);
         noDatos.classList.add("fuenteTransacciones", "noDatos");
+
+        // Ocultar gráficos si no hay datos
+        document.querySelector("main > header").classList.add("main-expandido");
+        document.querySelector("#vistaDesglose").classList.add("main-expandido");
+
+        const vistaChart = document.getElementById("vistaChart");
+        const vistaTotales = document.getElementById("vistaTotales");
+    
+        vistaChart.classList.remove("visible");
+        vistaChart.classList.add("oculto");
+        vistaTotales.classList.remove("visible");
+        vistaTotales.classList.add("oculto");
+
     } else {
+        
+        // Mostrar gráficos si hay datos
+        document.querySelector("main > header").classList.remove("main-expandido");
+        document.querySelector("#vistaDesglose").classList.remove("main-expandido");
+        if (tipo != "") {
+            const vistaChart = document.getElementById("vistaChart");
+            const vistaTotales = document.getElementById("vistaTotales");
+        
+            vistaChart.classList.remove("oculto");
+            vistaChart.classList.add("visible");
+            vistaTotales.classList.remove("visible");
+            vistaTotales.classList.add("oculto");
+        } else {
+            const vistaChart = document.getElementById("vistaChart");
+            const vistaTotales = document.getElementById("vistaTotales");
+        
+            vistaChart.classList.remove("visible");
+            vistaChart.classList.add("oculto");
+            vistaTotales.classList.remove("oculto");
+            vistaTotales.classList.add("visible");
+        }
+        
+
         listadoTransacciones.innerHTML = "";
 
         transacciones.forEach(transaccion => {

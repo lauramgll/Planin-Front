@@ -331,6 +331,22 @@ function cambiarFiltroCuenta(event) {
 async function cargarCuentas() {
     let cuentas = await getCuentas();
 
+    if (cuentas.length == 0) {
+        Swal.fire({
+            text: "Necesitas tener al menos una cuenta para crear transacciones",
+            icon: "info",
+            confirmButtonColor: "#727DF3",
+            cancelButtonColor: "#FC7B7F",
+            confirmButtonText: "Crear cuenta",
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.setItem("tipoEditCuenta", "nueva")
+                window.location.href = "../nueva_editar_cuenta.html";
+            }
+        });
+    }
+
     cuentas.forEach(cuenta => {
         let divFiltroCuenta = document.getElementById("filtroCuenta");
 

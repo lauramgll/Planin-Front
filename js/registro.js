@@ -17,22 +17,34 @@ window.addEventListener("load", () => {
     let errores = await validaRegistro(formdata);
     console.log(errores);
     if (Object.keys(errores).length > 0) {
-      mostrarErrores(form, errores);
+        mostrarErrores(form, errores);
     } else {
-      formdata.append("vistaDecimal", true);
-      await fetch(`${URL}/usuarios/crearUsuario`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(Object.fromEntries(formdata))
-      })
-      mostrarErrores(form, {});
-      console.log("Registro OK");
-      window.location.href = "../inicio_sesion.html";
+        formdata.append("vistaDecimal", true);
+        await fetch(`${URL}/usuarios/crearUsuario`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formdata))
+        });
+        mostrarErrores(form, {});
+        console.log("Registro OK");
+
+        Swal.fire({
+          icon: "success",
+          text: "¡Cuenta creada con éxito!",
+          showConfirmButton: false, 
+          timer: 2000,
+          timerProgressBar: true 
+      });
+
+      // Espera 3 segundos antes de redirigir a la página de inicio de sesión
+      setTimeout(() => {
+          window.location.href = "../inicio_sesion.html";
+      }, 2000);
     }
-  })
-})
+  });
+});
 
 async function validaRegistro(formdata) {
   const errores = {};

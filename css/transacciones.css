@@ -171,6 +171,12 @@ h5 {
     overflow-y: auto; 
 }
 
+.noDatos {
+    padding-top: 25px;
+    text-align: center;
+    color: rgba(95, 95, 95, 0.60);
+}
+
 @media (min-width: 840px) {
     body {
         grid-template-columns: 225px 350px auto;

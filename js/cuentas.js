@@ -6,39 +6,11 @@ window.addEventListener("DOMContentLoaded", async () => {
     checkUser();
     cargarMenu();
 
-    let valorNeto = document.getElementById("valorNeto");
-
     // Cuentas usuario
     let cuentas = await getCuentas();
-    actualizarSaldoCuentas(cuentas);
+    await actualizarSaldoCuentas(cuentas);
 
-    let sumaSaldo = 0;
-    cuentas.forEach(cuenta => {
-        sumaSaldo += cuenta.saldo;
-
-        let listadoCuentas = document.getElementById("vistaCuentas");
-
-        let divCuenta = crearElemento("div", listadoCuentas);
-        if (cuenta.predeterminada == "Sí") {
-            divCuenta.classList.add("predeterminada");
-        }
-
-        let nombreCuenta = crearElementoTexto(cuenta.nombre, "p", divCuenta);
-        nombreCuenta.classList.add("fuenteTransacciones");
-
-        let saldoCuenta = crearElementoTexto(vistaDecimal(cuenta.saldo), "p", divCuenta);
-        saldoCuenta.classList.add("fuenteTransacciones");
-
-        // Ir a cuenta
-        divCuenta.addEventListener("click", function () {
-            localStorage.setItem("cuentaSeleccionada", JSON.stringify(cuenta));
-            localStorage.setItem("tipoEditCuenta", "editar")
-            window.location.href = "../nueva_editar_cuenta.html";
-        });
-    });
-
-    // Valor neto
-    valorNeto.textContent = vistaDecimal(sumaSaldo);
+    cargarCuentas(cuentas);
 
     // Nueva cuenta
     document.getElementById("nuevaCuenta").addEventListener("click", function () {
@@ -56,7 +28,7 @@ export async function actualizarSaldoCuentas(cuentas) {
     let transaccionesUsuario = await getTransacciones();
 
     cuentas.forEach(async cuenta => {
-        let saldoCuenta = cuenta.saldo;
+        let saldoCuenta = 0;
 
         let transaccionesCuenta = transaccionesUsuario.filter(transaccion => transaccion.idCuenta === cuenta.id);
 
@@ -68,7 +40,7 @@ export async function actualizarSaldoCuentas(cuentas) {
             }
         })
 
-        cuenta.saldo = saldoCuenta - cuenta.saldo;
+        cuenta.saldo = saldoCuenta;
 
         await fetch(`${URL}/cuentas/${cuenta.id}`, {
             method: 'PUT',
@@ -79,4 +51,35 @@ export async function actualizarSaldoCuentas(cuentas) {
         });
         console.log("Saldo actualizado OK");
     });
+}
+
+export function cargarCuentas(cuentas) {
+    let valorNeto = document.getElementById("valorNeto");
+
+    let sumaSaldo = 0;
+    cuentas.forEach(cuenta => {
+        sumaSaldo += cuenta.saldo + cuenta.saldoInicial;
+
+        let listadoCuentas = document.getElementById("vistaCuentas");
+
+        let divCuenta = crearElemento("div", listadoCuentas);
+        if (cuenta.predeterminada == "Sí") {
+            divCuenta.classList.add("predeterminada");
+        }
+
+        let nombreCuenta = crearElementoTexto(cuenta.nombre, "p", divCuenta);
+        nombreCuenta.classList.add("fuenteTransacciones");
+
+        let saldoCuenta = crearElementoTexto(vistaDecimal(cuenta.saldo + cuenta.saldoInicial), "p", divCuenta);
+        saldoCuenta.classList.add("fuenteTransacciones");
+
+        // Ir a cuenta
+        divCuenta.addEventListener("click", function () {
+            localStorage.setItem("cuentaSeleccionada", JSON.stringify(cuenta));
+            localStorage.setItem("tipoEditCuenta", "editar")
+            window.location.href = "../nueva_editar_cuenta.html";
+        });
+    });
+
+    valorNeto.textContent = vistaDecimal(sumaSaldo);
 }

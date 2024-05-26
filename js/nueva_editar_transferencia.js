@@ -18,6 +18,21 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     // Cuentas usuario
     let cuentas = await getCuentas();
+    if (cuentas.length <= 1) {
+        Swal.fire({
+            text: "Necesitas tener al menos dos cuentas para realizar transferencias",
+            icon: "info",
+            confirmButtonColor: "#727DF3",
+            cancelButtonColor: "#FC7B7F",
+            confirmButtonText: "Crear cuenta",
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.setItem("tipoEditCuenta", "nueva")
+                window.location.href = "../nueva_editar_cuenta.html";
+            }
+        });
+    }
 
     // Ordenar las cuentas, colocando la predeterminada primero
     cuentas.sort((a, b) => {

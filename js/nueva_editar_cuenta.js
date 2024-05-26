@@ -15,7 +15,11 @@ window.addEventListener("DOMContentLoaded", () => {
     let nombre = document.getElementById("nombre");
     let predeterminada = document.querySelector("#predeterminada > p");
 
-    let idCuenta = JSON.parse(localStorage.getItem("cuentaSeleccionada")).id;
+    let idCuenta;
+    if(localStorage.getItem("cuentaSeleccionada") != null) {
+        idCuenta = JSON.parse(localStorage.getItem("cuentaSeleccionada")).id;
+    }
+    
     let numeroInput = document.getElementById('numeroInput');
 
     titulos.forEach(titulo => {
@@ -31,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
             btnBorrar.style.display = "block";
             txtSaldo.textContent = "Saldo";
             nombre.value = JSON.parse(localStorage.getItem("cuentaSeleccionada")).nombre;
-            numeroInput.value = (JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo).toFixed(2).toString().replace('.', ',');
+            numeroInput.value = (JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo + JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldoInicial).toFixed(2).toString().replace('.', ',');
             predeterminada.textContent = JSON.parse(localStorage.getItem("cuentaSeleccionada")).predeterminada;
 
             if (predeterminada.textContent == "Sí") {
@@ -74,7 +78,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     mostrarErroresNombreCuenta(nombre, errores);
                 } else {
                     const dataNueva = {
-                        saldo: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
+                        saldoInicial: parseFloat(numeroInput.value.replace(/\./g, '').replace(',', '.')),
+                        saldo: 0.00,
                         nombre: nombre.value,
                         predeterminada: predeterminada.textContent,
                         idUsuario: localStorage.getItem("id")
