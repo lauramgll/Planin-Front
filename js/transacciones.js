@@ -50,6 +50,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         elemento.addEventListener("click", cambiarFiltroTipo);
     });
     cargarTransacciones(cuentaActiva, fechaActual, categoriaActiva, tipoActivo);
+    actualizarVista();
 
     // Filtros
     const transparenciaFiltrado = document.getElementById("transparenciaFiltrado");

@@ -72,7 +72,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
                 const saldoCuentaOrigen = await obtenerCuenta(idCuentaOrigen);
 
-                if (importe <= saldoCuentaOrigen.saldo) {
+                if (importe <= (saldoCuentaOrigen.saldo)) {
                     error.style.display = "none";
 
                     const dataOrigen = {
@@ -106,10 +106,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
                     if(response.ok) {
                         console.log("Transferencia creada OK");
-                        let responseActualizacion = await actualizarSaldosCuentas(idCuentaOrigen, idCuentaDestino, importe);
-                        if(response.ok) {
-                            location.href = "../cuentas.html";
-                        }
+                        await actualizarSaldosCuentas(idCuentaOrigen, idCuentaDestino, importe);
+                        await delay(1000); 
+                        location.href = "../cuentas.html";
                     }
                 } else {
                     error.style.display = "block";
@@ -212,4 +211,8 @@ async function actualizarSaldosCuentas(idCuentaOrigen, idCuentaDestino, importe)
 async function obtenerCuenta(idCuenta) {
     const response = await fetch(`${URL}/cuentas/${idCuenta}`);
     return await response.json();
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -51,6 +51,27 @@ export async function getTransacciones() {
   }
 }
 
+export async function getTransaccionesSinFiltrar() {
+  let idUsuario = localStorage.getItem("id");
+
+  const transaccionesResponse = await fetch(`${URL}/transacciones/usuario/${idUsuario}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+
+  let transacciones = await transaccionesResponse.json();
+
+  if (transacciones == 0) {
+    console.log('No hay transacciones disponibles para este usuario');
+    return []; 
+  } else {
+    console.log(transacciones);
+    return transacciones;
+  }
+}
+
 /*
 export async function getTransacciones() {
   let idUsuario = localStorage.getItem("id");

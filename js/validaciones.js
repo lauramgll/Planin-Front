@@ -26,7 +26,7 @@ export function validaEmail(campo, errores) {
 
 export function validaPassword(campo, errores) {
   let correcto = true;
-  let passexpreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+  let passexpreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W]{6,}$/;
   if (!passexpreg.test(campo)) {
     errores["password"] = "La contraseña debe tener mínimo 6 caracteres e incluir al menos 1 dígito.";
     correcto = false;

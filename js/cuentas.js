@@ -1,6 +1,6 @@
 'use strict'
 
-import { URL, getCuentas, crearElemento, crearElementoTexto, vistaDecimal, cargarMenu, getTransacciones, checkUser } from './utils.js';
+import { URL, getCuentas, crearElemento, crearElementoTexto, vistaDecimal, cargarMenu, checkUser, getTransaccionesSinFiltrar } from './utils.js';
 
 window.addEventListener("DOMContentLoaded", async () => {
     checkUser();
@@ -25,10 +25,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 export async function actualizarSaldoCuentas(cuentas) {
-    let transaccionesUsuario = await getTransacciones();
+    let transaccionesUsuario = await getTransaccionesSinFiltrar();
 
     cuentas.forEach(async cuenta => {
-        let saldoCuenta = 0;
+        let saldoCuenta = cuenta.saldoInicial;
 
         let transaccionesCuenta = transaccionesUsuario.filter(transaccion => transaccion.idCuenta === cuenta.id);
 
@@ -37,6 +37,10 @@ export async function actualizarSaldoCuentas(cuentas) {
                 saldoCuenta += transaccion.importe;
             } else if (transaccion.tipo === 'gasto') {
                 saldoCuenta -= transaccion.importe;
+            } else if (transaccion.tipo === 'transferencia_origen') {
+                saldoCuenta -= transaccion.importe;
+            } else if (transaccion.tipo === 'transferencia_destino') {
+                saldoCuenta += transaccion.importe;
             }
         })
 
@@ -58,7 +62,7 @@ export function cargarCuentas(cuentas) {
 
     let sumaSaldo = 0;
     cuentas.forEach(cuenta => {
-        sumaSaldo += cuenta.saldo + cuenta.saldoInicial;
+        sumaSaldo += cuenta.saldo;
 
         let listadoCuentas = document.getElementById("vistaCuentas");
 
@@ -70,7 +74,7 @@ export function cargarCuentas(cuentas) {
         let nombreCuenta = crearElementoTexto(cuenta.nombre, "p", divCuenta);
         nombreCuenta.classList.add("fuenteTransacciones");
 
-        let saldoCuenta = crearElementoTexto(vistaDecimal(cuenta.saldo + cuenta.saldoInicial), "p", divCuenta);
+        let saldoCuenta = crearElementoTexto(vistaDecimal(cuenta.saldo), "p", divCuenta);
         saldoCuenta.classList.add("fuenteTransacciones");
 
         // Ir a cuenta

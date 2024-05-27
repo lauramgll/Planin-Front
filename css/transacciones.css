@@ -209,7 +209,7 @@ h5 {
     }
 
     #transparenciaFiltrado {
-        display: flex;
+        display: none;
         background-color: #FFFFFF;
         grid-column: 2;
         width: 350px;
