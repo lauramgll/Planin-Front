@@ -333,7 +333,12 @@ async function cargarTransacciones(cuenta, fecha, tipo = "") {
                     legend: {
                         display: false
                     }
-                }
+                },
+                interaction: {
+                    mode: 'none',
+                    intersect: false
+                },
+                events: [] 
             }
         });
     }
@@ -488,7 +493,12 @@ function vistaTotales(transacciones) {
                 legend: {
                     display: false
                 }
-            }
+            },
+            interaction: {
+                mode: 'none',
+                intersect: false
+            },
+            events: []
         }
     });
 }
