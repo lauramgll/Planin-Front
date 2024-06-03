@@ -1,6 +1,6 @@
 'use strict'
 
-export const URL = 'https://juanda.jdfs.dev:8888';
+export const URL = 'https://juanda.jdfs.dev';
 
 export function crearElemento(tipo = "br", padre = contenido) {
   let elemento = document.createElement(tipo);
