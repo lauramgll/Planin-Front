@@ -1,6 +1,6 @@
 'use strict'
 
-export const URL = 'https://planin-flax.vercel.app/138.68.113.173:8888';
+export const URL = 'http://138.68.113.173:8888';
 
 export function crearElemento(tipo = "br", padre = contenido) {
   let elemento = document.createElement(tipo);
