@@ -1,6 +1,6 @@
 'use strict'
 
-export const URL = 'http://localhost:8888';
+export const URL = 'https://planinback.netlify.app';
 
 export function crearElemento(tipo = "br", padre = contenido) {
   let elemento = document.createElement(tipo);
