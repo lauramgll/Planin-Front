@@ -13,6 +13,9 @@ let idUsuario = localStorage.getItem("id");
 localStorage.removeItem("idCategoria");
 localStorage.removeItem("tipoTransaccion");
 localStorage.removeItem("transaccionSeleccionada");
+localStorage.removeItem("importeTransaccion");
+localStorage.removeItem("fechaTransaccion"); 
+localStorage.removeItem("notasTransaccion");
 
 window.addEventListener("DOMContentLoaded", async () => {
     checkUser();
