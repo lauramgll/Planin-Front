@@ -25,6 +25,21 @@ window.addEventListener("DOMContentLoaded", async () => {
     let cuentas = await getCuentas();
     let listadoCuentas = document.getElementById("cuentas");
 
+    // Si ya ha ido a la página de categorías, para no perder los datos que ya haya seleccionado previamente comprobar si hay algo guardado
+    let importeTransaccion = localStorage.getItem("importeTransaccion");
+    let fechaTransaccion = localStorage.getItem("fechaTransaccion"); 
+    let notasTransaccion = localStorage.getItem("notasTransaccion");
+
+    if(importeTransaccion != null) {
+        numeroInput.value = importeTransaccion;
+    }
+    if(fechaTransaccion != null) {
+        fecha.value = fechaTransaccion;
+    }
+    if(notasTransaccion != null) {
+        notas.value = notasTransaccion;
+    }
+
     titulos.forEach(titulo => {
         if (tipoEdit == "nueva") {
             titulo.textContent = "NUEVA TRANSACCIÓN";
@@ -50,6 +65,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
             // Elegir categoría
             document.getElementById("elegirCat").addEventListener('click', () => {
+                importeTransaccion = localStorage.setItem("importeTransaccion", numeroInput.value);
+                fechaTransaccion = localStorage.setItem("fechaTransaccion", fecha.value);
+                notasTransaccion = localStorage.setItem("notasTransaccion", notas.value);
                 window.location.href = "../categorias.html";
             });
 
