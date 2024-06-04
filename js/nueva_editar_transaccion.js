@@ -18,6 +18,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     let numeroInput = document.getElementById('numeroInput');
     let categoria = document.getElementById("categoriaSeleccionada");
     let fecha = document.getElementById("fecha");
+    fecha.value = new Date().toISOString().split('T')[0];
     let notas = document.getElementById("textAreaNotas");
 
     // Cuentas usuario
