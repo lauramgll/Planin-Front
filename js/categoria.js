@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
             let nombreCat = cat[0];
             localStorage.setItem('idCategoria', idCat);
             localStorage.setItem('nombreCategoria', nombreCat);
-            history.back();
+            window.location.href = "nueva_editar_transaccion.html";
         });
     });
 })
