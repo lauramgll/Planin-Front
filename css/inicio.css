@@ -162,7 +162,7 @@ h5 {
 
 #categorias {
     display: grid;
-    row-gap: 17px;
+    row-gap: 12px;
     column-gap: 7px;
     min-width: 150px;
     grid-template-columns: auto 10px auto;
@@ -246,10 +246,6 @@ h5 {
 .noDatos {
     text-align: center;
     color: rgba(95, 95, 95, 0.60);
-}
-
-footer {
-    bottom: 0;
 }
 
 @media (min-width: 840px) {
