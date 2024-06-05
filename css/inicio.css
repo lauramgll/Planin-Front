@@ -167,13 +167,9 @@ h5 {
     min-width: 150px;
     grid-template-columns: auto 10px auto;
     align-items: center;
-    overflow-y: hidden;
+    overflow-y: auto;
     max-height: 115px;
     overflow-x: none;
-}
-
-#categorias:hover {
-    overflow-y: auto; 
 }
 
 #transparenciaFiltrado {
@@ -306,8 +302,12 @@ h5 {
 
     #categorias {
         max-height: 250px;
+        overflow-y: hidden;
     }
 
+    #categorias:hover {
+        overflow-y: auto; 
+    }
     /*
     .main-expandido {
         grid-column: 1 / 3; 
