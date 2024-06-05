@@ -12,34 +12,52 @@
 </head>
 <body>
     <div id="indexMovil">
-        <img id="logo" src="./images/logo.png" alt="logo">
+        <img class="logo" src="./images/logo.png" alt="logo">
         <main>
             <section>
-                <h1>Gestionar tus finanzas personales nunca fue tan fácil</h1>
+                <h2>Gestionar tus finanzas personales nunca fue tan fácil</h2>
                 <h3>El control de tu dinero, al alcance de tu mano. ¡Descúbrelo!</h3>
-                <img id="ilustracionInicio" src="./images/vectorInicio.png" alt="imagen index">    
+                <img class="ilustracionInicio" src="./images/vectorInicio.png" alt="imagen index">    
             </section>
             <div>
-                <a href="./inicio_sesion.html"><button class="botonAzul">Iniciar sesión</button></a>
-                <button class="botonTransparente"><a href="./registro.html">Registrarse</a></button> 
+                <button class="botonAzul">Iniciar sesión</button>
+                <button class="botonTransparente">Registrarse</button> 
             </div>
         </main>
     </div>
     <div id="indexWeb">
         <header>
-            <img id="logo" src="./images/logo.png" alt="logo">
+            <img class="logo" src="./images/logo.png" alt="logo">
             <div>
-                <a href="./inicio_sesion.html"><button class="botonAzul">Iniciar sesión</button></a>
-                <button class="botonTransparente"><a href="./registro.html">Registrarse</a></button> 
+                <button class="botonAzul">Iniciar sesión</button>
+                <button class="botonTransparente">Registrarse</button> 
             </div>
         </header>
-        <main>
-            <img id="ilustracionInicio" src="./images/vectorInicio.png" alt="imagen index">    
+        <div>
+            <img class="ilustracionInicio" src="./images/vectorInicio.png" alt="imagen index">    
             <div>
-                <h1>Gestionar tus finanzas personales nunca fue tan fácil</h1>
+                <h2>Gestionar tus finanzas personales nunca fue tan fácil</h2>
                 <h3>El control de tu dinero, al alcance de tu mano. ¡Descúbrelo!</h3>
             </div>
-        </main>
+        </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const botonesIniciarSesion = document.querySelectorAll('.botonAzul');
+            botonesIniciarSesion.forEach(function(boton) {
+                boton.addEventListener('click', function() {
+                    window.location.href = './inicio_sesion.html';
+                });
+            });
+    
+            const botonesRegistrarse = document.querySelectorAll('.botonTransparente');
+            botonesRegistrarse.forEach(function(boton) {
+                boton.addEventListener('click', function() {
+                    window.location.href = './registro.html';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
