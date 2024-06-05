@@ -200,26 +200,26 @@ async function cargarTransacciones(cuenta, fecha, tipo = "") {
         let noDatos = crearElementoTexto("No hay transacciones registradas para este período.", "p", listadoTransacciones);
         noDatos.classList.add("fuenteTransacciones", "noDatos");
 
-        /*
-        // Ocultar gráficos si no hay datos
-        document.querySelector("main > header").classList.add("main-expandido");
-        document.querySelector("#vistaDesglose").classList.add("main-expandido");
+        // Ocultar gráficos en móvil si no hay datos
+        if (window.matchMedia("(max-width: 840px)").matches) {
+            document.querySelector("main > header").classList.add("main-expandido");
+            document.querySelector("#vistaDesglose").classList.add("main-expandido");
 
-        const vistaChart = document.getElementById("vistaChart");
-        const vistaTotales = document.getElementById("vistaTotales");
-    
-        vistaChart.classList.remove("visible");
-        vistaChart.classList.add("oculto");
-        vistaTotales.classList.remove("visible");
-        vistaTotales.classList.add("oculto");
-        */
-
+            const vistaChart = document.getElementById("vistaChart");
+            //const vistaTotales = document.getElementById("vistaTotales");
+        
+            vistaChart.classList.remove("visible");
+            vistaChart.classList.add("oculto");
+           // vistaTotales.classList.remove("visible");
+        //vistaTotales.classList.add("oculto");
+        }
     } else {
-        /*
-        // Mostrar gráficos si hay datos
-        document.querySelector("main > header").classList.remove("main-expandido");
-        document.querySelector("#vistaDesglose").classList.remove("main-expandido");
-        */
+        // Mostrar gráficos en móvil si hay datos
+        if (window.matchMedia("(max-width: 840px)").matches) {
+            document.querySelector("main > header").classList.remove("main-expandido");
+            document.querySelector("#vistaDesglose").classList.remove("main-expandido");
+        }
+
         if (tipo != "") {
             const vistaChart = document.getElementById("vistaChart");
             const vistaTotales = document.getElementById("vistaTotales");
