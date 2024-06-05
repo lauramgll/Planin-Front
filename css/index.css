@@ -5,7 +5,7 @@
 }
 
 body {
-    padding: 30px 50px;
+    padding: 40px 50px 20px 50px;
 }
 
 h1 {
@@ -40,7 +40,7 @@ section {
 #indexMovil {
     display: flex;
     flex-direction: column;
-    height: calc(100% - 45px);
+    height: calc(100% - 55px);
 }
 
 .botonTransparente {
@@ -95,6 +95,12 @@ a {
 
     .botonAzul {
         order: 2;
+    }
+
+    #ilustracionInicio {
+        width: 290px;
+        height: 290px;
+        margin: 40px 0px 65px 0px;
     }
 
     main {
