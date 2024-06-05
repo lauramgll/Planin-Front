@@ -6,11 +6,11 @@ header ion-icon {
 
 body {
     display: grid;
-    grid-template-rows: 100px auto 90px;
+    grid-template-rows: 80px auto 90px;
 }
 
 header {
-    padding: 68px 35px 20px 35px;
+    padding: 40px 35px 20px 35px;
     display: flex;
     align-items: center;
     justify-content: center;

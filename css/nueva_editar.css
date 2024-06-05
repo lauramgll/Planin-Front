@@ -199,6 +199,11 @@ p.error, span.error {
     padding: 10px 0px;
 }
 
+input:disabled {
+    background-color:transparent;
+    color: #5F5F5F;
+}
+
 /* Cuentas */
 input[type="text"] {
     border: none;
