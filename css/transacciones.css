@@ -40,7 +40,7 @@ main > div {
 #vistaTransacciones {
     padding-bottom: 20px;
     overflow-y: auto;
-    max-height: calc(100vh - 305px);
+    max-height: calc(100vh - 295px);
 }
 
 .grupoFecha > div {
@@ -159,11 +159,7 @@ h5 {
 
 #filtrado {
     max-height: calc(100vh - 130px);
-    overflow-y: hidden;
-}
-
-#filtrado:hover {
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
 .noDatos {
@@ -249,5 +245,13 @@ h5 {
         grid-column: 2 / span 2; 
         padding-right: 100px;
         padding-left: 100px;
+    }
+
+    #filtrado {
+        overflow-y: hidden;
+    }
+
+    #filtrado:hover {
+        overflow-y: auto; 
     }
 }
