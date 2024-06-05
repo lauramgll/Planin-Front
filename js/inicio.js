@@ -200,6 +200,7 @@ async function cargarTransacciones(cuenta, fecha, tipo = "") {
         let noDatos = crearElementoTexto("No hay transacciones registradas para este período.", "p", listadoTransacciones);
         noDatos.classList.add("fuenteTransacciones", "noDatos");
 
+        /*
         // Ocultar gráficos si no hay datos
         document.querySelector("main > header").classList.add("main-expandido");
         document.querySelector("#vistaDesglose").classList.add("main-expandido");
@@ -211,12 +212,14 @@ async function cargarTransacciones(cuenta, fecha, tipo = "") {
         vistaChart.classList.add("oculto");
         vistaTotales.classList.remove("visible");
         vistaTotales.classList.add("oculto");
+        */
 
     } else {
-        
+        /*
         // Mostrar gráficos si hay datos
         document.querySelector("main > header").classList.remove("main-expandido");
         document.querySelector("#vistaDesglose").classList.remove("main-expandido");
+        */
         if (tipo != "") {
             const vistaChart = document.getElementById("vistaChart");
             const vistaTotales = document.getElementById("vistaTotales");
