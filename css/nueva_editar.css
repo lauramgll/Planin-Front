@@ -204,6 +204,10 @@ input:disabled {
     color: #5F5F5F;
 }
 
+input[type="text"]:disabled {
+    -webkit-text-fill-color: #5F5F5F !important; 
+}
+
 /* Cuentas */
 input[type="text"] {
     border: none;
