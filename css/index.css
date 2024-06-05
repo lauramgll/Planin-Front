@@ -31,8 +31,8 @@ section {
 }
 
 #ilustracionInicio {
-    width: 290px;
-    height: 290px;
+    width: 250px;
+    height: 250px;
     margin: 40px 0px 65px 0px;
     align-self: center;
 }
@@ -40,6 +40,7 @@ section {
 #indexMovil {
     display: flex;
     flex-direction: column;
+    height: calc(100% - 100px);
 }
 
 .botonTransparente {
