@@ -10,7 +10,7 @@ body {
 
 header {
     align-items: center;
-    padding: 68px 35px 20px 35px;
+    padding: 50px 35px 20px 35px;
 }
 
 header div {
@@ -81,7 +81,7 @@ h3 {
 
 #vistaDesglose {
     border-radius: 10px 10px 0px 0px;
-    padding: 50px 50px 25px 50px;
+    padding: 40px 50px 25px 50px;
     position: relative;
     margin-top: -10px;
     z-index: 1;
@@ -102,7 +102,7 @@ h5 {
     padding: 7px 50px;
     border-radius: 50px;
     border: 1px solid #727DF3;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     cursor: pointer;
 }
 
