@@ -5,7 +5,7 @@ ion-icon {
 
 body {
     display: grid;
-    grid-template-rows: 100px auto 90px;
+    grid-template-rows: 80px auto 90px;
 }
 
 header {
@@ -81,7 +81,7 @@ h3 {
 
 #vistaDesglose {
     border-radius: 10px 10px 0px 0px;
-    padding: 30px 50px 20px 50px;
+    padding: 30px 50px 25px 50px;
     position: relative;
     margin-top: -10px;
     z-index: 1;
