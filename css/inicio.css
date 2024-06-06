@@ -169,7 +169,7 @@ h5 {
     align-items: center;
     overflow-y: auto;
     max-height: 115px;
-    overflow-x: none;
+    overflow-x: hidden;
 }
 
 #transparenciaFiltrado {

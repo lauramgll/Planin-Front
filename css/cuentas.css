@@ -96,7 +96,9 @@ h2 {
 }
 
 footer > div:nth-of-type(1) img {
-    rotate: 0deg;
+    -webkit-transform: rotate(0deg); 
+    -moz-transform: rotate(0deg);    
+    transform: rotate(0deg); 
 }
 
 @media (min-width: 840px) {
@@ -141,6 +143,8 @@ footer > div:nth-of-type(1) img {
     }
 
     aside > div:nth-of-type(1) img {
-        rotate: 0deg;
+        -webkit-transform: rotate(0deg); 
+        -moz-transform: rotate(0deg);    
+        transform: rotate(0deg); 
     }
 }

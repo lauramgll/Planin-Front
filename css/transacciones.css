@@ -26,7 +26,9 @@ header div {
 }
 
 footer > div:nth-of-type(1) img {
-    rotate: 0deg;
+    -webkit-transform: rotate(0deg); 
+    -moz-transform: rotate(0deg);    
+    transform: rotate(0deg); 
 }
 
 main > div {
@@ -204,7 +206,7 @@ h5 {
         background-color: #FFFFFF;
         grid-column: 2;
         width: 350px;
-        border-radius: none;
+        border-radius: 0;
         justify-content: center;
         align-items: center;
         padding: 0px 20px;
@@ -238,7 +240,9 @@ h5 {
     }
 
     aside > div:nth-of-type(1) img {
-        rotate: 0deg;
+        -webkit-transform: rotate(0deg); 
+        -moz-transform: rotate(0deg);    
+        transform: rotate(0deg); 
     }
 
     .main-expandido {

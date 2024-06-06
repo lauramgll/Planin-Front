@@ -138,7 +138,9 @@ footer div {
 footer > div:nth-of-type(1) img {
     width: 15px;
     height: 15px;
-    rotate: 180deg;
+    -webkit-transform: rotate(180deg); 
+    -moz-transform: rotate(180deg);    
+    transform: rotate(180deg); 
 }
 
 footer img {
@@ -212,7 +214,9 @@ div:where(.swal2-container).swal2-backdrop-show, div:where(.swal2-container).swa
     }
 
     aside > div:nth-of-type(1) img {
-        rotate: 180deg;
+        -webkit-transform: rotate(180deg); 
+        -moz-transform: rotate(180deg);    
+        transform: rotate(180deg); 
     }
 
     aside > div:last-of-type {
