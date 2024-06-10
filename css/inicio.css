@@ -158,6 +158,7 @@ h5 {
 
 #vistaChart {
     column-gap: 10%;
+    max-height: 500px;
 }
 
 #categorias {
