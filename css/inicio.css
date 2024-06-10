@@ -43,6 +43,7 @@ h3 {
 #vistaTotales {
     flex-direction: column;
     row-gap: 17px;
+    max-height: 590px;
 }
 
 #vistaTotales div:not(#chartTotales) {
