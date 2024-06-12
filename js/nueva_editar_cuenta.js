@@ -128,7 +128,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         body: JSON.stringify((dataEditar))
                     })
                     console.log("Cambio cuenta OK");
-                    redireccion = true;
+                    //redireccion = true;
                 }
             }
 
