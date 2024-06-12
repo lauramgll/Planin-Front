@@ -28,7 +28,12 @@ export async function actualizarSaldoCuentas(cuentas) {
     let transaccionesUsuario = await getTransaccionesSinFiltrar();
 
     cuentas.forEach(async cuenta => {
-        let saldoCuenta = cuenta.saldoInicial;
+        let saldoCuenta;
+        if(cuenta.saldoInicial == null) {
+            saldoCuenta = 0;
+        } else {
+            saldoCuenta = cuenta.saldoInicial;
+        }
 
         let transaccionesCuenta = transaccionesUsuario.filter(transaccion => transaccion.idCuenta === cuenta.id);
 
@@ -46,10 +51,6 @@ export async function actualizarSaldoCuentas(cuentas) {
 
         cuenta.saldo = saldoCuenta;
         console.log(`Saldo calculado de la cuenta ${cuenta.id}: ${saldoCuenta}`);
-
-        /*if(cuenta.saldo == null) {
-            cuenta.saldo = 0;
-        }*/
 
         await fetch(`${URL}/cuentas/${cuenta.id}`, {
             method: 'PUT',
