@@ -28,12 +28,7 @@ export async function actualizarSaldoCuentas(cuentas) {
     let transaccionesUsuario = await getTransaccionesSinFiltrar();
 
     cuentas.forEach(async cuenta => {
-        let saldoCuenta;
-        if(cuenta.saldoInicial == null) {
-            saldoCuenta = 0;
-        } else {
-            saldoCuenta = cuenta.saldoInicial;
-        }
+        let saldoCuenta = cuenta.saldoInicial;
 
         let transaccionesCuenta = transaccionesUsuario.filter(transaccion => transaccion.idCuenta === cuenta.id);
 

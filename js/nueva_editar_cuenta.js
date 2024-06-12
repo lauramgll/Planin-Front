@@ -114,6 +114,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     mostrarErroresNombreCuenta(nombre, errores);
                 } else {
                     const dataEditar = {
+                        saldoInicial: JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldoInicial,
                         saldo: JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo,
                         nombre: nombre.value,
                         predeterminada: predeterminada.textContent,
