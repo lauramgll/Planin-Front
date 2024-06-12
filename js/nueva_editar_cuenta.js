@@ -129,6 +129,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     })
                     console.log("Cambio cuenta OK");
                     redireccion = true;
+
+                    await getCuentas();
                 }
             }
 
