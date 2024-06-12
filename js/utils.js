@@ -220,6 +220,10 @@ export function cargarMenu() {
 export function vistaDecimal(importe) {
   let vista = localStorage.getItem("decimal");
 
+  if(importe == null) {
+    importe = 0;
+  }
+
   if(vista === "true") {
     return importe.toFixed(2).toString().replace('.', ',') + ' €';
   } else {
