@@ -120,15 +120,22 @@ window.addEventListener("DOMContentLoaded", () => {
                         idUsuario: localStorage.getItem("id")
                     };
 
-                    await fetch(`${URL}/cuentas/${idCuenta}`, {
+                    const response = await fetch(`${URL}/cuentas/${idCuenta}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify((dataEditar))
                     })
-                    console.log("Cambio cuenta OK");
-                    redireccion = true;
+
+                    if (response.ok) {
+                        console.log("Cambio cuenta OK");
+                        const updatedCuenta = await response.json();
+                        console.log("Respuesta del servidor:", updatedCuenta);
+                        redireccion = true;
+                    } else {
+                        console.log("Error al actualizar la cuenta:", response.statusText);
+                    }
                 }
             }
 
