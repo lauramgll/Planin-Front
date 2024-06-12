@@ -129,6 +129,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     })
                     console.log("Cambio cuenta OK");
                     //redireccion = true;
+                    console.log(dataEditar);
                 }
             }
 
