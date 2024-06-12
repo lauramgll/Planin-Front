@@ -137,10 +137,10 @@ window.addEventListener("DOMContentLoaded", () => {
                 const cuentas = await getCuentas();
                 const cuentasPorActualizar = cuentas.filter(cuenta => cuenta.id != idCuenta);
                 
-                cuentasPorActualizar.forEach(async cuenta => {
+                const updatePromises = cuentasPorActualizar.map(cuenta => {
                     cuenta.predeterminada = "No";
                     console.log(cuenta);
-                    await fetch(`${URL}/cuentas/${cuenta.id}`, {
+                    return fetch(`${URL}/cuentas/${cuenta.id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
@@ -148,6 +148,8 @@ window.addEventListener("DOMContentLoaded", () => {
                         body: JSON.stringify(cuenta)
                     });
                 });
+
+                await Promise.all(updatePromises);
             }
 
             if(redireccion) {
