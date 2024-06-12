@@ -45,6 +45,7 @@ export async function actualizarSaldoCuentas(cuentas) {
         })
 
         cuenta.saldo = saldoCuenta;
+        console.log(`Saldo calculado de la cuenta ${cuenta.id}: ${saldoCuenta}`);
 
         /*if(cuenta.saldo == null) {
             cuenta.saldo = 0;

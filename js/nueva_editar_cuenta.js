@@ -114,28 +114,21 @@ window.addEventListener("DOMContentLoaded", () => {
                     mostrarErroresNombreCuenta(nombre, errores);
                 } else {
                     const dataEditar = {
-                        saldo: (JSON.parse(localStorage.getItem("cuentaSeleccionada"))).saldo,
+                        saldo: JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo,
                         nombre: nombre.value,
                         predeterminada: predeterminada.textContent,
                         idUsuario: localStorage.getItem("id")
                     };
 
-                    const response = await fetch(`${URL}/cuentas/${idCuenta}`, {
+                    await fetch(`${URL}/cuentas/${idCuenta}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify((dataEditar))
                     })
-
-                    if (response.ok) {
-                        console.log("Cambio cuenta OK");
-                        const updatedCuenta = await response.json();
-                        console.log("Respuesta del servidor:", updatedCuenta);
-                        redireccion = true;
-                    } else {
-                        console.log("Error al actualizar la cuenta:", response.statusText);
-                    }
+                    console.log("Cambio cuenta OK");
+                    redireccion = true;
                 }
             }
 
