@@ -46,9 +46,9 @@ export async function actualizarSaldoCuentas(cuentas) {
 
         cuenta.saldo = saldoCuenta;
 
-        if(cuenta.saldo == null) {
+        /*if(cuenta.saldo == null) {
             cuenta.saldo = 0;
-        }
+        }*/
 
         await fetch(`${URL}/cuentas/${cuenta.id}`, {
             method: 'PUT',
