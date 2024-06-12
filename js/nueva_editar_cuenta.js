@@ -35,7 +35,11 @@ window.addEventListener("DOMContentLoaded", () => {
             btnBorrar.style.display = "block";
             txtSaldo.textContent = "Saldo";
             nombre.value = JSON.parse(localStorage.getItem("cuentaSeleccionada")).nombre;
-            numeroInput.value = (JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo).toFixed(2).toString().replace('.', ',');
+            if(localStorage.getItem("cuentaSeleccionada").saldo == null) {
+                numeroInput.value = "0,00";
+            } else {
+                numeroInput.value = (JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo).toFixed(2).toString().replace('.', ',');
+            }
             predeterminada.textContent = JSON.parse(localStorage.getItem("cuentaSeleccionada")).predeterminada;
 
             if (predeterminada.textContent == "Sí") {
