@@ -35,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
             btnBorrar.style.display = "block";
             txtSaldo.textContent = "Saldo";
             nombre.value = JSON.parse(localStorage.getItem("cuentaSeleccionada")).nombre;
-            if(localStorage.getItem("cuentaSeleccionada").saldo != null) {
+            if(localStorage.getItem("cuentaSeleccionada").saldo != "" || localStorage.getItem("cuentaSeleccionada").saldo != "0") {
                 numeroInput.value = (JSON.parse(localStorage.getItem("cuentaSeleccionada")).saldo).toFixed(2).toString().replace('.', ',');
             } else {
                 numeroInput.value = "0,00";
